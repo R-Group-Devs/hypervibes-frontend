@@ -1,6 +1,7 @@
 {
   "name": "hypervibes-frontend",
   "version": "0.1.0",
+  "type": "module",
   "dependencies": {
     "@ethersproject/contracts": "^5.4.1",
     "@ethersproject/providers": "^5.4.5",
@@ -19,12 +20,14 @@
     "react-router-dom": "^5.3.0",
     "react-scripts": "4.0.3",
     "styled-components": "^5.3.1",
+    "ts-node": "^10.3.0",
     "typescript": "^4.1.2",
     "use-nft": "^0.10.1"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && yarn ascii",
+    "ascii": "node --loader ts-node/esm --experimental-specifier-resolution=node ./scripts/inject-ascii.ts",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

@@ -10,8 +10,8 @@ Frontend app for the [**HyperVIBES**](https://hypervibes.xyz) project.
 
 ## Requirements
 
-- [Node](https://nodejs.org/en/) version ^14.x
-- [Yarn](https://yarnpkg.com/) version ^1.22.x
+- [Node](https://nodejs.org/en/) ^14.x
+- [Yarn](https://yarnpkg.com/) ^1.22.x
 
 ## Setup
 
