@@ -1,12 +1,15 @@
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { ErrorBoundary } from 'react-error-boundary';
 import PlaceholderPage from './pages/PlaceholderPage';
 import CreateTenantPage from './pages/CreateTenantPage';
 import NotFoundPage from './pages/NotFoundPage';
 import GlobalStyle from './components/GlobalStyle';
+import AppErrorMessage from './components/AppErrorMessage';
 
 const App = () => (
-  <>
-    <Router>
+  <Router>
+    <GlobalStyle />
+    <ErrorBoundary fallback={<AppErrorMessage />}>
       <Switch>
         <Route exact path="/">
           <PlaceholderPage />
@@ -20,10 +23,8 @@ const App = () => (
           <NotFoundPage />
         </Route>
       </Switch>
-    </Router>
-
-    <GlobalStyle />
-  </>
+    </ErrorBoundary>
+  </Router>
 );
 
 export default App;
