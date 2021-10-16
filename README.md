@@ -1,6 +1,6 @@
 # hypervibes-frontend
 
-Frontend app for the **HyperVIBES** project.
+Frontend app for the [**HyperVIBES**](https://hypervibes.xyz) project.
 
 ## Links
 
@@ -10,7 +10,7 @@ Frontend app for the **HyperVIBES** project.
 
 ## Requirements
 
-- [Node](https://nodejs.org/en/) version ^14.x ([nvm](https://github.com/nvm-sh/nvm) recommended)
+- [Node](https://nodejs.org/en/) version ^14.x
 - [Yarn](https://yarnpkg.com/) version ^1.22.x
 
 ## Setup
