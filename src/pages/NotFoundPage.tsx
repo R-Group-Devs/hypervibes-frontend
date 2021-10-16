@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 const Container = styled.div`
   display: flex;
@@ -23,11 +24,13 @@ const H2 = styled.h2`
   color: rgba(255, 255, 255, 0.6);
 `;
 
-const Placeholder = () => (
+const PlaceholderPage = () => (
   <Container>
-    <H1>&#8725;&#8725; hypervibes &#8725;&#8725;</H1>
-    <H2>coming soon</H2>
+    <H1>404 not found :(</H1>
+    <H2>
+      <Link to="/">go back home</Link>
+    </H2>
   </Container>
 );
 
-export default Placeholder;
+export default PlaceholderPage;
