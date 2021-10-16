@@ -24,7 +24,7 @@ const H2 = styled.h2`
   color: rgba(255, 255, 255, 0.6);
 `;
 
-const PlaceholderPage = () => (
+const NotFoundPage = () => (
   <Container>
     <H1>404 not found :(</H1>
     <H2>
@@ -33,4 +33,4 @@ const PlaceholderPage = () => (
   </Container>
 );
 
-export default PlaceholderPage;
+export default NotFoundPage;
