@@ -20,7 +20,7 @@ const Image = styled.img`
   width: 300px;
 `;
 
-const Nft = ({ contractAddress, tokenId }: Props) => {
+export default ({ contractAddress, tokenId }: Props) => {
   const { loading, error, nft } = useNft(contractAddress, tokenId);
 
   if (loading) return <>Loading...</>;
@@ -36,5 +36,3 @@ const Nft = ({ contractAddress, tokenId }: Props) => {
     </Container>
   );
 };
-
-export default Nft;

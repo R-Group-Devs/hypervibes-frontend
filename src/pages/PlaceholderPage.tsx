@@ -23,11 +23,9 @@ const H2 = styled.h2`
   color: rgba(255, 255, 255, 0.6);
 `;
 
-const PlaceholderPage = () => (
+export default () => (
   <Container>
     <H1>&#8725;&#8725; hypervibes &#8725;&#8725;</H1>
     <H2>coming soon</H2>
   </Container>
 );
-
-export default PlaceholderPage;

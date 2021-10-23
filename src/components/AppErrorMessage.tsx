@@ -24,7 +24,7 @@ const H2 = styled.h2`
   color: rgba(255, 255, 255, 0.6);
 `;
 
-const AppErrorMessage = () => (
+export default () => (
   <Container>
     <H1>something went wrong :(</H1>
     <H2>
@@ -32,5 +32,3 @@ const AppErrorMessage = () => (
     </H2>
   </Container>
 );
-
-export default AppErrorMessage;

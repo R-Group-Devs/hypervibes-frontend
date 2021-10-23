@@ -7,12 +7,10 @@ const Container = styled.div`
   display: flex;
 `;
 
-const NftListPage = () => (
+export default () => (
   <Container>
     {tokenIds.map((tokenId) => (
       <Nft contractAddress="0xd07dc4262bcdbf85190c01c996b4c06a461d2430" tokenId={tokenId} />
     ))}
   </Container>
 );
-
-export default NftListPage;

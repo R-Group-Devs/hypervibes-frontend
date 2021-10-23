@@ -24,7 +24,7 @@ const H2 = styled.h2`
   color: rgba(255, 255, 255, 0.6);
 `;
 
-const NotFoundPage = () => (
+export default () => (
   <Container>
     <H1>404 not found :(</H1>
     <H2>
@@ -32,5 +32,3 @@ const NotFoundPage = () => (
     </H2>
   </Container>
 );
-
-export default NotFoundPage;
