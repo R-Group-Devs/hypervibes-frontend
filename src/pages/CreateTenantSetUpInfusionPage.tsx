@@ -1,5 +1,6 @@
 import { useHistory } from 'react-router-dom';
 import { useForm, FormProvider } from 'react-hook-form';
+import { DevTool } from '@hookform/devtools';
 import useCreateTenant, { Tenant } from '../hooks/useCreateTenant';
 import AddressInput from '../components/AddressInput';
 import MultiAddressInput from '../components/MultiAddressInput';
@@ -23,6 +24,8 @@ export default () => {
 
         <SubmitButton>Next</SubmitButton>
       </form>
+
+      <DevTool control={methods.control} />
     </FormProvider>
   );
 };
