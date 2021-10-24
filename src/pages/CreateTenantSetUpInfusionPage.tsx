@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { useForm, FieldValues } from 'react-hook-form';
 import useCreateTenant from '../hooks/useCreateTenant';
 import AddressInput from '../components/AddressInput';
-import MultiInput from '../components/MultiInput';
+import MultiAddressInput from '../components/MultiAddressInput';
 import SubmitButton from '../components/SubmitButton';
 
 export default () => {
@@ -33,7 +33,7 @@ export default () => {
         errors={formState.errors}
       />
 
-      <MultiInput
+      <MultiAddressInput
         name="allowedInfusers"
         label="Allowed infusers"
         register={register}

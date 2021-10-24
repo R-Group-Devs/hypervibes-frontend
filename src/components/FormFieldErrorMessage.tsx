@@ -2,7 +2,7 @@ import { FieldError } from 'react-hook-form';
 import styled from 'styled-components';
 
 interface Props {
-  error: FieldError;
+  error?: FieldError;
   maxLength?: number;
 }
 
@@ -20,11 +20,9 @@ const Message = styled.span<{ isVisible: boolean }>`
 export default ({ error, maxLength }: Props) => (
   <Container>
     <Message isVisible={!!error}>
-      {error && error.type === 'required' && <span>This field is required.</span>}
-      {error && error.type === 'maxLength' && (
-        <span>This field must be shorter {maxLength} characters.</span>
-      )}
-      {error && error.type === 'address' && <span>Enter a valid Ethereum address.</span>}
+      {error?.type === 'required' && 'This field is required.'}
+      {error?.type === 'maxLength' && `This field must be shorter ${maxLength} characters.`}
+      {error?.type === 'address' && 'Enter a valid Ethereum address.'}
     </Message>
   </Container>
 );

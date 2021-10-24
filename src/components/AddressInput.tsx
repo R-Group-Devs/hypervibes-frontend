@@ -4,7 +4,7 @@ import TextInput from './TextInput';
 
 interface Props {
   name: string;
-  label: string;
+  label?: string;
   required?: boolean;
   register: UseFormReturn['register'];
   errors: UseFormReturn['formState']['errors'];
@@ -17,7 +17,7 @@ export default ({ register, name, required, label, errors }: Props) => (
     required={required}
     register={register}
     validate={{
-      address: (value: string) => isAddress(value),
+      address: (value) => !value || isAddress(value),
     }}
     errors={errors}
   />

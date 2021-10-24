@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useForm, FieldValues } from 'react-hook-form';
 import useCreateTenant from '../hooks/useCreateTenant';
-import MultiInput from '../components/MultiInput';
+import MultiAddressInput from '../components/MultiAddressInput';
 import SubmitButton from '../components/SubmitButton';
 
 export default () => {
@@ -24,7 +24,7 @@ export default () => {
 
   return (
     <form onSubmit={onSubmit}>
-      <MultiInput
+      <MultiAddressInput
         name="allowedCollections"
         label="Allowed collections"
         register={register}

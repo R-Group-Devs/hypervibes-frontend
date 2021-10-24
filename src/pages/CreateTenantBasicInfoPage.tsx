@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { useForm, FieldValues } from 'react-hook-form';
 import useCreateTenant from '../hooks/useCreateTenant';
 import TextInput from '../components/TextInput';
-import MultiInput from '../components/MultiInput';
+import MultiAddressInput from '../components/MultiAddressInput';
 import SubmitButton from '../components/SubmitButton';
 
 export default () => {
@@ -41,7 +41,7 @@ export default () => {
         register={register}
         errors={formState.errors}
       />
-      <MultiInput
+      <MultiAddressInput
         name="admins"
         label="Admin(s)"
         register={register}

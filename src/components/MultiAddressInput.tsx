@@ -1,7 +1,7 @@
 import { useFieldArray, FieldValues, Control, UseFormReturn } from 'react-hook-form';
 import styled from 'styled-components';
 import Label from './Label';
-import Input from './Input';
+import AddressInput from './AddressInput';
 
 interface Props {
   name: string;
@@ -13,19 +13,25 @@ interface Props {
   errors: UseFormReturn['formState']['errors'];
 }
 
-const Container = styled.div``;
+const Container = styled.div`
+  display: flex;
+`;
 
-const MultiInput = styled(Input)`
+const StyledLabel = styled(Label)`
+  display: inline-block;
+`;
+
+const Input = styled(AddressInput)`
   margin-bottom: 0.5em;
 `;
 
-const RemoveButton = styled.button<{ isVisible: boolean }>`
+const AddAnotherButton = styled.button`
   margin-left: 1em;
-  font-size: 14px;
-  visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
   padding: 0;
+  display: inline-block;
   background: none;
   font-family: 'Courier New', monospace;
+  font-size: 12px;
   color: #fff;
   border: none;
 
@@ -34,14 +40,15 @@ const RemoveButton = styled.button<{ isVisible: boolean }>`
   }
 `;
 
-const AddAnotherButton = styled.button`
-  position: relative;
-  top: -0.25em;
+const RemoveButton = styled.button<{ isVisible: boolean }>`
+  margin-top: 1.4em;
+  margin-left: 1em;
   padding: 0;
-  display: inline-block;
+  align-self: flex-start;
+  font-size: 14px;
+  visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
   background: none;
   font-family: 'Courier New', monospace;
-  font-size: 12px;
   color: #fff;
   border: none;
 
@@ -64,22 +71,7 @@ export default ({
 
   return (
     <>
-      <Label name={`${name}.0`}>{label}</Label>
-
-      {fields.map((field, index) => (
-        <Container key={field.id}>
-          <MultiInput
-            type="text"
-            id={`${name}.${index}`}
-            {...register(`${name}.${index}.value`)}
-            {...rest}
-          />
-
-          <RemoveButton isVisible={fields.length > 1} onClick={() => remove(index)}>
-            Remove
-          </RemoveButton>
-        </Container>
-      ))}
+      <StyledLabel name={`${name}.0.value`}>{label}</StyledLabel>
 
       <AddAnotherButton
         onClick={(e) => {
@@ -89,6 +81,21 @@ export default ({
       >
         Add another...
       </AddAnotherButton>
+
+      {fields.map((field, index) => (
+        <Container key={field.id}>
+          <Input
+            name={`${name}.${index}.value` as const}
+            register={register}
+            errors={errors}
+            {...rest}
+          />
+
+          <RemoveButton isVisible={fields.length > 1} onClick={() => remove(index)}>
+            Remove
+          </RemoveButton>
+        </Container>
+      ))}
     </>
   );
 };

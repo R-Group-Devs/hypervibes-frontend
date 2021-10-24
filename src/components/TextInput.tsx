@@ -1,11 +1,12 @@
 import { UseFormReturn } from 'react-hook-form';
+import { get } from 'lodash';
 import Label from './Label';
 import Input from './Input';
 import FormFieldErrorMessage from './FormFieldErrorMessage';
 
 interface Props {
   name: string;
-  label: string;
+  label?: string;
   required?: boolean;
   maxLength?: number;
   register: UseFormReturn['register'];
@@ -23,19 +24,21 @@ export default ({
   errors,
   ...rest
 }: Props) => (
-  <>
-    <Label name={name} isRequired={required}>
-      {label}
-    </Label>
+  <div>
+    {label && (
+      <Label name={name} isRequired={required}>
+        {label}
+      </Label>
+    )}
 
     <Input
       type="text"
       id={name}
-      hasError={errors[name]}
+      hasError={get(errors, name)}
       {...register(name, { required, maxLength, validate })}
       {...rest}
     />
 
-    <FormFieldErrorMessage error={errors[name]} maxLength={maxLength} />
-  </>
+    <FormFieldErrorMessage error={get(errors, name)} maxLength={maxLength} />
+  </div>
 );

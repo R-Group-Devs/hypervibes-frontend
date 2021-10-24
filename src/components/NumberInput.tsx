@@ -24,6 +24,7 @@ export default ({ register, name, label, required = false, errors, ...rest }: Pr
       {...register(name, { required, valueAsNumber: true })}
       {...rest}
     />
+
     <FormFieldErrorMessage error={errors[name]} />
   </div>
 );
