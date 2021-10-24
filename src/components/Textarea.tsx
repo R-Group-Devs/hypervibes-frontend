@@ -11,7 +11,7 @@ interface Props {
 }
 
 export default ({ register, name, label, required, maxLength, errors, ...rest }: Props) => (
-  <>
+  <div>
     <Label name={name}>{label}</Label>
 
     <textarea id={name} {...register(name, { required, maxLength })} {...rest} />
@@ -19,5 +19,5 @@ export default ({ register, name, label, required, maxLength, errors, ...rest }:
     {errors[name] && errors[name].type === 'maxLength' && (
       <span>This field must be shorter than {maxLength} characters.</span>
     )}
-  </>
+  </div>
 );

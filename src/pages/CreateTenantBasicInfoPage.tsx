@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useForm, FieldValues } from 'react-hook-form';
 import useCreateTenant from '../hooks/useCreateTenant';
-import Input from '../components/Input';
+import TextInput from '../components/TextInput';
 import Textarea from '../components/Textarea';
 import MultiInput from '../components/MultiInput';
 import SubmitButton from '../components/SubmitButton';
@@ -30,7 +30,7 @@ export default () => {
 
   return (
     <form onSubmit={onSubmit}>
-      <Input
+      <TextInput
         name="name"
         label="Name"
         required
@@ -38,7 +38,7 @@ export default () => {
         register={register}
         errors={formState.errors}
       />
-      <Textarea
+      <TextInput
         name="description"
         label="Description"
         required

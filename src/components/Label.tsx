@@ -7,7 +7,12 @@ interface Props {
 }
 
 const Label = styled.label`
+  margin-bottom: 0.5em;
   display: block;
 `;
 
-export default ({ name, children }: Props) => <Label htmlFor={name}>{children}</Label>;
+export default ({ name, children, ...rest }: Props) => (
+  <Label htmlFor={name} {...rest}>
+    {children}
+  </Label>
+);

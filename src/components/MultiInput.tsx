@@ -1,6 +1,7 @@
 import { useFieldArray, FieldValues, Control, UseFormReturn } from 'react-hook-form';
 import styled from 'styled-components';
 import Label from './Label';
+import Input from './Input';
 
 interface Props {
   name: string;
@@ -14,7 +15,29 @@ interface Props {
 
 const Container = styled.div``;
 
-const Input = styled.input``;
+const MultiInput = styled(Input)`
+  margin-bottom: 0.5em;
+`;
+
+const AddAnotherButton = styled.span`
+  position: relative;
+  top: -0.25em;
+  display: inline-block;
+  font-size: 12px;
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+const RemoveButton = styled.span`
+  margin-left: 1em;
+  font-size: 14px;
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
 
 export default ({
   register,
@@ -34,24 +57,24 @@ export default ({
 
       {fields.map((field, index) => (
         <Container key={field.id}>
-          <Input
+          <MultiInput
             type="text"
             id={`${name}.${index}`}
             {...register(`${name}.${index}.value`)}
             {...rest}
           />
-          <span onClick={() => remove(index)}>Remove</span>
+          <RemoveButton onClick={() => remove(index)}>Remove</RemoveButton>
         </Container>
       ))}
 
-      <button
+      <AddAnotherButton
         onClick={(e) => {
           e.preventDefault();
           append({ value: '' });
         }}
       >
         Add another...
-      </button>
+      </AddAnotherButton>
     </>
   );
 };

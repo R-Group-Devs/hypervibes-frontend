@@ -1,7 +1,6 @@
 import React from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import styled from 'styled-components';
-import Label from './Label';
 
 interface Props {
   name: string;
@@ -10,14 +9,21 @@ interface Props {
   errors: UseFormReturn['formState']['errors'];
 }
 
-const RadioGroup = styled.div``;
+const Container = styled.div`
+  margin-bottom: 3em;
+`;
+
+const RadioGroup = styled.div`
+  display: flex;
+  column-gap: 2em;
+`;
 
 export default ({ name, label, children, errors }: Props) => (
-  <RadioGroup>
+  <Container>
     <h3>{label}</h3>
 
-    {children}
+    <RadioGroup>{children}</RadioGroup>
 
     {errors[name] && errors[name].type === 'required' && <span>This field is required.</span>}
-  </RadioGroup>
+  </Container>
 );

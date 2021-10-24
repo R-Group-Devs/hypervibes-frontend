@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useForm, FieldValues } from 'react-hook-form';
 import useCreateTenant from '../hooks/useCreateTenant';
+import InputGroup from '../components/InputGroup';
 import NumberInput from '../components/NumberInput';
 import RadioGroup from '../components/RadioGroup';
 import RadioButton from '../components/RadioButton';
@@ -34,37 +35,41 @@ export default () => {
 
   return (
     <form onSubmit={onSubmit}>
-      <NumberInput
-        name="minClaimableTokenRate"
-        label="Minimum Claimable Token Rate"
-        required
-        register={register}
-        errors={formState.errors}
-      />
+      <InputGroup label="Claimable Token Rate">
+        <NumberInput
+          name="minClaimableTokenRate"
+          label="Minimum"
+          required
+          register={register}
+          errors={formState.errors}
+        />
 
-      <NumberInput
-        name="maxClaimableTokenRate"
-        label="Maximum Claimable Token Rate"
-        required
-        register={register}
-        errors={formState.errors}
-      />
+        <NumberInput
+          name="maxClaimableTokenRate"
+          label="Maximum"
+          required
+          register={register}
+          errors={formState.errors}
+        />
+      </InputGroup>
 
-      <NumberInput
-        name="minTokenInfusionAmount"
-        label="Minimum Token Infusion Amount"
-        required
-        register={register}
-        errors={formState.errors}
-      />
+      <InputGroup label="Token Infusion Amount">
+        <NumberInput
+          name="minTokenInfusionAmount"
+          label="Minimum"
+          required
+          register={register}
+          errors={formState.errors}
+        />
 
-      <NumberInput
-        name="maxTokenInfusionAmount"
-        label="Maximum Token Infusion Amount"
-        required
-        register={register}
-        errors={formState.errors}
-      />
+        <NumberInput
+          name="maxTokenInfusionAmount"
+          label="Maximum"
+          required
+          register={register}
+          errors={formState.errors}
+        />
+      </InputGroup>
 
       <NumberInput
         name="maxInfusibleTokens"

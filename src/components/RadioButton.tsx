@@ -11,14 +11,25 @@ interface Props {
   register: UseFormReturn['register'];
 }
 
+const Container = styled.div``;
+
+const StyledLabel = styled(Label)`
+  display: inline-block;
+`;
+
 const RadioButton = styled.input`
-  display: block;
+  display: inline-block;
 `;
 
 export default ({ register, id, name, label, required = false, ...rest }: Props) => (
-  <>
-    <Label name={id}>{label}</Label>
-
-    <RadioButton type="radio" id={id} value={id} {...register(name, { required })} {...rest} />
-  </>
+  <Container>
+    <RadioButton
+      type="radio"
+      id={`${name}-${id}`}
+      value={id}
+      {...register(name, { required })}
+      {...rest}
+    />
+    <StyledLabel name={`${name}-${id}`}>{label}</StyledLabel>
+  </Container>
 );
