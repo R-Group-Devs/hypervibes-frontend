@@ -13,13 +13,14 @@ export default () => {
   const { tenant, updateTenant, resetTenant } = useCreateTenant();
   const methods = useForm<Tenant>({ defaultValues: tenant });
 
-  const onSubmit = methods.handleSubmit((data) => {
+  const onSubmit = methods.handleSubmit(async (data) => {
     updateTenant(data);
 
-    setTimeout(() => {
-      history.push('success');
-      resetTenant();
-    }, 200);
+    // TODO - replace with react-query mutation to call contract w/ tenant payload
+    await new Promise((resolve) => setTimeout(resolve, 500));
+
+    history.push('success');
+    resetTenant();
   });
 
   return (
