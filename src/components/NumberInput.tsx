@@ -15,7 +15,13 @@ export default ({ register, name, label, required = false, errors, ...rest }: Pr
   <div>
     <Label name={name}>{label}</Label>
 
-    <Input type="number" id={name} {...register(name, { required })} {...rest} />
+    <Input
+      type="number"
+      id={name}
+      hasError={errors[name]}
+      {...register(name, { required })}
+      {...rest}
+    />
     <FormFieldErrorMessage error={errors[name]} />
   </div>
 );

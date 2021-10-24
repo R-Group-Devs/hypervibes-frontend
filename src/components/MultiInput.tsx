@@ -19,20 +19,21 @@ const MultiInput = styled(Input)`
   margin-bottom: 0.5em;
 `;
 
-const AddAnotherButton = styled.span`
-  position: relative;
-  top: -0.25em;
-  display: inline-block;
-  font-size: 12px;
+const RemoveButton = styled.span<{ isVisible: boolean }>`
+  margin-left: 1em;
+  font-size: 14px;
+  visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
 
   &:hover {
     cursor: pointer;
   }
 `;
 
-const RemoveButton = styled.span`
-  margin-left: 1em;
-  font-size: 14px;
+const AddAnotherButton = styled.span`
+  position: relative;
+  top: -0.25em;
+  display: inline-block;
+  font-size: 12px;
 
   &:hover {
     cursor: pointer;
@@ -63,7 +64,10 @@ export default ({
             {...register(`${name}.${index}.value`)}
             {...rest}
           />
-          <RemoveButton onClick={() => remove(index)}>Remove</RemoveButton>
+
+          <RemoveButton isVisible={fields.length > 1} onClick={() => remove(index)}>
+            Remove
+          </RemoveButton>
         </Container>
       ))}
 

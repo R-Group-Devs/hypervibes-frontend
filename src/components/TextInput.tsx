@@ -16,7 +16,14 @@ export default ({ register, name, label, required = false, maxLength, errors, ..
   <>
     <Label name={name}>{label}</Label>
 
-    <Input type="text" id={name} {...register(name, { required, maxLength })} {...rest} />
+    <Input
+      type="text"
+      id={name}
+      hasError={errors[name]}
+      {...register(name, { required, maxLength })}
+      {...rest}
+    />
+
     <FormFieldErrorMessage error={errors[name]} />
   </>
 );

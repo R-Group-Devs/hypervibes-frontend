@@ -43,7 +43,7 @@ export default () => {
       />
       <MultiInput
         name="admins"
-        label="Admins"
+        label="Admin(s)"
         register={register}
         control={control}
         errors={formState.errors}
