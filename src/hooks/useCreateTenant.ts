@@ -1,6 +1,22 @@
 import { createGlobalState } from 'react-hooks-global-state';
 
-const initialState = {
+export interface Tenant {
+  name: string;
+  description: string;
+  admins: string[];
+  allowedCollections: string[];
+  tokenAddress: string;
+  allowedInfusers: string[];
+  minClaimableTokenRate: number | null;
+  maxClaimableTokenRate: number | null;
+  minTokenInfusionAmount: number | null;
+  maxTokenInfusionAmount: number | null;
+  maxInfusibleTokens: number | null;
+  requireOwnership: 'yes' | 'no';
+  allowMultiInfusion: 'yes' | 'no';
+}
+
+const initialState: Record<'tenant', Tenant> = {
   tenant: {
     name: '',
     description: '',
@@ -25,7 +41,7 @@ export default () => {
 
   return {
     tenant,
-    updateTenant: (fields: Record<string, any>) => updateTenant({ ...tenant, ...fields }),
+    updateTenant: (fields: Tenant) => updateTenant({ ...tenant, ...fields }),
     resetTenant: () => updateTenant(initialState.tenant),
   };
 };

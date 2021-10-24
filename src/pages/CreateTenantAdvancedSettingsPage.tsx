@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useForm, FormProvider, FieldValues } from 'react-hook-form';
-import useCreateTenant from '../hooks/useCreateTenant';
+import { useForm, FormProvider } from 'react-hook-form';
+import useCreateTenant, { Tenant } from '../hooks/useCreateTenant';
 import InputGroup from '../components/InputGroup';
 import NumberInput from '../components/NumberInput';
 import RadioGroup from '../components/RadioGroup';
@@ -12,7 +12,7 @@ export default () => {
   const history = useHistory();
   const { tenant, updateTenant, resetTenant } = useCreateTenant();
 
-  const methods = useForm<FieldValues>({
+  const methods = useForm<Tenant>({
     defaultValues: tenant,
   });
 

@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useForm, FormProvider, FieldValues } from 'react-hook-form';
-import useCreateTenant from '../hooks/useCreateTenant';
+import { useForm, FormProvider } from 'react-hook-form';
+import useCreateTenant, { Tenant } from '../hooks/useCreateTenant';
 import AddressInput from '../components/AddressInput';
 import MultiAddressInput from '../components/MultiAddressInput';
 import SubmitButton from '../components/SubmitButton';
@@ -10,7 +10,7 @@ export default () => {
   const history = useHistory();
   const { tenant, updateTenant } = useCreateTenant();
 
-  const methods = useForm<FieldValues>({
+  const methods = useForm<Tenant>({
     defaultValues: tenant,
   });
 

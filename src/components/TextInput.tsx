@@ -1,4 +1,4 @@
-import { useFormContext } from 'react-hook-form';
+import { useFormContext, Validate } from 'react-hook-form';
 import { get } from 'lodash';
 import Label from './Label';
 import Input from './Input';
@@ -9,7 +9,7 @@ interface Props {
   label?: string;
   required?: boolean;
   maxLength?: number;
-  validate?: Record<string, (value: string) => boolean>;
+  validate?: Record<string, Validate<string>>;
 }
 
 export default ({ name, label, required = false, maxLength, validate, ...rest }: Props) => {
