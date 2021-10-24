@@ -1,4 +1,4 @@
-import { UseFormReturn } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
 import { get } from 'lodash';
 import Label from './Label';
 import Input from './Input';
@@ -9,36 +9,29 @@ interface Props {
   label?: string;
   required?: boolean;
   maxLength?: number;
-  register: UseFormReturn['register'];
   validate?: Record<string, (value: string) => boolean>;
-  errors: UseFormReturn['formState']['errors'];
 }
 
-export default ({
-  register,
-  name,
-  label,
-  required = false,
-  maxLength,
-  validate,
-  errors,
-  ...rest
-}: Props) => (
-  <div>
-    {label && (
-      <Label name={name} isRequired={required}>
-        {label}
-      </Label>
-    )}
+export default ({ name, label, required = false, maxLength, validate, ...rest }: Props) => {
+  const { register, formState } = useFormContext();
 
-    <Input
-      type="text"
-      id={name}
-      hasError={get(errors, name)}
-      {...register(name, { required, maxLength, validate })}
-      {...rest}
-    />
+  return (
+    <div>
+      {label && (
+        <Label name={name} isRequired={required}>
+          {label}
+        </Label>
+      )}
 
-    <FormFieldErrorMessage error={get(errors, name)} maxLength={maxLength} />
-  </div>
-);
+      <Input
+        type="text"
+        id={name}
+        hasError={get(formState.errors, name)}
+        {...register(name, { required, maxLength, validate })}
+        {...rest}
+      />
+
+      <FormFieldErrorMessage error={get(formState.errors, name)} maxLength={maxLength} />
+    </div>
+  );
+};

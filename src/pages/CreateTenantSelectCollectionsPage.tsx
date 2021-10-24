@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useForm, FieldValues } from 'react-hook-form';
+import { useForm, FormProvider, FieldValues } from 'react-hook-form';
 import useCreateTenant from '../hooks/useCreateTenant';
 import MultiAddressInput from '../components/MultiAddressInput';
 import SubmitButton from '../components/SubmitButton';
@@ -9,11 +9,11 @@ export default () => {
   const history = useHistory();
   const { tenant, updateTenant } = useCreateTenant();
 
-  const { register, control, formState, handleSubmit } = useForm<FieldValues>({
+  const methods = useForm<FieldValues>({
     defaultValues: tenant,
   });
 
-  const onSubmit = handleSubmit((data) => {
+  const onSubmit = methods.handleSubmit((data) => {
     updateTenant(data);
     history.push('set-up-infusion');
   });
@@ -23,16 +23,12 @@ export default () => {
   }, [tenant]);
 
   return (
-    <form onSubmit={onSubmit}>
-      <MultiAddressInput
-        name="allowedCollections"
-        label="Allowed collections"
-        register={register}
-        control={control}
-        errors={formState.errors}
-      />
+    <FormProvider {...methods}>
+      <form onSubmit={onSubmit}>
+        <MultiAddressInput name="allowedCollections" label="Allowed collections" />
 
-      <SubmitButton>Next</SubmitButton>
-    </form>
+        <SubmitButton>Next</SubmitButton>
+      </form>
+    </FormProvider>
   );
 };

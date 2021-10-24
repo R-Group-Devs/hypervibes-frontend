@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useForm, FieldValues } from 'react-hook-form';
+import { useForm, FormProvider, FieldValues } from 'react-hook-form';
 import useCreateTenant from '../hooks/useCreateTenant';
 import InputGroup from '../components/InputGroup';
 import NumberInput from '../components/NumberInput';
@@ -12,11 +12,11 @@ export default () => {
   const history = useHistory();
   const { tenant, updateTenant, resetTenant } = useCreateTenant();
 
-  const { register, formState, handleSubmit } = useForm<FieldValues>({
+  const methods = useForm<FieldValues>({
     defaultValues: tenant,
   });
 
-  const onSubmit = handleSubmit((data) => {
+  const onSubmit = methods.handleSubmit((data) => {
     updateTenant(data);
 
     setTimeout(() => {
@@ -30,66 +30,35 @@ export default () => {
   }, [tenant]);
 
   return (
-    <form onSubmit={onSubmit}>
-      <InputGroup label="Claimable Token Rate">
-        <NumberInput
-          name="minClaimableTokenRate"
-          label="Minimum"
-          required
-          register={register}
-          errors={formState.errors}
-        />
+    <FormProvider {...methods}>
+      <form onSubmit={onSubmit}>
+        <InputGroup label="Claimable Token Rate">
+          <NumberInput name="minClaimableTokenRate" label="Minimum" required />
+          <NumberInput name="maxClaimableTokenRate" label="Maximum" required />
+        </InputGroup>
 
-        <NumberInput
-          name="maxClaimableTokenRate"
-          label="Maximum"
-          required
-          register={register}
-          errors={formState.errors}
-        />
-      </InputGroup>
+        <InputGroup label="Token Infusion Amount">
+          <NumberInput name="minTokenInfusionAmount" label="Minimum" required />
+          <NumberInput name="maxTokenInfusionAmount" label="Maximum" required />
+        </InputGroup>
 
-      <InputGroup label="Token Infusion Amount">
-        <NumberInput
-          name="minTokenInfusionAmount"
-          label="Minimum"
-          required
-          register={register}
-          errors={formState.errors}
-        />
+        <NumberInput name="maxInfusibleTokens" label="Maximum Infusible Tokens" required />
 
-        <NumberInput
-          name="maxTokenInfusionAmount"
-          label="Maximum"
-          required
-          register={register}
-          errors={formState.errors}
-        />
-      </InputGroup>
+        <RadioGroup name="requireOwnership" label="Require NFT ownership?">
+          <RadioButton name="requireOwnership" id="yes" label="Yes" required />
+          <RadioButton name="requireOwnership" id="no" label="No" required />
+        </RadioGroup>
 
-      <NumberInput
-        name="maxInfusibleTokens"
-        label="Maximum Infusible Tokens"
-        required
-        register={register}
-        errors={formState.errors}
-      />
+        <RadioGroup
+          name="allowMultiInfusion"
+          label="Allow infusing tokens into the same NFT more than once?"
+        >
+          <RadioButton name="allowMultiInfusion" id="yes" label="Yes" required />
+          <RadioButton name="allowMultiInfusion" id="no" label="No" required />
+        </RadioGroup>
 
-      <RadioGroup name="requireOwnership" label="Require NFT ownership?" errors={formState.errors}>
-        <RadioButton name="requireOwnership" id="yes" label="Yes" required register={register} />
-        <RadioButton name="requireOwnership" id="no" label="No" required register={register} />
-      </RadioGroup>
-
-      <RadioGroup
-        name="allowMultiInfusion"
-        label="Allow infusing tokens into the same NFT more than once?"
-        errors={formState.errors}
-      >
-        <RadioButton name="allowMultiInfusion" id="yes" label="Yes" required register={register} />
-        <RadioButton name="allowMultiInfusion" id="no" label="No" required register={register} />
-      </RadioGroup>
-
-      <SubmitButton>Create Tenant</SubmitButton>
-    </form>
+        <SubmitButton>Create Tenant</SubmitButton>
+      </form>
+    </FormProvider>
   );
 };

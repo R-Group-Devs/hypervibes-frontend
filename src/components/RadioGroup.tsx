@@ -1,5 +1,5 @@
 import React from 'react';
-import { UseFormReturn } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
 import styled from 'styled-components';
 import FormFieldErrorMessage from './FormFieldErrorMessage';
 
@@ -7,7 +7,6 @@ interface Props {
   name: string;
   label: string;
   children: React.ReactNode;
-  errors: UseFormReturn['formState']['errors'];
 }
 
 const Container = styled.div`
@@ -19,11 +18,15 @@ const RadioGroup = styled.div`
   column-gap: 2em;
 `;
 
-export default ({ name, label, children, errors }: Props) => (
-  <Container>
-    <h3>{label}</h3>
+export default ({ name, label, children }: Props) => {
+  const { formState } = useFormContext();
 
-    <RadioGroup>{children}</RadioGroup>
-    <FormFieldErrorMessage error={errors[name]} />
-  </Container>
-);
+  return (
+    <Container>
+      <h3>{label}</h3>
+
+      <RadioGroup>{children}</RadioGroup>
+      <FormFieldErrorMessage error={formState.errors[name]} />
+    </Container>
+  );
+};

@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useForm, FieldValues } from 'react-hook-form';
+import { useForm, FormProvider, FieldValues } from 'react-hook-form';
 import useCreateTenant from '../hooks/useCreateTenant';
 import AddressInput from '../components/AddressInput';
 import MultiAddressInput from '../components/MultiAddressInput';
@@ -10,11 +10,11 @@ export default () => {
   const history = useHistory();
   const { tenant, updateTenant } = useCreateTenant();
 
-  const { register, control, formState, handleSubmit } = useForm<FieldValues>({
+  const methods = useForm<FieldValues>({
     defaultValues: tenant,
   });
 
-  const onSubmit = handleSubmit((data) => {
+  const onSubmit = methods.handleSubmit((data) => {
     updateTenant(data);
     history.push('advanced-settings');
   });
@@ -24,24 +24,13 @@ export default () => {
   }, [tenant]);
 
   return (
-    <form onSubmit={onSubmit}>
-      <AddressInput
-        name="tokenAddress"
-        label="ERC-20 Token Address"
-        required
-        register={register}
-        errors={formState.errors}
-      />
+    <FormProvider {...methods}>
+      <form onSubmit={onSubmit}>
+        <AddressInput name="tokenAddress" label="ERC-20 Token Address" required />
+        <MultiAddressInput name="allowedInfusers" label="Allowed infusers" />
 
-      <MultiAddressInput
-        name="allowedInfusers"
-        label="Allowed infusers"
-        register={register}
-        control={control}
-        errors={formState.errors}
-      />
-
-      <SubmitButton>Next</SubmitButton>
-    </form>
+        <SubmitButton>Next</SubmitButton>
+      </form>
+    </FormProvider>
   );
 };

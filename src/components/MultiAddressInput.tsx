@@ -1,4 +1,4 @@
-import { useFieldArray, FieldValues, Control, UseFormReturn } from 'react-hook-form';
+import { useFormContext, useFieldArray } from 'react-hook-form';
 import styled from 'styled-components';
 import Label from './Label';
 import AddressInput from './AddressInput';
@@ -8,9 +8,6 @@ interface Props {
   label: string;
   required?: boolean;
   maxLength?: number;
-  register: UseFormReturn['register'];
-  control: Control<FieldValues>;
-  errors: UseFormReturn['formState']['errors'];
 }
 
 const Container = styled.div`
@@ -57,16 +54,8 @@ const RemoveButton = styled.button<{ isVisible: boolean }>`
   }
 `;
 
-export default ({
-  register,
-  control,
-  name,
-  label,
-  required,
-  maxLength,
-  errors,
-  ...rest
-}: Props) => {
+export default ({ name, label, required, maxLength, ...rest }: Props) => {
+  const { control } = useFormContext();
   const { fields, append, remove } = useFieldArray({ control, name });
 
   return (
@@ -84,12 +73,7 @@ export default ({
 
       {fields.map((field, index) => (
         <Container key={field.id}>
-          <Input
-            name={`${name}.${index}.value` as const}
-            register={register}
-            errors={errors}
-            {...rest}
-          />
+          <Input name={`${name}.${index}.value` as const} {...rest} />
 
           <RemoveButton isVisible={fields.length > 1} onClick={() => remove(index)}>
             Remove
