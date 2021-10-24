@@ -12,9 +12,9 @@ interface Props {
   errors: UseFormReturn['formState']['errors'];
 }
 
-const Input = styled.input`
-  display: block;
-`;
+const Container = styled.div``;
+
+const Input = styled.input``;
 
 export default ({
   register,
@@ -26,20 +26,22 @@ export default ({
   errors,
   ...rest
 }: Props) => {
-  const { fields, append } = useFieldArray({ control, name });
+  const { fields, append, remove } = useFieldArray({ control, name });
 
   return (
     <>
       <Label name={`${name}.0`}>{label}</Label>
 
       {fields.map((field, index) => (
-        <Input
-          type="text"
-          key={field.id}
-          id={`${name}.${index}`}
-          {...register(`${name}.${index}.value`)}
-          {...rest}
-        />
+        <Container key={field.id}>
+          <Input
+            type="text"
+            id={`${name}.${index}`}
+            {...register(`${name}.${index}.value`)}
+            {...rest}
+          />
+          <span onClick={() => remove(index)}>Remove</span>
+        </Container>
       ))}
 
       <button

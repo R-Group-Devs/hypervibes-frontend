@@ -1,54 +1,31 @@
 import { useEffect } from 'react';
 import { useForm, FieldValues } from 'react-hook-form';
-import { useHistory } from 'react-router-dom';
 import useCreateTenant from '../hooks/useCreateTenant';
-import Input from '../components/Input';
-import Textarea from '../components/Textarea';
 import MultiInput from '../components/MultiInput';
 import SubmitButton from '../components/SubmitButton';
 
 export default () => {
   const { register, control, formState, handleSubmit } = useForm<FieldValues>({
     defaultValues: {
-      name: '',
-      description: '',
-      admins: [''],
+      allowedCollections: [''],
     },
   });
 
   const { tenant, updateTenant } = useCreateTenant();
-  const history = useHistory();
 
   const onSubmit = handleSubmit((data) => {
     updateTenant(data);
-    history.push('select-collections');
   });
 
   useEffect(() => {
-    console.log('step 1', tenant);
+    console.log('step 2', tenant);
   }, [tenant]);
 
   return (
     <form onSubmit={onSubmit}>
-      <Input
-        name="name"
-        label="Name"
-        required
-        maxLength={30}
-        register={register}
-        errors={formState.errors}
-      />
-      <Textarea
-        name="description"
-        label="Description"
-        required
-        maxLength={150}
-        register={register}
-        errors={formState.errors}
-      />
       <MultiInput
-        name="admins"
-        label="Admins"
+        name="allowedCollections"
+        label="Allowed collections"
         register={register}
         control={control}
         errors={formState.errors}

@@ -3,6 +3,7 @@ import { ErrorBoundary } from 'react-error-boundary';
 import NftProvider from './providers/NftProvider';
 import PlaceholderPage from './pages/PlaceholderPage';
 import CreateTenantBasicInfoPage from './pages/CreateTenantBasicInfoPage';
+import CreateTenantSelectCollectionsPage from './pages/CreateTenantSelectCollectionsPage';
 import NftListPage from './pages/NftListPage';
 import NotFoundPage from './pages/NotFoundPage';
 import GlobalStyle from './components/GlobalStyle';
@@ -20,6 +21,10 @@ export default () => (
 
           <Route path="/tenant/create/basic-info">
             <CreateTenantBasicInfoPage />
+          </Route>
+
+          <Route path="/tenant/create/select-collections">
+            <CreateTenantSelectCollectionsPage />
           </Route>
 
           <Route path="/nfts">
