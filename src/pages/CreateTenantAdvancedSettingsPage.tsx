@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useForm, FormProvider } from 'react-hook-form';
 import useCreateTenant, { Tenant } from '../hooks/useCreateTenant';
@@ -11,10 +10,7 @@ import SubmitButton from '../components/SubmitButton';
 export default () => {
   const history = useHistory();
   const { tenant, updateTenant, resetTenant } = useCreateTenant();
-
-  const methods = useForm<Tenant>({
-    defaultValues: tenant,
-  });
+  const methods = useForm<Tenant>({ defaultValues: tenant });
 
   const onSubmit = methods.handleSubmit((data) => {
     updateTenant(data);
@@ -24,10 +20,6 @@ export default () => {
       resetTenant();
     }, 200);
   });
-
-  useEffect(() => {
-    console.log('step 4', tenant);
-  }, [tenant]);
 
   return (
     <FormProvider {...methods}>
