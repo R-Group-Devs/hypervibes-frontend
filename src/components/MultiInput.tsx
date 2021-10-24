@@ -19,21 +19,31 @@ const MultiInput = styled(Input)`
   margin-bottom: 0.5em;
 `;
 
-const RemoveButton = styled.span<{ isVisible: boolean }>`
+const RemoveButton = styled.button<{ isVisible: boolean }>`
   margin-left: 1em;
   font-size: 14px;
   visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
+  padding: 0;
+  background: none;
+  font-family: 'Courier New', monospace;
+  color: #fff;
+  border: none;
 
   &:hover {
     cursor: pointer;
   }
 `;
 
-const AddAnotherButton = styled.span`
+const AddAnotherButton = styled.button`
   position: relative;
   top: -0.25em;
+  padding: 0;
   display: inline-block;
+  background: none;
+  font-family: 'Courier New', monospace;
   font-size: 12px;
+  color: #fff;
+  border: none;
 
   &:hover {
     cursor: pointer;
