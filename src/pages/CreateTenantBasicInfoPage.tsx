@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
-import { useForm, FieldValues } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
+import { useForm, FieldValues } from 'react-hook-form';
 import useCreateTenant from '../hooks/useCreateTenant';
 import Input from '../components/Input';
 import Textarea from '../components/Textarea';
@@ -8,6 +8,7 @@ import MultiInput from '../components/MultiInput';
 import SubmitButton from '../components/SubmitButton';
 
 export default () => {
+  const history = useHistory();
   const { register, control, formState, handleSubmit } = useForm<FieldValues>({
     defaultValues: {
       name: '',
@@ -17,7 +18,6 @@ export default () => {
   });
 
   const { tenant, updateTenant } = useCreateTenant();
-  const history = useHistory();
 
   const onSubmit = handleSubmit((data) => {
     updateTenant(data);
