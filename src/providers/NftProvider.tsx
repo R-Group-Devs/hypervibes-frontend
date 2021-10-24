@@ -1,17 +1,15 @@
-import { ReactNode } from 'react';
+import React from 'react';
+import { NftProvider } from 'use-nft';
 import { getDefaultProvider } from '@ethersproject/providers';
-import { NftProvider as Provider } from 'use-nft';
 
 interface Props {
-  children: ReactNode;
+  children: React.ReactNode;
 }
 
 const ethersConfig = {
   provider: getDefaultProvider('homestead'),
 };
 
-const NftProvider = ({ children }: Props) => (
-  <Provider fetcher={['ethers', ethersConfig]}>{children}</Provider>
+export default ({ children }: Props) => (
+  <NftProvider fetcher={['ethers', ethersConfig]}>{children}</NftProvider>
 );
-
-export default NftProvider;

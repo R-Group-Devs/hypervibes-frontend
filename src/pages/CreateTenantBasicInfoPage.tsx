@@ -1,4 +1,6 @@
+import { useEffect } from 'react';
 import { useForm, FieldValues } from 'react-hook-form';
+import useCreateTenant from '../hooks/useCreateTenant';
 import Input from '../components/Input';
 import Textarea from '../components/Textarea';
 import MultiInput from '../components/MultiInput';
@@ -13,7 +15,15 @@ export default () => {
     },
   });
 
-  const onSubmit = handleSubmit((data) => console.log(data));
+  const { tenant, updateTenant } = useCreateTenant();
+
+  const onSubmit = handleSubmit((data) => {
+    updateTenant(data);
+  });
+
+  useEffect(() => {
+    console.log('TENANT', tenant);
+  }, [tenant]);
 
   return (
     <form onSubmit={onSubmit}>
