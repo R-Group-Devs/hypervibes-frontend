@@ -1,6 +1,7 @@
 import { UseFormReturn } from 'react-hook-form';
 import Label from './Label';
 import Input from './Input';
+import FormFieldErrorMessage from './FormFieldErrorMessage';
 
 interface Props {
   name: string;
@@ -12,13 +13,10 @@ interface Props {
 }
 
 export default ({ register, name, label, required = false, maxLength, errors, ...rest }: Props) => (
-  <div>
+  <>
     <Label name={name}>{label}</Label>
 
     <Input type="text" id={name} {...register(name, { required, maxLength })} {...rest} />
-    {errors[name] && errors[name].type === 'required' && <span>This field is required.</span>}
-    {errors[name] && errors[name].type === 'maxLength' && (
-      <span>This field must be shorter than {maxLength} characters.</span>
-    )}
-  </div>
+    <FormFieldErrorMessage error={errors[name]} />
+  </>
 );

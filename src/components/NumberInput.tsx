@@ -1,6 +1,7 @@
 import { UseFormReturn } from 'react-hook-form';
 import Label from './Label';
 import Input from './Input';
+import FormFieldErrorMessage from './FormFieldErrorMessage';
 
 interface Props {
   name: string;
@@ -15,6 +16,6 @@ export default ({ register, name, label, required = false, errors, ...rest }: Pr
     <Label name={name}>{label}</Label>
 
     <Input type="number" id={name} {...register(name, { required })} {...rest} />
-    {errors[name] && errors[name].type === 'required' && <span>This field is required.</span>}
+    <FormFieldErrorMessage error={errors[name]} />
   </div>
 );

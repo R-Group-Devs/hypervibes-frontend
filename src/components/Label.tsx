@@ -7,7 +7,7 @@ interface Props {
 }
 
 const Label = styled.label`
-  margin-bottom: 0.5em;
+  margin: 1.5em 0 0.5em;
   display: block;
 `;
 

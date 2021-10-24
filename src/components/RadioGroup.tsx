@@ -1,6 +1,7 @@
 import React from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import styled from 'styled-components';
+import FormFieldErrorMessage from './FormFieldErrorMessage';
 
 interface Props {
   name: string;
@@ -23,7 +24,6 @@ export default ({ name, label, children, errors }: Props) => (
     <h3>{label}</h3>
 
     <RadioGroup>{children}</RadioGroup>
-
-    {errors[name] && errors[name].type === 'required' && <span>This field is required.</span>}
+    <FormFieldErrorMessage error={errors[name]} />
   </Container>
 );
