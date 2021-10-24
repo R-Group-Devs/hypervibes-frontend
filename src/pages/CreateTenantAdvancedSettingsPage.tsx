@@ -10,23 +10,19 @@ import SubmitButton from '../components/SubmitButton';
 
 export default () => {
   const history = useHistory();
-  const { register, formState, handleSubmit } = useForm<FieldValues>({
-    defaultValues: {
-      minClaimableTokenRate: null,
-      maxClaimableTokenRate: null,
-      minTokenInfusionAmount: null,
-      maxTokenInfusionAmount: null,
-      maxInfusibleTokens: null,
-      requireOwnership: 'no',
-      allowMultiInfusion: 'yes',
-    },
-  });
+  const { tenant, updateTenant, resetTenant } = useCreateTenant();
 
-  const { tenant, updateTenant } = useCreateTenant();
+  const { register, formState, handleSubmit } = useForm<FieldValues>({
+    defaultValues: tenant,
+  });
 
   const onSubmit = handleSubmit((data) => {
     updateTenant(data);
-    history.push('success');
+
+    setTimeout(() => {
+      history.push('success');
+      resetTenant();
+    }, 200);
   });
 
   useEffect(() => {
@@ -93,7 +89,7 @@ export default () => {
         <RadioButton name="allowMultiInfusion" id="no" label="No" required register={register} />
       </RadioGroup>
 
-      <SubmitButton>Next</SubmitButton>
+      <SubmitButton>Create Tenant</SubmitButton>
     </form>
   );
 };

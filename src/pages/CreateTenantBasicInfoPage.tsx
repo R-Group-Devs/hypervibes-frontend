@@ -3,21 +3,16 @@ import { useHistory } from 'react-router-dom';
 import { useForm, FieldValues } from 'react-hook-form';
 import useCreateTenant from '../hooks/useCreateTenant';
 import TextInput from '../components/TextInput';
-import Textarea from '../components/Textarea';
 import MultiInput from '../components/MultiInput';
 import SubmitButton from '../components/SubmitButton';
 
 export default () => {
   const history = useHistory();
-  const { register, control, formState, handleSubmit } = useForm<FieldValues>({
-    defaultValues: {
-      name: '',
-      description: '',
-      admins: [''],
-    },
-  });
-
   const { tenant, updateTenant } = useCreateTenant();
+
+  const { register, control, formState, handleSubmit } = useForm<FieldValues>({
+    defaultValues: tenant,
+  });
 
   const onSubmit = handleSubmit((data) => {
     updateTenant(data);

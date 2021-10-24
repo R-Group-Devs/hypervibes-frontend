@@ -7,13 +7,11 @@ import SubmitButton from '../components/SubmitButton';
 
 export default () => {
   const history = useHistory();
-  const { register, control, formState, handleSubmit } = useForm<FieldValues>({
-    defaultValues: {
-      allowedCollections: [''],
-    },
-  });
-
   const { tenant, updateTenant } = useCreateTenant();
+
+  const { register, control, formState, handleSubmit } = useForm<FieldValues>({
+    defaultValues: tenant,
+  });
 
   const onSubmit = handleSubmit((data) => {
     updateTenant(data);
