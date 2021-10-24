@@ -13,7 +13,9 @@ interface Props {
 
 export default ({ register, name, label, required = false, errors, ...rest }: Props) => (
   <div>
-    <Label name={name}>{label}</Label>
+    <Label name={name} isRequired={required}>
+      {label}
+    </Label>
 
     <Input
       type="number"

@@ -14,7 +14,9 @@ interface Props {
 
 export default ({ register, name, label, required = false, maxLength, errors, ...rest }: Props) => (
   <>
-    <Label name={name}>{label}</Label>
+    <Label name={name} isRequired={required}>
+      {label}
+    </Label>
 
     <Input
       type="text"
@@ -24,6 +26,6 @@ export default ({ register, name, label, required = false, maxLength, errors, ..
       {...rest}
     />
 
-    <FormFieldErrorMessage error={errors[name]} />
+    <FormFieldErrorMessage error={errors[name]} maxLength={maxLength} />
   </>
 );

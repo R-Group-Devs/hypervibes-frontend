@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export default styled.button`
-  padding: 10px 40px;
+  padding: 0.5em 2em;
   display: block;
   background: rgba(255, 255, 255, 0.4);
   font-family: 'Courier New', monospace;

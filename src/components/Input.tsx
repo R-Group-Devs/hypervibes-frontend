@@ -11,6 +11,7 @@ export default styled.input<{ hasError?: boolean }>`
   border-width: 2px;
   border-style: solid;
   border-color: ${({ hasError }) => (hasError ? '#a72f2f' : 'transparent')};
+  transition: border-color 0.2s;
 
   &:focus {
     outline: none;
