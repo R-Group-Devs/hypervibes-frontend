@@ -24,6 +24,7 @@ export default ({ error, maxLength }: Props) => (
       {error && error.type === 'maxLength' && (
         <span>This field must be shorter {maxLength} characters.</span>
       )}
+      {error && error.type === 'address' && <span>Enter a valid Ethereum address.</span>}
     </Message>
   </Container>
 );

@@ -9,10 +9,20 @@ interface Props {
   required?: boolean;
   maxLength?: number;
   register: UseFormReturn['register'];
+  validate?: Record<string, (value: string) => boolean>;
   errors: UseFormReturn['formState']['errors'];
 }
 
-export default ({ register, name, label, required = false, maxLength, errors, ...rest }: Props) => (
+export default ({
+  register,
+  name,
+  label,
+  required = false,
+  maxLength,
+  validate,
+  errors,
+  ...rest
+}: Props) => (
   <>
     <Label name={name} isRequired={required}>
       {label}
@@ -22,7 +32,7 @@ export default ({ register, name, label, required = false, maxLength, errors, ..
       type="text"
       id={name}
       hasError={errors[name]}
-      {...register(name, { required, maxLength })}
+      {...register(name, { required, maxLength, validate })}
       {...rest}
     />
 

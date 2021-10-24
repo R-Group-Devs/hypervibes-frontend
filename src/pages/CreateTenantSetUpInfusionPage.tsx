@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useForm, FieldValues } from 'react-hook-form';
 import useCreateTenant from '../hooks/useCreateTenant';
-import TextInput from '../components/TextInput';
+import AddressInput from '../components/AddressInput';
 import MultiInput from '../components/MultiInput';
 import SubmitButton from '../components/SubmitButton';
 
@@ -25,7 +25,7 @@ export default () => {
 
   return (
     <form onSubmit={onSubmit}>
-      <TextInput
+      <AddressInput
         name="tokenAddress"
         label="ERC-20 Token Address"
         required

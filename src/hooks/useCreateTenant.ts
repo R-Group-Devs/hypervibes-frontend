@@ -17,6 +17,7 @@ const initialState = {
     allowMultiInfusion: 'yes',
   },
 };
+
 const { useGlobalState } = createGlobalState(initialState);
 
 export default () => {
