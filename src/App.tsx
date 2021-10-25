@@ -19,9 +19,10 @@ export default () => (
     <NftProvider>
       <Router>
         <GlobalStyle />
-        <Header />
 
         <ErrorBoundary fallback={<AppErrorMessage />}>
+          <Header />
+
           <Switch>
             <Route exact path="/">
               <PlaceholderPage />

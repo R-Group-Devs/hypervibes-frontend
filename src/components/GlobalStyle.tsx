@@ -20,6 +20,7 @@ export default createGlobalStyle`
 
     &:hover {
       color: #fff;
+      text-decoration: underline;
     }
   }
 `;

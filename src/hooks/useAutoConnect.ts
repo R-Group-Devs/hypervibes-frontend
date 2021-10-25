@@ -10,14 +10,21 @@ export default () => {
 
     if (wallet.status === 'connected' && wallet.connector) {
       localStorage.setItem('__CONNECTED_WALLET', wallet.connector);
-    }
-
-    if (wallet.status === 'disconnected' && cachedWallet) {
-      wallet.connect(cachedWallet).then(() => setTried(true));
-    } else {
       setTried(true);
     }
-  }, [wallet]);
+
+    if (!tried && wallet.status === 'disconnected' && cachedWallet) {
+      wallet.connect(cachedWallet).then(() => setTried(true));
+    }
+
+    if (!cachedWallet) {
+      setTried(true);
+    }
+
+    if (tried && wallet.status === 'disconnected') {
+      localStorage.removeItem('__CONNECTED_WALLET');
+    }
+  }, [wallet, tried]);
 
   return tried;
 };

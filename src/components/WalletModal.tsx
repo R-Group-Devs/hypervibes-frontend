@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useWallet } from 'use-wallet';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
@@ -66,11 +66,6 @@ export default ({ close }: Props) => {
     }
   }, [isAddressCopied]);
 
-  const disconnectWallet = useCallback(() => {
-    localStorage.removeItem('__CONNECTED_WALLET');
-    wallet.reset();
-  }, [wallet]);
-
   return (
     <Modal close={close}>
       {wallet.status === 'disconnected' && (
@@ -116,7 +111,7 @@ export default ({ close }: Props) => {
             <ConnectedWalletInfo>
               <ConnectedWalletInfoHeading>
                 Connected with {connectedWallet.name}
-                <Button size="sm" inline onClick={() => disconnectWallet()}>
+                <Button size="sm" inline onClick={() => wallet.reset()}>
                   Change
                 </Button>
               </ConnectedWalletInfoHeading>
