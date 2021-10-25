@@ -40,11 +40,9 @@ export default () => {
         </ConnectWalletButton>
       )}
 
-      {isOpen && (
-        <Portal>
-          <WalletModal close={closePortal} />
-        </Portal>
-      )}
+      <Portal>
+        <WalletModal isOpen={isOpen} close={closePortal} />
+      </Portal>
     </Container>
   );
 };

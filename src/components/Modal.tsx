@@ -1,11 +1,12 @@
 import React, { useRef } from 'react';
 import styled from 'styled-components';
-import { useSpring, animated } from 'react-spring';
+import { useTransition, animated } from 'react-spring';
 import Button from './Button';
 
 export interface Props {
-  children: React.ReactNode;
+  isOpen: boolean;
   close: () => void;
+  children: React.ReactNode;
 }
 
 const Overlay = styled.div`
@@ -47,30 +48,35 @@ const CloseButton = styled(Button)`
   }
 `;
 
-export default ({ children, close }: Props) => {
+export default ({ isOpen, children, close }: Props) => {
   const overlay = useRef<HTMLDivElement>(null);
 
-  const animationProps = useSpring({
+  const transitions = useTransition(isOpen, {
     from: { opacity: 0 },
-    to: { opacity: 1 },
+    enter: { opacity: 1 },
+    leave: { opacity: 0 },
+    reverse: isOpen,
   });
 
-  return (
-    <animated.div style={animationProps}>
-      <Overlay
-        ref={overlay}
-        onClick={(e) => {
-          if (e.target === overlay.current) {
-            close();
-          }
-        }}
-      >
-        <Modal>
-          {children}
+  return transitions(
+    (styles, item) =>
+      item && (
+        <animated.div style={styles}>
+          <Overlay
+            ref={overlay}
+            onClick={(e) => {
+              if (e.target === overlay.current) {
+                close();
+              }
+            }}
+          >
+            <Modal>
+              {children}
 
-          <CloseButton onClick={close}>X</CloseButton>
-        </Modal>
-      </Overlay>
-    </animated.div>
+              <CloseButton onClick={close}>X</CloseButton>
+            </Modal>
+          </Overlay>
+        </animated.div>
+      )
   );
 };

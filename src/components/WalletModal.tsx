@@ -8,6 +8,7 @@ import { SUPPORTED_WALLETS } from '../constants/wallets';
 import { shortenAddress } from '../utils/address';
 
 interface Props {
+  isOpen: boolean;
   close: () => void;
 }
 
@@ -55,7 +56,7 @@ const WalletLink = styled.a`
   }
 `;
 
-export default ({ close }: Props) => {
+export default ({ isOpen, close }: Props) => {
   const wallet = useWallet();
   const connectedWallet = wallet.connector ? SUPPORTED_WALLETS[wallet.connector] : null;
   const [isAddressCopied, setIsAddressCopied] = useState(false);
@@ -67,7 +68,7 @@ export default ({ close }: Props) => {
   }, [isAddressCopied]);
 
   return (
-    <Modal close={close}>
+    <Modal isOpen={isOpen} close={close}>
       {wallet.status === 'disconnected' && (
         <>
           <ModalHeading>Select a wallet</ModalHeading>
