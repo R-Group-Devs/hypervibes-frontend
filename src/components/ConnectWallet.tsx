@@ -85,6 +85,19 @@ const WalletLink = styled.a`
   }
 `;
 
+const CloseButton = styled(Button)`
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  padding: 0.5em;
+  background: none;
+  font-weight: 900;
+
+  &:hover {
+    background: none;
+  }
+`;
+
 export default () => {
   const { openPortal, closePortal, isOpen, Portal } = usePortal();
   const overlay = useRef<HTMLDivElement>(null);
@@ -104,7 +117,7 @@ export default () => {
 
   useEffect(() => {
     if (isAddressCopied) {
-      setTimeout(() => setIsAddressCopied(false), 400);
+      setTimeout(() => setIsAddressCopied(false), 500);
     }
   }, [isAddressCopied]);
 
@@ -187,6 +200,8 @@ export default () => {
                   </ConnectedWalletInfo>
                 </>
               )}
+
+              <CloseButton onClick={closePortal}>X</CloseButton>
             </Modal>
           </Overlay>
         </Portal>
