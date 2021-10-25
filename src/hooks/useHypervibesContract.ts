@@ -29,7 +29,7 @@ export default () => {
 
   const createTenant = useCallback(
     async (payload: CreateTenantPayload) => {
-      const res = await contract.createTenant(payload);
+      const res = await contract?.createTenant(payload);
 
       console.log(res.hash);
       return res.hash;

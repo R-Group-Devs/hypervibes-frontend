@@ -18,7 +18,7 @@ export default () => {
   const onSubmit = methods.handleSubmit(async (data) => {
     updateTenant(data);
 
-    createTenant({
+    await createTenant({
       name: tenant.name,
       description: tenant.description,
       admins: tenant.admins.map((x) => x.value),
