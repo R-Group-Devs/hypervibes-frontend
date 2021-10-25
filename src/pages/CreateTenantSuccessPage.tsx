@@ -8,5 +8,5 @@ export default () => {
     console.log('done', tenant);
   }, [tenant]);
 
-  return <h2>tenant created.</h2>;
+  return <h2>realm created.</h2>;
 };

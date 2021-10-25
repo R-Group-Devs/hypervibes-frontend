@@ -23,10 +23,6 @@ export default () => {
   const triedAutoConnect = useAutoConnect();
 
   useEffect(() => {
-    console.log(wallet);
-  }, [wallet]);
-
-  useEffect(() => {
     if (wallet.status === 'connected') {
       closePortal();
     }

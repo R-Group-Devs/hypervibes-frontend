@@ -3,10 +3,10 @@ import { createGlobalState } from 'react-hooks-global-state';
 export interface Tenant {
   name: string;
   description: string;
-  admins: string[];
-  allowedCollections: string[];
+  admins: { value: string }[];
+  allowedCollections: { value: string }[];
   tokenAddress: string;
-  allowedInfusers: string[];
+  allowedInfusers: { value: string }[];
   minClaimableTokenRate: number | null;
   maxClaimableTokenRate: number | null;
   minTokenInfusionAmount: number | null;
@@ -20,10 +20,10 @@ const initialState: Record<'tenant', Tenant> = {
   tenant: {
     name: '',
     description: '',
-    admins: [''],
-    allowedCollections: [''],
+    admins: [{ value: '' }],
+    allowedCollections: [{ value: '' }],
     tokenAddress: '',
-    allowedInfusers: [''],
+    allowedInfusers: [{ value: '' }],
     minClaimableTokenRate: null,
     maxClaimableTokenRate: null,
     minTokenInfusionAmount: null,
