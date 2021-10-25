@@ -5,6 +5,7 @@ import { WalletConnectConnector } from '@web3-react/walletconnect-connector';
 import usePortal from 'react-useportal';
 import styled from 'styled-components';
 import Button from './Button';
+import { shortenAddress } from '../utils/address';
 import { SUPPORTED_WALLETS } from '../constants/wallets';
 
 //const WALLET_VIEWS = {
@@ -92,7 +93,11 @@ export default () => {
 
   return (
     <Container>
-      {account ? <span>{account}</span> : <Button onClick={openPortal}>connect wallet</Button>}
+      {account ? (
+        <span>{shortenAddress(account)}</span>
+      ) : (
+        <Button onClick={openPortal}>connect wallet</Button>
+      )}
 
       {isOpen && (
         <Portal>
