@@ -30,6 +30,8 @@ const Modal = styled.div`
 `;
 
 export const ModalHeading = styled.h3`
+  display: flex;
+  align-items: center;
   margin-bottom: 2em;
 `;
 

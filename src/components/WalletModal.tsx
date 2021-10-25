@@ -46,6 +46,10 @@ const WalletProviderIcon = styled.img`
   height: 24px;
 `;
 
+const DisconnectWalletButton = styled(Button)`
+  margin-left: 1em;
+`;
+
 const WalletLink = styled.a`
   display: inline-block;
   margin: 0 2em 1em 0;
@@ -59,6 +63,7 @@ const WalletLink = styled.a`
 export default ({ isOpen, close }: Props) => {
   const wallet = useWallet();
   const connectedWallet = wallet.connector ? SUPPORTED_WALLETS[wallet.connector] : null;
+  const [isChangingWallets, setIsChangingWallets] = useState(false);
   const [isAddressCopied, setIsAddressCopied] = useState(false);
 
   useEffect(() => {
@@ -67,15 +72,27 @@ export default ({ isOpen, close }: Props) => {
     }
   }, [isAddressCopied]);
 
+  useEffect(() => {
+    if (isOpen) {
+      setIsChangingWallets(false);
+    }
+  }, [isOpen]);
+
   return (
     <Modal isOpen={isOpen} close={close}>
-      {wallet.status === 'disconnected' && (
+      {(wallet.status === 'disconnected' || isChangingWallets) && (
         <>
           <ModalHeading>Select a wallet</ModalHeading>
 
           <ModalContent>
             {Object.values(SUPPORTED_WALLETS).map(({ name, connector, iconURL }) => (
-              <WalletProviderOption key={name} onClick={() => wallet.connect(connector)}>
+              <WalletProviderOption
+                key={name}
+                onClick={() => {
+                  wallet.connect(connector);
+                  setIsChangingWallets(false);
+                }}
+              >
                 <h4>{name}</h4>
                 <WalletProviderIcon src={iconURL} alt={name} />
               </WalletProviderOption>
@@ -104,15 +121,20 @@ export default ({ isOpen, close }: Props) => {
         </>
       )}
 
-      {wallet.status === 'connected' && wallet.account && connectedWallet && (
+      {wallet.status === 'connected' && wallet.account && connectedWallet && !isChangingWallets && (
         <>
-          <ModalHeading>Account</ModalHeading>
+          <ModalHeading>
+            <span>Account</span>
+            <DisconnectWalletButton size="sm" inline onClick={() => wallet.reset()}>
+              Disconnect
+            </DisconnectWalletButton>
+          </ModalHeading>
 
           <ModalContent>
             <ConnectedWalletInfo>
               <ConnectedWalletInfoHeading>
                 Connected with {connectedWallet.name}
-                <Button size="sm" inline onClick={() => wallet.reset()}>
+                <Button size="sm" inline onClick={() => setIsChangingWallets(true)}>
                   Change
                 </Button>
               </ConnectedWalletInfoHeading>
