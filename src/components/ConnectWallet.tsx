@@ -1,7 +1,8 @@
-import { useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import usePortal from 'react-useportal';
 import { useWallet } from 'use-wallet';
+import usePortal from 'react-useportal';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 import Button from './Button';
 import { shortenAddress } from '../utils/address';
 import { SUPPORTED_WALLETS } from '../constants/wallets';
@@ -76,8 +77,12 @@ const WalletProviderIcon = styled.img`
 
 const WalletLink = styled.a`
   display: inline-block;
-  margin: 0 1em 1em 0;
-  font-size: 14px;
+  margin: 0 2em 1em 0;
+  font-size: 13px;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 export default () => {
@@ -85,6 +90,7 @@ export default () => {
   const overlay = useRef<HTMLDivElement>(null);
   const wallet = useWallet();
   const connectedWallet = wallet.connector ? SUPPORTED_WALLETS[wallet.connector] : null;
+  const [isAddressCopied, setIsAddressCopied] = useState(false);
 
   useEffect(() => {
     console.log(wallet);
@@ -95,6 +101,12 @@ export default () => {
       closePortal();
     }
   }, [wallet.status, closePortal]);
+
+  useEffect(() => {
+    if (isAddressCopied) {
+      setTimeout(() => setIsAddressCopied(false), 400);
+    }
+  }, [isAddressCopied]);
 
   return (
     <Container>
@@ -157,10 +169,18 @@ export default () => {
                     <h3>{shortenAddress(wallet.account)}</h3>
 
                     <div>
-                      <WalletLink href={`https://etherscan.io/address/${wallet.account}`}>
-                        Copy address
-                      </WalletLink>
-                      <WalletLink href={`https://etherscan.io/address/${wallet.account}`}>
+                      <CopyToClipboard
+                        text={wallet.account}
+                        onCopy={() => {
+                          setIsAddressCopied(true);
+                        }}
+                      >
+                        <WalletLink>{isAddressCopied ? 'Copied' : 'Copy address'}</WalletLink>
+                      </CopyToClipboard>
+                      <WalletLink
+                        href={`https://etherscan.io/address/${wallet.account}`}
+                        target="_blank"
+                      >
                         View on explorer
                       </WalletLink>
                     </div>
