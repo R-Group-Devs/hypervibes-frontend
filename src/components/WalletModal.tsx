@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import styled from 'styled-components';
 import { useWallet } from 'use-wallet';
 import { useSpring, animated } from 'react-spring';
@@ -105,6 +105,11 @@ export default ({ close }: { close: () => void }) => {
     }
   }, [isAddressCopied]);
 
+  const disconnectWallet = useCallback(() => {
+    localStorage.removeItem('__CONNECTED_WALLET');
+    wallet.reset();
+  }, [wallet]);
+
   return (
     <animated.div style={animationProps}>
       <Overlay
@@ -153,7 +158,7 @@ export default ({ close }: { close: () => void }) => {
               <ConnectedWalletInfo>
                 <ConnectedWalletInfoHeading>
                   Connected with {connectedWallet.name}
-                  <Button size="sm" inline onClick={() => wallet.reset()}>
+                  <Button size="sm" inline onClick={() => disconnectWallet()}>
                     Change
                   </Button>
                 </ConnectedWalletInfoHeading>

@@ -30,6 +30,18 @@ export default () => {
     }
   }, [wallet.status, closePortal]);
 
+  useEffect(() => {
+    const cachedWallet = localStorage.getItem('__CONNECTED_WALLET');
+
+    if (wallet.status === 'connected' && wallet.connector) {
+      localStorage.setItem('__CONNECTED_WALLET', wallet.connector);
+    }
+
+    if (wallet.status === 'disconnected' && cachedWallet) {
+      wallet.connect(cachedWallet);
+    }
+  }, [wallet]);
+
   return (
     <Container>
       <ConnectWalletButton onClick={openPortal}>
