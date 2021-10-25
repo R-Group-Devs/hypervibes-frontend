@@ -1,7 +1,7 @@
 import { useHistory } from 'react-router-dom';
 import { useForm, FormProvider } from 'react-hook-form';
 import { DevTool } from '@hookform/devtools';
-import useCreateTenant, { Tenant } from '../hooks/useCreateTenant';
+import useCreateRealmWizard, { Realm } from '../hooks/useCreateRealmWizard';
 import InputGroup from '../components/InputGroup';
 import NumberInput from '../components/NumberInput';
 import RadioGroup from '../components/RadioGroup';
@@ -9,18 +9,16 @@ import RadioButton from '../components/RadioButton';
 import SubmitButton from '../components/SubmitButton';
 
 export default () => {
+  const { realm, updateRealm, createRealm, resetRealm } = useCreateRealmWizard();
+  const methods = useForm<Realm>({ defaultValues: realm });
   const history = useHistory();
-  const { tenant, updateTenant, resetTenant } = useCreateTenant();
-  const methods = useForm<Tenant>({ defaultValues: tenant });
 
   const onSubmit = methods.handleSubmit(async (data) => {
-    updateTenant(data);
-
-    // TODO - replace with react-query mutation to call contract w/ tenant payload
-    await new Promise((resolve) => setTimeout(resolve, 500));
+    updateRealm(data);
+    await createRealm({ ...realm, ...data });
 
     history.push('success');
-    resetTenant();
+    resetRealm();
   });
 
   return (
@@ -51,7 +49,7 @@ export default () => {
           <RadioButton name="allowMultiInfusion" id="no" label="No" required />
         </RadioGroup>
 
-        <SubmitButton>Create Tenant</SubmitButton>
+        <SubmitButton>Create Realm</SubmitButton>
       </form>
 
       <DevTool control={methods.control} />
