@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import { useWallet } from 'use-wallet';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
