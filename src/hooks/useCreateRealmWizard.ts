@@ -1,8 +1,8 @@
 import { useCallback } from 'react';
 import { createGlobalState } from 'react-hooks-global-state';
 import { BigNumber } from '@ethersproject/bignumber';
-import useHypervibesContract from './useHypervibesContract';
-import useERC20Contract from './useERC20Contract';
+import useHyperVibesContract from './useHyperVibesContract';
+import useErc20Contract from './useErc20Contract';
 
 export interface Realm {
   name: string;
@@ -42,15 +42,15 @@ const { useGlobalState } = createGlobalState(initialState);
 
 export default () => {
   const [realm, updateRealm] = useGlobalState('realmWizard');
-  const hypervibesContract = useHypervibesContract();
-  const erc20Contract = useERC20Contract(realm.tokenAddress);
+  const hyperVibesContract = useHyperVibesContract();
+  const erc20Contract = useErc20Contract(realm.tokenAddress);
 
   const createRealm = useCallback(
     async (realm: Realm) => {
       const decimalExponent = await erc20Contract?.decimals();
       const decimals = BigNumber.from(10).pow(decimalExponent);
 
-      return hypervibesContract?.createRealm({
+      return hyperVibesContract?.createRealm({
         name: realm.name,
         description: realm.description,
         admins: realm.admins.map((x) => x.value),
@@ -72,7 +72,7 @@ export default () => {
         },
       });
     },
-    [hypervibesContract, erc20Contract]
+    [hyperVibesContract, erc20Contract]
   );
 
   return {

@@ -1,8 +1,7 @@
 import { useWallet } from 'use-wallet';
-import { Web3Provider } from '@ethersproject/providers';
 import useContract from './useContract';
+import { getContract } from '../utils/contract';
 import erc20Abi from '../constants/abis/ERC20.json';
-import { Contract } from '@ethersproject/contracts';
 
 export default (tokenAddress: string) => {
   const contract = useContract(tokenAddress, erc20Abi);
@@ -10,15 +9,12 @@ export default (tokenAddress: string) => {
   return contract;
 };
 
-export const useLazyERC20Contract = () => {
+export const useLazyErc20Contract = () => {
   const wallet = useWallet();
 
   if (!wallet.ethereum) {
     return null;
   }
 
-  const provider = new Web3Provider(wallet.ethereum);
-  const signer = provider.getSigner();
-
-  return (tokenAddress: string) => new Contract(tokenAddress, erc20Abi, signer);
+  return (tokenAddress: string) => getContract(tokenAddress, erc20Abi, wallet.ethereum);
 };

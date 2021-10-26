@@ -1,14 +1,12 @@
-import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { useForm, FormProvider } from 'react-hook-form';
 import { DevTool } from '@hookform/devtools';
 import useCreateRealmWizard, { Realm } from '../hooks/useCreateRealmWizard';
+import useErc20TokenDetails from '../hooks/useErc20TokenDetails';
 import AddressInput from '../components/AddressInput';
-import { useLazyERC20Contract } from '../hooks/useERC20Contract';
 import MultiAddressInput from '../components/MultiAddressInput';
 import SubmitButton from '../components/SubmitButton';
-import { isAddress } from '@ethersproject/address';
 
 const Container = styled.div`
   position: relative;
@@ -23,36 +21,21 @@ const TokenSymbol = styled.div`
 export default () => {
   const { realm, updateRealm } = useCreateRealmWizard();
   const methods = useForm<Realm>({ defaultValues: realm });
-  const getErc20Contract = useLazyERC20Contract();
+  const tokenAddress = methods.watch('tokenAddress');
+  const { symbol } = useErc20TokenDetails(tokenAddress);
   const history = useHistory();
-  const [tokenSymbol, setTokenSymbol] = useState('');
 
   const onSubmit = methods.handleSubmit((data) => {
     updateRealm(data);
     history.push('advanced-settings');
   });
 
-  const [tokenAddress] = methods.watch(['tokenAddress']);
-
-  useEffect(() => {
-    (async () => {
-      try {
-        if (isAddress(tokenAddress) && getErc20Contract) {
-          const symbol = await getErc20Contract(tokenAddress)?.symbol();
-          setTokenSymbol(symbol);
-        }
-      } catch (e) {
-        setTokenSymbol('');
-      }
-    })();
-  }, [tokenAddress, getErc20Contract]);
-
   return (
     <Container>
       <FormProvider {...methods}>
         <form onSubmit={onSubmit}>
           <AddressInput name="tokenAddress" label="ERC-20 Token Address" required />
-          <TokenSymbol>{tokenSymbol}</TokenSymbol>
+          <TokenSymbol>{symbol}</TokenSymbol>
 
           <MultiAddressInput name="allowedInfusers" label="Allowed infusers" />
 
