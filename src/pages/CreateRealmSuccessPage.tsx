@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
-import useRealmWizard from '../hooks/useRealmWizard';
+import useCreateRealmWizard from '../hooks/useCreateRealmWizard';
 
 export default () => {
-  const { realm } = useRealmWizard();
+  const { realm } = useCreateRealmWizard();
 
   useEffect(() => {
     console.log('done', realm);

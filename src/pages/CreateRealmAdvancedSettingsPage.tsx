@@ -1,7 +1,7 @@
 import { useHistory } from 'react-router-dom';
 import { useForm, FormProvider } from 'react-hook-form';
 import { DevTool } from '@hookform/devtools';
-import useRealmWizard, { Realm } from '../hooks/useRealmWizard';
+import useCreateRealmWizard, { Realm } from '../hooks/useCreateRealmWizard';
 import InputGroup from '../components/InputGroup';
 import NumberInput from '../components/NumberInput';
 import RadioGroup from '../components/RadioGroup';
@@ -10,33 +10,12 @@ import SubmitButton from '../components/SubmitButton';
 
 export default () => {
   const history = useHistory();
-  const { realm, updateRealm, createRealm, resetRealm } = useRealmWizard();
+  const { realm, updateRealm, createRealm, resetRealm } = useCreateRealmWizard();
   const methods = useForm<Realm>({ defaultValues: realm });
 
   const onSubmit = methods.handleSubmit(async (data) => {
     updateRealm(data);
-
-    await createRealm({
-      name: realm.name,
-      description: realm.description,
-      admins: realm.admins.map((x) => x.value),
-      infusers: realm.allowedInfusers.map((x) => x.value),
-      collections: realm.allowedCollections.map((x) => x.value),
-      config: {
-        token: realm.tokenAddress,
-        constraints: {
-          minDailyRate: (realm.minClaimableTokenRate || 0) * 1e18,
-          imaxDailyRate: (realm.maxClaimableTokenRate || 0) * 1e18,
-          minInfusionAmount: (realm.minTokenInfusionAmount || 0) * 1e18,
-          imaxInfusionAmount: (realm.maxTokenInfusionAmount || 0) * 1e18,
-          imaxTokenBalance: (realm.maxInfusibleTokens || 0) * 1e18,
-          requireOwnedNft: realm.requireOwnership === 'yes',
-          disableMultiInfuse: realm.allowMultiInfusion === 'no',
-          requireInfusionWhitelist: true,
-          requireCollectionWhitelist: true,
-        },
-      },
-    });
+    await createRealm({ ...realm, ...data });
 
     history.push('success');
     resetRealm();

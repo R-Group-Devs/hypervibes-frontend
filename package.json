@@ -4,6 +4,7 @@
   "type": "module",
   "dependencies": {
     "@ethersproject/address": "^5.5.0",
+    "@ethersproject/bignumber": "^5.5.0",
     "@ethersproject/contracts": "^5.4.1",
     "@ethersproject/providers": "^5.4.5",
     "@hookform/devtools": "^4.0.1",

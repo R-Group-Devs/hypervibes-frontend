@@ -5,7 +5,7 @@ import { Contract, ContractInterface } from '@ethersproject/contracts';
 export default (contractAddress: string, abi: ContractInterface) => {
   const wallet = useWallet();
 
-  if (!wallet.ethereum) {
+  if (!wallet.ethereum || !contractAddress) {
     return null;
   }
 
