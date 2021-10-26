@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import { ErrorBoundary } from 'react-error-boundary';
 import WalletProvider from './providers/WalletProvider';
+import QueryProvider from './providers/QueryProvider';
 import NftProvider from './providers/NftProvider';
 import PlaceholderPage from './pages/PlaceholderPage';
 import CreateRealmBasicInfoPage from './pages/CreateRealmBasicInfoPage';
@@ -16,50 +17,52 @@ import AppErrorMessage from './components/AppErrorMessage';
 
 export default () => (
   <WalletProvider>
-    <NftProvider>
-      <Router>
-        <GlobalStyle />
+    <QueryProvider>
+      <NftProvider>
+        <Router>
+          <GlobalStyle />
 
-        <ErrorBoundary fallback={<AppErrorMessage />}>
-          <Header />
+          <ErrorBoundary fallback={<AppErrorMessage />}>
+            <Header />
 
-          <Switch>
-            <Route exact path="/">
-              <PlaceholderPage />
-            </Route>
+            <Switch>
+              <Route exact path="/">
+                <PlaceholderPage />
+              </Route>
 
-            <Redirect exact from="/realm/create" to="/realm/create/basic-info" />
+              <Redirect exact from="/realm/create" to="/realm/create/basic-info" />
 
-            <Route path="/realm/create/basic-info">
-              <CreateRealmBasicInfoPage />
-            </Route>
+              <Route path="/realm/create/basic-info">
+                <CreateRealmBasicInfoPage />
+              </Route>
 
-            <Route path="/realm/create/select-collections">
-              <CreateRealmSelectCollectionsPage />
-            </Route>
+              <Route path="/realm/create/select-collections">
+                <CreateRealmSelectCollectionsPage />
+              </Route>
 
-            <Route path="/realm/create/set-up-infusion">
-              <CreateRealmSetUpInfusionPage />
-            </Route>
+              <Route path="/realm/create/set-up-infusion">
+                <CreateRealmSetUpInfusionPage />
+              </Route>
 
-            <Route path="/realm/create/advanced-settings">
-              <CreateRealmAdvancedSettingsPage />
-            </Route>
+              <Route path="/realm/create/advanced-settings">
+                <CreateRealmAdvancedSettingsPage />
+              </Route>
 
-            <Route path="/realm/create/success">
-              <CreateRealmSuccessPage />
-            </Route>
+              <Route path="/realm/create/success">
+                <CreateRealmSuccessPage />
+              </Route>
 
-            <Route path="/nfts">
-              <NftListPage />
-            </Route>
+              <Route path="/nfts">
+                <NftListPage />
+              </Route>
 
-            <Route path="*">
-              <NotFoundPage />
-            </Route>
-          </Switch>
-        </ErrorBoundary>
-      </Router>
-    </NftProvider>
+              <Route path="*">
+                <NotFoundPage />
+              </Route>
+            </Switch>
+          </ErrorBoundary>
+        </Router>
+      </NftProvider>
+    </QueryProvider>
   </WalletProvider>
 );
