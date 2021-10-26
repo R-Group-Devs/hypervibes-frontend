@@ -6,9 +6,9 @@ import MultiAddressInput from '../components/MultiAddressInput';
 import SubmitButton from '../components/SubmitButton';
 
 export default () => {
-  const history = useHistory();
   const { realm, updateRealm } = useCreateRealmWizard();
   const methods = useForm<Realm>({ defaultValues: realm });
+  const history = useHistory();
 
   const onSubmit = methods.handleSubmit((data) => {
     updateRealm(data);

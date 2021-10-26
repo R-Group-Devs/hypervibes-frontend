@@ -9,9 +9,9 @@ import RadioButton from '../components/RadioButton';
 import SubmitButton from '../components/SubmitButton';
 
 export default () => {
-  const history = useHistory();
   const { realm, updateRealm, createRealm, resetRealm } = useCreateRealmWizard();
   const methods = useForm<Realm>({ defaultValues: realm });
+  const history = useHistory();
 
   const onSubmit = methods.handleSubmit(async (data) => {
     updateRealm(data);
