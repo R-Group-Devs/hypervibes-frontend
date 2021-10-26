@@ -8796,6 +8796,15 @@ get-caller-file@^2.0.1:
   resolved "https://registry.yarnpkg.com/get-caller-file/-/get-caller-file-2.0.5.tgz#4f94412a82db32f36e3b0b9741f8a97feb031f7e"
   integrity sha512-DyFP3BM/3YHTQOCUL/w0OZHR0lpKeGrxotcHWcqNEdnltqFwXVfhEBQ94eIo34AfQpo0rGki4cyIiftY06h2Fg==
 
+get-ens@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/get-ens/-/get-ens-2.0.1.tgz#aa154fbdf779477c9b17f5ef6f163004b0bfff2b"
+  integrity sha512-saMS+DK+omitKFBHjLnVDlpcEJCZEAHqC7jS86nmeYnFstrG3eQqQxOBhY53qOKfX5zd3SRFSeTJxMXCesXAow==
+  dependencies:
+    "@ethersproject/contracts" "^5.4.1"
+    "@ethersproject/providers" "^5.4.5"
+    js-sha3 "^0.8.0"
+
 get-intrinsic@^1.0.2, get-intrinsic@^1.1.0, get-intrinsic@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/get-intrinsic/-/get-intrinsic-1.1.1.tgz#15f59f376f855c446963948f0d24cd3637b4abc6"
