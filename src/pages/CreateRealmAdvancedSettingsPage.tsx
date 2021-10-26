@@ -1,6 +1,6 @@
-import { useHistory } from 'react-router-dom';
 import { useForm, FormProvider } from 'react-hook-form';
 import { DevTool } from '@hookform/devtools';
+import { useHistory } from 'react-router-dom';
 import useCreateRealmWizard, { Realm } from '../hooks/useCreateRealmWizard';
 import InputGroup from '../components/InputGroup';
 import NumberInput from '../components/NumberInput';
@@ -15,8 +15,12 @@ export default () => {
 
   const onSubmit = methods.handleSubmit(async (data) => {
     updateRealm(data);
-    await createRealm({ ...realm, ...data });
 
+    // TODO - move this logic to a `useEffect` block that fires on `realm` dependency change
+    // check if all `realm` data is valid
+    // if invalid, highlight wizard steps which contain invalid inputs
+    // if valid, persist `realm` to contract
+    await createRealm({ ...realm, ...data });
     history.push('success');
     resetRealm();
   });

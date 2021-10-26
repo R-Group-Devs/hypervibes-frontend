@@ -1,6 +1,6 @@
-import { useHistory } from 'react-router-dom';
 import { useForm, FormProvider } from 'react-hook-form';
 import { DevTool } from '@hookform/devtools';
+import { useHistory } from 'react-router-dom';
 import useCreateRealmWizard, { Realm } from '../hooks/useCreateRealmWizard';
 import TextInput from '../components/TextInput';
 import MultiAddressInput from '../components/MultiAddressInput';
