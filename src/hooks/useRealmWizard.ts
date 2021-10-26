@@ -1,6 +1,7 @@
 import { createGlobalState } from 'react-hooks-global-state';
+import useHypervibesContract from './useHypervibesContract';
 
-export interface Tenant {
+export interface Realm {
   name: string;
   description: string;
   admins: { value: string }[];
@@ -16,8 +17,8 @@ export interface Tenant {
   allowMultiInfusion: 'yes' | 'no';
 }
 
-const initialState: Record<'tenant', Tenant> = {
-  tenant: {
+const initialState: Record<'realmWizard', Realm> = {
+  realmWizard: {
     name: '',
     description: '',
     admins: [{ value: '' }],
@@ -37,11 +38,13 @@ const initialState: Record<'tenant', Tenant> = {
 const { useGlobalState } = createGlobalState(initialState);
 
 export default () => {
-  const [tenant, updateTenant] = useGlobalState('tenant');
+  const [realm, updateRealm] = useGlobalState('realmWizard');
+  const { createRealm } = useHypervibesContract();
 
   return {
-    tenant,
-    updateTenant: (fields: Tenant) => updateTenant({ ...tenant, ...fields }),
-    resetTenant: () => updateTenant(initialState.tenant),
+    realm,
+    updateRealm: (fields: Realm) => updateRealm({ ...realm, ...fields }),
+    createRealm,
+    resetRealm: () => updateRealm(initialState.realmWizard),
   };
 };

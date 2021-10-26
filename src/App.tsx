@@ -3,11 +3,11 @@ import { ErrorBoundary } from 'react-error-boundary';
 import WalletProvider from './providers/WalletProvider';
 import NftProvider from './providers/NftProvider';
 import PlaceholderPage from './pages/PlaceholderPage';
-import CreateTenantBasicInfoPage from './pages/CreateTenantBasicInfoPage';
-import CreateTenantSelectCollectionsPage from './pages/CreateTenantSelectCollectionsPage';
-import CreateTenantSetUpInfusionPage from './pages/CreateTenantSetUpInfusionPage';
-import CreateTenantAdvancedSettingsPage from './pages/CreateTenantAdvancedSettingsPage';
-import CreateTenantSuccessPage from './pages/CreateTenantSuccessPage';
+import CreateRealmBasicInfoPage from './pages/CreateRealmBasicInfoPage';
+import CreateRealmSelectCollectionsPage from './pages/CreateRealmSelectCollectionsPage';
+import CreateRealmSetUpInfusionPage from './pages/CreateRealmSetUpInfusionPage';
+import CreateRealmAdvancedSettingsPage from './pages/CreateRealmAdvancedSettingsPage';
+import CreateRealmSuccessPage from './pages/CreateRealmSuccessPage';
 import NftListPage from './pages/NftListPage';
 import NotFoundPage from './pages/NotFoundPage';
 import GlobalStyle from './components/GlobalStyle';
@@ -28,26 +28,26 @@ export default () => (
               <PlaceholderPage />
             </Route>
 
-            <Redirect exact from="/tenant/create" to="/tenant/create/basic-info" />
+            <Redirect exact from="/realm/create" to="/realm/create/basic-info" />
 
-            <Route path="/tenant/create/basic-info">
-              <CreateTenantBasicInfoPage />
+            <Route path="/realm/create/basic-info">
+              <CreateRealmBasicInfoPage />
             </Route>
 
-            <Route path="/tenant/create/select-collections">
-              <CreateTenantSelectCollectionsPage />
+            <Route path="/realm/create/select-collections">
+              <CreateRealmSelectCollectionsPage />
             </Route>
 
-            <Route path="/tenant/create/set-up-infusion">
-              <CreateTenantSetUpInfusionPage />
+            <Route path="/realm/create/set-up-infusion">
+              <CreateRealmSetUpInfusionPage />
             </Route>
 
-            <Route path="/tenant/create/advanced-settings">
-              <CreateTenantAdvancedSettingsPage />
+            <Route path="/realm/create/advanced-settings">
+              <CreateRealmAdvancedSettingsPage />
             </Route>
 
-            <Route path="/tenant/create/success">
-              <CreateTenantSuccessPage />
+            <Route path="/realm/create/success">
+              <CreateRealmSuccessPage />
             </Route>
 
             <Route path="/nfts">

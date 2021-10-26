@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 import useContract from './useContract';
 import hypervibesAbi from '../constants/abis/hypervibes.json';
 
-interface CreateTenantPayload {
+interface CreateRealmPayload {
   name: string;
   description: string;
   admins: string[];
@@ -27,8 +27,8 @@ interface CreateTenantPayload {
 export default () => {
   const contract = useContract('0xD23C25Eb1bAD8b1de60cBD313c09209055fD74c0', hypervibesAbi);
 
-  const createTenant = useCallback(
-    async (payload: CreateTenantPayload) => {
+  const createRealm = useCallback(
+    async (payload: CreateRealmPayload) => {
       const res = await contract?.createTenant(payload);
 
       console.log(res.hash);
@@ -38,6 +38,6 @@ export default () => {
   );
 
   return {
-    createTenant,
+    createRealm,
   };
 };

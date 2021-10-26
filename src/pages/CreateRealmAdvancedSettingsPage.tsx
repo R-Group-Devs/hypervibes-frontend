@@ -1,8 +1,7 @@
 import { useHistory } from 'react-router-dom';
 import { useForm, FormProvider } from 'react-hook-form';
 import { DevTool } from '@hookform/devtools';
-import useCreateTenant, { Tenant } from '../hooks/useCreateTenant';
-import useHypervibesContract from '../hooks/useHypervibesContract';
+import useRealmWizard, { Realm } from '../hooks/useRealmWizard';
 import InputGroup from '../components/InputGroup';
 import NumberInput from '../components/NumberInput';
 import RadioGroup from '../components/RadioGroup';
@@ -11,29 +10,28 @@ import SubmitButton from '../components/SubmitButton';
 
 export default () => {
   const history = useHistory();
-  const { tenant, updateTenant, resetTenant } = useCreateTenant();
-  const { createTenant } = useHypervibesContract();
-  const methods = useForm<Tenant>({ defaultValues: tenant });
+  const { realm, updateRealm, createRealm, resetRealm } = useRealmWizard();
+  const methods = useForm<Realm>({ defaultValues: realm });
 
   const onSubmit = methods.handleSubmit(async (data) => {
-    updateTenant(data);
+    updateRealm(data);
 
-    await createTenant({
-      name: tenant.name,
-      description: tenant.description,
-      admins: tenant.admins.map((x) => x.value),
-      infusers: tenant.allowedInfusers.map((x) => x.value),
-      collections: tenant.allowedCollections.map((x) => x.value),
+    await createRealm({
+      name: realm.name,
+      description: realm.description,
+      admins: realm.admins.map((x) => x.value),
+      infusers: realm.allowedInfusers.map((x) => x.value),
+      collections: realm.allowedCollections.map((x) => x.value),
       config: {
-        token: tenant.tokenAddress,
+        token: realm.tokenAddress,
         constraints: {
-          minDailyRate: (tenant.minClaimableTokenRate || 0) * 1e18,
-          imaxDailyRate: (tenant.maxClaimableTokenRate || 0) * 1e18,
-          minInfusionAmount: (tenant.minTokenInfusionAmount || 0) * 1e18,
-          imaxInfusionAmount: (tenant.maxTokenInfusionAmount || 0) * 1e18,
-          imaxTokenBalance: (tenant.maxInfusibleTokens || 0) * 1e18,
-          requireOwnedNft: tenant.requireOwnership === 'yes',
-          disableMultiInfuse: tenant.allowMultiInfusion === 'no',
+          minDailyRate: (realm.minClaimableTokenRate || 0) * 1e18,
+          imaxDailyRate: (realm.maxClaimableTokenRate || 0) * 1e18,
+          minInfusionAmount: (realm.minTokenInfusionAmount || 0) * 1e18,
+          imaxInfusionAmount: (realm.maxTokenInfusionAmount || 0) * 1e18,
+          imaxTokenBalance: (realm.maxInfusibleTokens || 0) * 1e18,
+          requireOwnedNft: realm.requireOwnership === 'yes',
+          disableMultiInfuse: realm.allowMultiInfusion === 'no',
           requireInfusionWhitelist: true,
           requireCollectionWhitelist: true,
         },
@@ -41,7 +39,7 @@ export default () => {
     });
 
     history.push('success');
-    resetTenant();
+    resetRealm();
   });
 
   return (
