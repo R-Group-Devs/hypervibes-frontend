@@ -12,6 +12,8 @@ export default (tokenAddress: string) => {
         if (isAddress(tokenAddress) && getErc20Contract) {
           const symbol = await getErc20Contract(tokenAddress)?.symbol();
           setTokenSymbol(symbol);
+        } else {
+          setTokenSymbol('');
         }
       } catch (e) {
         setTokenSymbol('');
