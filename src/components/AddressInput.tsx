@@ -1,5 +1,8 @@
+import styled from 'styled-components';
+import { useFormContext } from 'react-hook-form';
 import { isAddress } from '@ethersproject/address';
 import TextInput from './TextInput';
+import useEns from '../hooks/useEns';
 
 interface Props {
   name: string;
@@ -7,13 +10,38 @@ interface Props {
   required?: boolean;
 }
 
-export default ({ name, required, label }: Props) => (
-  <TextInput
-    name={name}
-    label={label}
-    required={required}
-    validate={{
-      address: (value) => !value || isAddress(value),
-    }}
-  />
-);
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const ResolvedAddress = styled.div`
+  position: relative;
+  top: -1em;
+  font-size: 12px;
+`;
+
+export default ({ name, required, label }: Props) => {
+  const { watch } = useFormContext();
+  const value = watch(name);
+  const { address } = useEns(value);
+
+  return (
+    <Container>
+      <TextInput
+        name={name}
+        label={label}
+        required={required}
+        validate={{
+          address: (value) => !value || isAddress(value),
+        }}
+      />
+
+      {address && (
+        <ResolvedAddress>
+          <strong>Resolved address</strong>: {address}
+        </ResolvedAddress>
+      )}
+    </Container>
+  );
+};
