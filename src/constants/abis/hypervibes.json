@@ -5,7 +5,7 @@
       {
         "indexed": true,
         "internalType": "uint256",
-        "name": "tenantId",
+        "name": "realmId",
         "type": "uint256"
       },
       {
@@ -24,7 +24,7 @@
       {
         "indexed": true,
         "internalType": "uint256",
-        "name": "tenantId",
+        "name": "realmId",
         "type": "uint256"
       },
       {
@@ -43,7 +43,7 @@
       {
         "indexed": true,
         "internalType": "uint256",
-        "name": "tenantId",
+        "name": "realmId",
         "type": "uint256"
       },
       {
@@ -74,7 +74,7 @@
       {
         "indexed": true,
         "internalType": "uint256",
-        "name": "tenantId",
+        "name": "realmId",
         "type": "uint256"
       },
       {
@@ -93,7 +93,7 @@
       {
         "indexed": true,
         "internalType": "uint256",
-        "name": "tenantId",
+        "name": "realmId",
         "type": "uint256"
       },
       {
@@ -112,7 +112,7 @@
       {
         "indexed": true,
         "internalType": "uint256",
-        "name": "tenantId",
+        "name": "realmId",
         "type": "uint256"
       },
       {
@@ -161,13 +161,13 @@
       {
         "indexed": true,
         "internalType": "uint256",
-        "name": "tenantId",
+        "name": "realmId",
         "type": "uint256"
       },
       {
         "indexed": true,
         "internalType": "address",
-        "name": "admin",
+        "name": "infuser",
         "type": "address"
       }
     ],
@@ -180,13 +180,13 @@
       {
         "indexed": true,
         "internalType": "uint256",
-        "name": "tenantId",
+        "name": "realmId",
         "type": "uint256"
       },
       {
         "indexed": true,
         "internalType": "address",
-        "name": "admin",
+        "name": "infuser",
         "type": "address"
       }
     ],
@@ -199,7 +199,7 @@
       {
         "indexed": true,
         "internalType": "uint256",
-        "name": "tenantId",
+        "name": "realmId",
         "type": "uint256"
       },
       {
@@ -215,7 +215,7 @@
         "type": "string"
       }
     ],
-    "name": "TenantCreated",
+    "name": "RealmCreated",
     "type": "event"
   },
   {
@@ -224,7 +224,7 @@
         "components": [
           {
             "internalType": "uint256",
-            "name": "tenantId",
+            "name": "realmId",
             "type": "uint256"
           },
           {
@@ -283,7 +283,7 @@
                   },
                   {
                     "internalType": "uint256",
-                    "name": "imaxDailyRate",
+                    "name": "maxDailyRate",
                     "type": "uint256"
                   },
                   {
@@ -293,41 +293,41 @@
                   },
                   {
                     "internalType": "uint256",
-                    "name": "imaxInfusionAmount",
+                    "name": "maxInfusionAmount",
                     "type": "uint256"
                   },
                   {
                     "internalType": "uint256",
-                    "name": "imaxTokenBalance",
+                    "name": "maxTokenBalance",
                     "type": "uint256"
                   },
                   {
                     "internalType": "bool",
-                    "name": "requireOwnedNft",
+                    "name": "requireNftIsOwned",
                     "type": "bool"
                   },
                   {
                     "internalType": "bool",
-                    "name": "disableMultiInfuse",
+                    "name": "allowMultiInfuse",
                     "type": "bool"
                   },
                   {
                     "internalType": "bool",
-                    "name": "requireInfusionWhitelist",
+                    "name": "allowPublicInfusion",
                     "type": "bool"
                   },
                   {
                     "internalType": "bool",
-                    "name": "requireCollectionWhitelist",
+                    "name": "allowAllCollections",
                     "type": "bool"
                   }
                 ],
-                "internalType": "struct TenantConstraints",
+                "internalType": "struct RealmConstraints",
                 "name": "constraints",
                 "type": "tuple"
               }
             ],
-            "internalType": "struct TenantConfig",
+            "internalType": "struct RealmConfig",
             "name": "config",
             "type": "tuple"
           },
@@ -347,12 +347,12 @@
             "type": "address[]"
           }
         ],
-        "internalType": "struct CreateTenantInput",
+        "internalType": "struct CreateRealmInput",
         "name": "create",
         "type": "tuple"
       }
     ],
-    "name": "createTenant",
+    "name": "createRealm",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -363,7 +363,7 @@
         "components": [
           {
             "internalType": "uint256",
-            "name": "tenantId",
+            "name": "realmId",
             "type": "uint256"
           },
           {
@@ -485,7 +485,7 @@
         "components": [
           {
             "internalType": "uint256",
-            "name": "tenantId",
+            "name": "realmId",
             "type": "uint256"
           },
           {
@@ -519,12 +519,12 @@
             "type": "address[]"
           }
         ],
-        "internalType": "struct ModifyTenantInput",
+        "internalType": "struct ModifyRealmInput",
         "name": "input",
         "type": "tuple"
       }
     ],
-    "name": "modifyTenant",
+    "name": "modifyRealm",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -544,7 +544,7 @@
   },
   {
     "inputs": [],
-    "name": "nextTenantId",
+    "name": "nextRealmId",
     "outputs": [
       {
         "internalType": "uint256",
@@ -563,7 +563,7 @@
         "type": "uint256"
       }
     ],
-    "name": "tenantConfig",
+    "name": "realmConfig",
     "outputs": [
       {
         "internalType": "contract IERC20",
@@ -579,7 +579,7 @@
           },
           {
             "internalType": "uint256",
-            "name": "imaxDailyRate",
+            "name": "maxDailyRate",
             "type": "uint256"
           },
           {
@@ -589,36 +589,36 @@
           },
           {
             "internalType": "uint256",
-            "name": "imaxInfusionAmount",
+            "name": "maxInfusionAmount",
             "type": "uint256"
           },
           {
             "internalType": "uint256",
-            "name": "imaxTokenBalance",
+            "name": "maxTokenBalance",
             "type": "uint256"
           },
           {
             "internalType": "bool",
-            "name": "requireOwnedNft",
+            "name": "requireNftIsOwned",
             "type": "bool"
           },
           {
             "internalType": "bool",
-            "name": "disableMultiInfuse",
+            "name": "allowMultiInfuse",
             "type": "bool"
           },
           {
             "internalType": "bool",
-            "name": "requireInfusionWhitelist",
+            "name": "allowPublicInfusion",
             "type": "bool"
           },
           {
             "internalType": "bool",
-            "name": "requireCollectionWhitelist",
+            "name": "allowAllCollections",
             "type": "bool"
           }
         ],
-        "internalType": "struct TenantConstraints",
+        "internalType": "struct RealmConstraints",
         "name": "constraints",
         "type": "tuple"
       }

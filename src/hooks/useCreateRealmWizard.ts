@@ -50,7 +50,7 @@ export default () => {
       const decimalExponent = await erc20Contract?.decimals();
       const decimals = BigNumber.from(10).pow(decimalExponent);
 
-      return hypervibesContract?.createTenant({
+      return hypervibesContract?.createRealm({
         name: realm.name,
         description: realm.description,
         admins: realm.admins.map((x) => x.value),
@@ -64,10 +64,10 @@ export default () => {
             minInfusionAmount: BigNumber.from(realm.minTokenInfusionAmount || 0).mul(decimals),
             maxInfusionAmount: BigNumber.from(realm.maxTokenInfusionAmount || 0).mul(decimals),
             maxTokenBalance: BigNumber.from(realm.maxInfusibleTokens || 0).mul(decimals),
-            requireOwnedNft: realm.requireOwnership === 'yes',
-            disableMultiInfuse: realm.allowMultiInfusion === 'no',
-            requireInfusionWhitelist: true,
-            requireCollectionWhitelist: true,
+            requireNftIsOwned: realm.requireOwnership === 'yes',
+            allowMultiInfuse: realm.allowMultiInfusion === 'yes',
+            allowPublicInfusion: false,
+            allowAllCollections: true,
           },
         },
       });
