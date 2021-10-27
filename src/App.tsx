@@ -9,6 +9,11 @@ import CreateRealmSelectCollectionsPage from './pages/CreateRealmSelectCollectio
 import CreateRealmSetUpInfusionPage from './pages/CreateRealmSetUpInfusionPage';
 import CreateRealmAdvancedSettingsPage from './pages/CreateRealmAdvancedSettingsPage';
 import CreateRealmSuccessPage from './pages/CreateRealmSuccessPage';
+import InfuseNftSelectRealmPage from './pages/InfuseNftSelectRealmPage';
+import InfuseNftSelectCollectionPage from './pages/InfuseNftSelectCollectionPage';
+import InfuseNftSelectTokenPage from './pages/InfuseNftSelectTokenPage';
+import InfuseNftEnterParametersPage from './pages/InfuseNftEnterParametersPage';
+import InfuseNftSuccessPage from './pages/InfuseNftSuccessPage';
 import NftListPage from './pages/NftListPage';
 import NotFoundPage from './pages/NotFoundPage';
 import GlobalStyle from './components/GlobalStyle';
@@ -50,6 +55,28 @@ export default () => (
 
               <Route path="/realm/create/success">
                 <CreateRealmSuccessPage />
+              </Route>
+
+              <Redirect exact from="/infuse" to="/infuse/select-realm" />
+
+              <Route path="/infuse/select-realm">
+                <InfuseNftSelectRealmPage />
+              </Route>
+
+              <Route path="/infuse/realm/:realmId/select-collection">
+                <InfuseNftSelectCollectionPage />
+              </Route>
+
+              <Route path="/infuse/realm/:realmId/collection/:collection/select-token">
+                <InfuseNftSelectTokenPage />
+              </Route>
+
+              <Route path="/infuse/realm/:realmId/collection/:collection/token/:tokenId">
+                <InfuseNftEnterParametersPage />
+              </Route>
+
+              <Route path="/infuse/success">
+                <InfuseNftSuccessPage />
               </Route>
 
               <Route path="/nfts">

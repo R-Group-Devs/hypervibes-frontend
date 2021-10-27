@@ -24,6 +24,8 @@ export default () => {
     // if invalid, highlight wizard steps which contain invalid inputs
     // if valid, persist `realm` to contract
     await createRealm({ ...realm, ...data });
+
+    // TODO - listen for confirmed transaction in new blocks before showing success message
     history.push('success');
     resetRealm();
   });

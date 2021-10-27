@@ -9,7 +9,7 @@ export default () => {
     'realms',
     gql`
       query {
-        account(id: ${account?.toLowerCase()}) {
+        account(id: "${account?.toLowerCase()}") {
           realmAdmins {
             realm {
               id

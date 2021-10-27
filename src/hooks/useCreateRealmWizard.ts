@@ -58,12 +58,14 @@ export default () => {
         name: realm.name,
         description: realm.description,
         admins: realm.admins.map((x) => x.value),
-        infusers: realm.allowPublicInfusion
-          ? []
-          : realm.allowedInfusers.map((x) => x.value).filter(Boolean),
-        collections: realm.allowAllCollections
-          ? []
-          : realm.allowedCollections.map((x) => x.value).filter(Boolean),
+        infusers:
+          realm.allowPublicInfusion === 'yes'
+            ? []
+            : realm.allowedInfusers.map((x) => x.value).filter(Boolean),
+        collections:
+          realm.allowAllCollections === 'yes'
+            ? []
+            : realm.allowedCollections.map((x) => x.value).filter(Boolean),
         config: {
           token: realm.tokenAddress,
           constraints: {
