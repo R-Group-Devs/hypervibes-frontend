@@ -18,6 +18,8 @@ export interface Realm {
   maxInfusibleTokens: number | null;
   requireOwnership: 'yes' | 'no';
   allowMultiInfusion: 'yes' | 'no';
+  allowAllCollections: 'yes' | 'no';
+  allowPublicInfusion: 'yes' | 'no';
 }
 
 const initialState: Record<'realmWizard', Realm> = {
@@ -35,6 +37,8 @@ const initialState: Record<'realmWizard', Realm> = {
     maxInfusibleTokens: null,
     requireOwnership: 'no',
     allowMultiInfusion: 'yes',
+    allowAllCollections: 'yes',
+    allowPublicInfusion: 'yes',
   },
 };
 
@@ -54,8 +58,12 @@ export default () => {
         name: realm.name,
         description: realm.description,
         admins: realm.admins.map((x) => x.value),
-        infusers: realm.allowedInfusers.map((x) => x.value),
-        collections: realm.allowedCollections.map((x) => x.value),
+        infusers: realm.allowPublicInfusion
+          ? []
+          : realm.allowedInfusers.map((x) => x.value).filter(Boolean),
+        collections: realm.allowAllCollections
+          ? []
+          : realm.allowedCollections.map((x) => x.value).filter(Boolean),
         config: {
           token: realm.tokenAddress,
           constraints: {
@@ -66,8 +74,8 @@ export default () => {
             maxTokenBalance: BigNumber.from(realm.maxInfusibleTokens || 0).mul(decimals),
             requireNftIsOwned: realm.requireOwnership === 'yes',
             allowMultiInfuse: realm.allowMultiInfusion === 'yes',
-            allowPublicInfusion: false,
-            allowAllCollections: true,
+            allowAllCollections: realm.allowAllCollections === 'yes',
+            allowPublicInfusion: realm.allowPublicInfusion === 'yes',
           },
         },
       });

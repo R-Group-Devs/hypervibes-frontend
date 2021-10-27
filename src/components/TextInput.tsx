@@ -27,6 +27,7 @@ export default ({ name, label, required = false, maxLength, validate, ...rest }:
         type="text"
         id={name}
         hasError={get(formState.errors, name)}
+        spellCheck={false}
         {...register(name, { required, maxLength, validate })}
         {...rest}
       />

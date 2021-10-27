@@ -73,7 +73,7 @@ export default ({ name, label, required, maxLength, ...rest }: Props) => {
 
       {fields.map((field, index) => (
         <Container key={field.id}>
-          <Input name={`${name}.${index}.value` as const} {...rest} />
+          <Input name={`${name}.${index}.value` as const} required={required} {...rest} />
 
           <RemoveButton isVisible={fields.length > 1} onClick={() => remove(index)}>
             Remove

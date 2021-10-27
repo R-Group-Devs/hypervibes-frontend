@@ -18,6 +18,8 @@ export default () => {
 
   return (
     <FormProvider {...methods}>
+      <h3>Create Your Realm</h3>
+
       <form onSubmit={onSubmit}>
         <TextInput name="name" label="Name" required maxLength={30} />
         <TextInput name="description" label="Description" required maxLength={150} />
