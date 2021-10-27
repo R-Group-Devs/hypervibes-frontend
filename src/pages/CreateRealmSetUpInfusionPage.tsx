@@ -16,7 +16,7 @@ const Container = styled.div`
 
 const TokenSymbol = styled.div`
   position: absolute;
-  top: 5.25em;
+  top: 7.5em;
   right: 8em;
 `;
 
@@ -35,7 +35,7 @@ export default () => {
 
   return (
     <Container>
-      <h3>Set up Infusion</h3>
+      <h2>Set up Infusion</h2>
 
       <FormProvider {...methods}>
         <form onSubmit={onSubmit}>

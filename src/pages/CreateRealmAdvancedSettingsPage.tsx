@@ -1,3 +1,4 @@
+import styled from 'styled-components';
 import { useForm, FormProvider } from 'react-hook-form';
 import { DevTool } from '@hookform/devtools';
 import { useHistory } from 'react-router-dom';
@@ -7,6 +8,8 @@ import NumberInput from '../components/NumberInput';
 import RadioGroup from '../components/RadioGroup';
 import RadioButton from '../components/RadioButton';
 import SubmitButton from '../components/SubmitButton';
+
+const Container = styled.div``;
 
 export default () => {
   const { realm, updateRealm, createRealm, resetRealm } = useCreateRealmWizard();
@@ -26,37 +29,41 @@ export default () => {
   });
 
   return (
-    <FormProvider {...methods}>
-      <form onSubmit={onSubmit}>
-        <InputGroup label="Claimable Token Rate">
-          <NumberInput name="minClaimableTokenRate" label="Minimum" required />
-          <NumberInput name="maxClaimableTokenRate" label="Maximum" required />
-        </InputGroup>
+    <Container>
+      <h2>Configure Settings</h2>
 
-        <InputGroup label="Token Infusion Amount">
-          <NumberInput name="minTokenInfusionAmount" label="Minimum" required />
-          <NumberInput name="maxTokenInfusionAmount" label="Maximum" required />
-        </InputGroup>
+      <FormProvider {...methods}>
+        <form onSubmit={onSubmit}>
+          <InputGroup label="Claimable Token Rate">
+            <NumberInput name="minClaimableTokenRate" label="Minimum" required />
+            <NumberInput name="maxClaimableTokenRate" label="Maximum" required />
+          </InputGroup>
 
-        <NumberInput name="maxInfusibleTokens" label="Maximum Infusible Tokens" required />
+          <InputGroup label="Token Infusion Amount">
+            <NumberInput name="minTokenInfusionAmount" label="Minimum" required />
+            <NumberInput name="maxTokenInfusionAmount" label="Maximum" required />
+          </InputGroup>
 
-        <RadioGroup name="requireOwnership" label="Require NFT ownership?">
-          <RadioButton name="requireOwnership" id="yes" label="Yes" required />
-          <RadioButton name="requireOwnership" id="no" label="No" required />
-        </RadioGroup>
+          <NumberInput name="maxInfusibleTokens" label="Maximum Infusible Tokens" required />
 
-        <RadioGroup
-          name="allowMultiInfusion"
-          label="Allow infusing tokens into the same NFT more than once?"
-        >
-          <RadioButton name="allowMultiInfusion" id="yes" label="Yes" required />
-          <RadioButton name="allowMultiInfusion" id="no" label="No" required />
-        </RadioGroup>
+          <RadioGroup name="requireOwnership" label="Require NFT ownership?">
+            <RadioButton name="requireOwnership" id="yes" label="Yes" required />
+            <RadioButton name="requireOwnership" id="no" label="No" required />
+          </RadioGroup>
 
-        <SubmitButton>Create Realm</SubmitButton>
-      </form>
+          <RadioGroup
+            name="allowMultiInfusion"
+            label="Allow infusing tokens into the same NFT more than once?"
+          >
+            <RadioButton name="allowMultiInfusion" id="yes" label="Yes" required />
+            <RadioButton name="allowMultiInfusion" id="no" label="No" required />
+          </RadioGroup>
 
-      <DevTool control={methods.control} />
-    </FormProvider>
+          <SubmitButton>Create Realm</SubmitButton>
+        </form>
+
+        <DevTool control={methods.control} />
+      </FormProvider>
+    </Container>
   );
 };

@@ -5,7 +5,8 @@ import App from './App';
 
 const Container = styled.div`
   display: flex;
-  width: 100%;
+  margin: 0 auto;
+  max-width: 1200px;
   height: 100%;
   flex-direction: column;
   align-items: center;

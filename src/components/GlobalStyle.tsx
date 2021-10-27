@@ -12,6 +12,10 @@ export default createGlobalStyle`
     height: 100vh;
   }
 
+  h2 {
+    margin-bottom: 2em;
+  }
+
   a {
     padding-bottom: 0.5em;
     color: rgba(255, 255, 255, 0.6);

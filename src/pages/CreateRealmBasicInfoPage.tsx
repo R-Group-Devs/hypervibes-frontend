@@ -1,3 +1,4 @@
+import styled from 'styled-components';
 import { useForm, FormProvider } from 'react-hook-form';
 import { DevTool } from '@hookform/devtools';
 import { useHistory } from 'react-router-dom';
@@ -5,6 +6,8 @@ import useCreateRealmWizard, { Realm } from '../hooks/useCreateRealmWizard';
 import TextInput from '../components/TextInput';
 import MultiAddressInput from '../components/MultiAddressInput';
 import SubmitButton from '../components/SubmitButton';
+
+const Container = styled.div``;
 
 export default () => {
   const { realm, updateRealm } = useCreateRealmWizard();
@@ -17,18 +20,20 @@ export default () => {
   });
 
   return (
-    <FormProvider {...methods}>
-      <h3>Create Your Realm</h3>
+    <Container>
+      <h2>Create Your Realm</h2>
 
-      <form onSubmit={onSubmit}>
-        <TextInput name="name" label="Name" required maxLength={30} />
-        <TextInput name="description" label="Description" required maxLength={150} />
-        <MultiAddressInput name="admins" label="Admin(s)" />
+      <FormProvider {...methods}>
+        <form onSubmit={onSubmit}>
+          <TextInput name="name" label="Name" required maxLength={30} />
+          <TextInput name="description" label="Description" required maxLength={150} />
+          <MultiAddressInput name="admins" label="Admin(s)" />
 
-        <SubmitButton>Next</SubmitButton>
-      </form>
+          <SubmitButton>Next</SubmitButton>
+        </form>
 
-      <DevTool control={methods.control} />
-    </FormProvider>
+        <DevTool control={methods.control} />
+      </FormProvider>
+    </Container>
   );
 };
