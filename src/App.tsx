@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import WalletProvider from './providers/WalletProvider';
 import QueryProvider from './providers/QueryProvider';
 import NftProvider from './providers/NftProvider';
+import ScrollToTop from './components/ScrollToTop';
 import PlaceholderPage from './pages/PlaceholderPage';
 import ChooseYourPathPage from './pages/ChooseYourPathPage';
 import CreateRealmBasicInfoPage from './pages/CreateRealmBasicInfoPage';
@@ -42,6 +43,7 @@ export default () => (
     <QueryProvider>
       <NftProvider>
         <Router>
+          <ScrollToTop />
           <GlobalStyle />
 
           <ErrorBoundary fallback={<AppErrorMessage />}>
