@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import { ErrorBoundary } from 'react-error-boundary';
+import styled from 'styled-components';
 import WalletProvider from './providers/WalletProvider';
 import QueryProvider from './providers/QueryProvider';
 import NftProvider from './providers/NftProvider';
@@ -26,6 +27,16 @@ import GlobalStyle from './components/GlobalStyle';
 import Header from './components/Header';
 import AppErrorMessage from './components/AppErrorMessage';
 
+const AppContainer = styled.div`
+  display: flex;
+  margin: 0 auto;
+  padding: 9em 0;
+  max-width: 1200px;
+  height: 100%;
+  flex-direction: column;
+  align-items: center;
+`;
+
 export default () => (
   <WalletProvider>
     <QueryProvider>
@@ -34,91 +45,93 @@ export default () => (
           <GlobalStyle />
 
           <ErrorBoundary fallback={<AppErrorMessage />}>
-            <Header />
+            <AppContainer>
+              <Header />
 
-            <Switch>
-              <Route exact path="/">
-                <PlaceholderPage />
-              </Route>
+              <Switch>
+                <Route exact path="/">
+                  <PlaceholderPage />
+                </Route>
 
-              <Route path="/app">
-                <ChooseYourPathPage />
-              </Route>
+                <Route path="/app">
+                  <ChooseYourPathPage />
+                </Route>
 
-              <Redirect exact from="/realm/create" to="/realm/create/basic-info" />
+                <Redirect exact from="/realm/create" to="/realm/create/basic-info" />
 
-              <Route path="/realm/create/basic-info">
-                <CreateRealmBasicInfoPage />
-              </Route>
+                <Route path="/realm/create/basic-info">
+                  <CreateRealmBasicInfoPage />
+                </Route>
 
-              <Route path="/realm/create/select-collections">
-                <CreateRealmSelectCollectionsPage />
-              </Route>
+                <Route path="/realm/create/select-collections">
+                  <CreateRealmSelectCollectionsPage />
+                </Route>
 
-              <Route path="/realm/create/set-up-infusion">
-                <CreateRealmSetUpInfusionPage />
-              </Route>
+                <Route path="/realm/create/set-up-infusion">
+                  <CreateRealmSetUpInfusionPage />
+                </Route>
 
-              <Route path="/realm/create/advanced-settings">
-                <CreateRealmAdvancedSettingsPage />
-              </Route>
+                <Route path="/realm/create/advanced-settings">
+                  <CreateRealmAdvancedSettingsPage />
+                </Route>
 
-              <Route path="/realm/create/success">
-                <CreateRealmSuccessPage />
-              </Route>
+                <Route path="/realm/create/success">
+                  <CreateRealmSuccessPage />
+                </Route>
 
-              <Redirect exact from="/infuse" to="/infuse/select-realm" />
+                <Redirect exact from="/infuse" to="/infuse/select-realm" />
 
-              <Route path="/infuse/select-realm">
-                <InfuseNftSelectRealmPage />
-              </Route>
+                <Route path="/infuse/select-realm">
+                  <InfuseNftSelectRealmPage />
+                </Route>
 
-              <Route path="/infuse/realm/:realmId/select-collection">
-                <InfuseNftSelectCollectionPage />
-              </Route>
+                <Route path="/infuse/realm/:realmId/select-collection">
+                  <InfuseNftSelectCollectionPage />
+                </Route>
 
-              <Route path="/infuse/realm/:realmId/collection/:collection/select-token">
-                <InfuseNftSelectTokenPage />
-              </Route>
+                <Route path="/infuse/realm/:realmId/collection/:collection/select-token">
+                  <InfuseNftSelectTokenPage />
+                </Route>
 
-              <Route path="/infuse/realm/:realmId/collection/:collection/token/:tokenId">
-                <InfuseNftEnterParametersPage />
-              </Route>
+                <Route path="/infuse/realm/:realmId/collection/:collection/token/:tokenId">
+                  <InfuseNftEnterParametersPage />
+                </Route>
 
-              <Route path="/infuse/success">
-                <InfuseNftSuccessPage />
-              </Route>
+                <Route path="/infuse/success">
+                  <InfuseNftSuccessPage />
+                </Route>
 
-              <Redirect exact from="/claim" to="/claim/select-realm" />
+                <Redirect exact from="/claim" to="/claim/select-realm" />
 
-              <Route path="/claim/select-realm">
-                <ClaimTokensSelectRealmPage />
-              </Route>
+                <Route path="/claim/select-realm">
+                  <ClaimTokensSelectRealmPage />
+                </Route>
 
-              <Route path="/claim/realm/:realmId/select-collection">
-                <ClaimTokensSelectCollectionPage />
-              </Route>
+                <Route path="/claim/realm/:realmId/select-collection">
+                  <ClaimTokensSelectCollectionPage />
+                </Route>
 
-              <Route path="/claim/realm/:realmId/collection/:collection/select-token">
-                <ClaimTokensSelectTokenPage />
-              </Route>
+                <Route path="/claim/realm/:realmId/collection/:collection/select-token">
+                  <ClaimTokensSelectTokenPage />
+                </Route>
 
-              <Route path="/claim/realm/:realmId/collection/:collection/token/:tokenId">
-                <ClaimTokensEnterParametersPage />
-              </Route>
+                <Route path="/claim/realm/:realmId/collection/:collection/token/:tokenId">
+                  <ClaimTokensEnterParametersPage />
+                </Route>
 
-              <Route path="/claim/success">
-                <ClaimTokensSuccessPage />
-              </Route>
+                <Route path="/claim/success">
+                  <ClaimTokensSuccessPage />
+                </Route>
 
-              <Route path="/nfts">
-                <NftListPage />
-              </Route>
+                <Route path="/nfts">
+                  <NftListPage />
+                </Route>
 
-              <Route path="*">
-                <NotFoundPage />
-              </Route>
-            </Switch>
+                <Route path="*">
+                  <NotFoundPage />
+                </Route>
+              </Switch>
+            </AppContainer>
           </ErrorBoundary>
         </Router>
       </NftProvider>

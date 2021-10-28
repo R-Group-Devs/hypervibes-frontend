@@ -23,10 +23,10 @@ const Modal = styled.div`
   left: 50%;
   top: 50%;
   padding: 1em 2em;
-  width: 420px;
+  width: 480px;
   transform: translate(-50%, -50%);
   z-index: 1000;
-  background: #222438;
+  background: #1c1c1c;
 `;
 
 export const ModalHeading = styled.h3`

@@ -3,11 +3,25 @@ import { useForm, FormProvider } from 'react-hook-form';
 import { DevTool } from '@hookform/devtools';
 import { useHistory } from 'react-router-dom';
 import useCreateRealmWizard, { RealmWizardValues } from '../hooks/useCreateRealmWizard';
+import FormContainer from '../components/FormContainer';
 import TextInput from '../components/TextInput';
 import MultiAddressInput from '../components/MultiAddressInput';
+import BackButton from '../components/BackButton';
 import SubmitButton from '../components/SubmitButton';
+import heading from '../assets/images/headings/create-your-realm.svg';
 
 const Container = styled.div``;
+
+const PageHeading = styled.img`
+  margin-bottom: 3em;
+`;
+
+const ButtonGroup = styled.div`
+  display: flex;
+  justify-content: center;
+  column-gap: 4em;
+  margin-top: 3em;
+`;
 
 export default () => {
   const { realm, updateRealm } = useCreateRealmWizard();
@@ -21,16 +35,25 @@ export default () => {
 
   return (
     <Container>
-      <h2>Create Your Realm</h2>
-
       <FormProvider {...methods}>
-        <form onSubmit={onSubmit}>
-          <TextInput name="name" label="Name" required maxLength={30} />
-          <TextInput name="description" label="Description" required maxLength={150} />
-          <MultiAddressInput name="admins" label="Admin(s)" />
+        <FormContainer step={1}>
+          <PageHeading src={heading} alt="Choose Your Path" />
 
-          <SubmitButton>Next</SubmitButton>
-        </form>
+          <form onSubmit={onSubmit}>
+            <TextInput name="name" label="Name Your Realm" required maxLength={30} />
+            <TextInput name="description" label="Description" required maxLength={150} />
+            <MultiAddressInput
+              name="admins"
+              label="Admin(s)"
+              description="A list of addresses and ENS names with permission to configure this realm"
+            />
+
+            <ButtonGroup>
+              <BackButton path="/app" />
+              <SubmitButton>Next</SubmitButton>
+            </ButtonGroup>
+          </form>
+        </FormContainer>
 
         <DevTool control={methods.control} />
       </FormProvider>

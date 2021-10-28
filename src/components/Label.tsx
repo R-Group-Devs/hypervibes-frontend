@@ -10,6 +10,10 @@ interface Props {
 const Label = styled.label<{ isRequired: boolean }>`
   margin: 1.5em 0 0.5em;
   display: block;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  text-transform: uppercase;
 
   &:after {
     content: '*';

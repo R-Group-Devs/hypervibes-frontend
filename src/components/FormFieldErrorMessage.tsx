@@ -7,7 +7,7 @@ interface Props {
 }
 
 const Container = styled.div`
-  margin-top: 0.5em;
+  margin-top: 0.75em;
   height: 20px;
   font-size: 12px;
 `;
