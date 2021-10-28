@@ -10,6 +10,7 @@ interface Props {
   description?: string;
   required?: boolean;
   maxLength?: number;
+  addMoreText?: string;
 }
 
 const Container = styled.div`
@@ -32,8 +33,9 @@ const Input = styled(AddressInput)`
 `;
 
 const AddAnotherButton = styled.button`
-  padding: 0;
   display: flex;
+  margin-top: 1em;
+  padding: 0;
   align-items: center;
   background: none;
   font-size: 14px;
@@ -68,7 +70,15 @@ const RemoveButton = styled.button<{ isVisible: boolean }>`
   }
 `;
 
-export default ({ name, label, description, required, maxLength, ...rest }: Props) => {
+export default ({
+  name,
+  label,
+  description,
+  required,
+  maxLength,
+  addMoreText = 'Add more',
+  ...rest
+}: Props) => {
   const { control } = useFormContext();
   const { fields, append, remove } = useFieldArray({ control, name });
 
@@ -94,7 +104,7 @@ export default ({ name, label, description, required, maxLength, ...rest }: Prop
         }}
       >
         <PlusIcon src={plusIcon} alt="+" />
-        <span>Add more admins</span>
+        <span>{addMoreText}</span>
       </AddAnotherButton>
     </>
   );

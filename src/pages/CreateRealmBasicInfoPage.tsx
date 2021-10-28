@@ -46,6 +46,7 @@ export default () => {
               name="admins"
               label="Admin(s)"
               description="A list of addresses and ENS names with permission to configure this realm"
+              addMoreText="Add more admins"
             />
 
             <ButtonGroup>
