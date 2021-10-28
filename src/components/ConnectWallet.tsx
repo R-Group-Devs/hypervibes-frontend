@@ -9,7 +9,7 @@ import { shortenAddress } from '../utils/address';
 
 const Container = styled.div`
   position: absolute;
-  top: 40px;
+  top: 30px;
   right: 300px;
 `;
 

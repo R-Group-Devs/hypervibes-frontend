@@ -8,6 +8,8 @@ export default createGlobalStyle`
 
   html {
     background: linear-gradient(#1c1c1c 20%, #183934 100%);
+    background-size: cover;
+    background-attachment: fixed;
   }
 
   body {

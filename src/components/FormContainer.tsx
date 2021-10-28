@@ -1,12 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
+import FormSteps from './FormSteps';
 import hyperVibesLogoPatternVertical from '../assets/images/hypervibes-logo-pattern-vertical.png';
 import hyperVibesLogoPatternHorizontal from '../assets/images/hypervibes-logo-pattern-horizontal.png';
 import stepOneIcon from '../assets/images/icons/step-1.svg';
 import star from '../assets/images/star.svg';
 
 interface Props {
-  step: number;
+  steps: string[];
+  activeStep: number;
   children: React.ReactNode;
 }
 
@@ -63,22 +65,26 @@ const Star = styled.img`
   left: 1.5em;
 `;
 
-export default ({ step, children }: Props) => (
-  <BackgroundContainerHorizontal>
-    <BackgroundContainerVertical>
-      <Container>
-        <ThreeLinePattern>
-          <LinePattern />
-          <LinePattern />
-          <LinePattern />
-        </ThreeLinePattern>
-        <Star src={star} alt="" />
+export default ({ steps, activeStep, children }: Props) => (
+  <>
+    <FormSteps steps={steps} activeStep={activeStep} />
 
-        <Content>
-          {step === 1 && <StepIcon src={stepOneIcon} alt="1" />}
-          {children}
-        </Content>
-      </Container>
-    </BackgroundContainerVertical>
-  </BackgroundContainerHorizontal>
+    <BackgroundContainerHorizontal>
+      <BackgroundContainerVertical>
+        <Container>
+          <ThreeLinePattern>
+            <LinePattern />
+            <LinePattern />
+            <LinePattern />
+          </ThreeLinePattern>
+          <Star src={star} alt="" />
+
+          <Content>
+            {activeStep === 1 && <StepIcon src={stepOneIcon} alt="1" />}
+            {children}
+          </Content>
+        </Container>
+      </BackgroundContainerVertical>
+    </BackgroundContainerHorizontal>
+  </>
 );

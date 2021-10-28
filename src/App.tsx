@@ -31,7 +31,7 @@ import AppErrorMessage from './components/AppErrorMessage';
 const AppContainer = styled.div`
   display: flex;
   margin: 0 auto;
-  padding: 9em 0;
+  padding: 10em 0;
   max-width: 1200px;
   height: 100%;
   flex-direction: column;

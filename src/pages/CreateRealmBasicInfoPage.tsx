@@ -36,7 +36,10 @@ export default () => {
   return (
     <Container>
       <FormProvider {...methods}>
-        <FormContainer step={1}>
+        <FormContainer
+          steps={['Basic Info', 'Select Collections', 'Set up Infusion', 'Configure Settings']}
+          activeStep={1}
+        >
           <PageHeading src={heading} alt="Choose Your Path" />
 
           <form onSubmit={onSubmit}>
