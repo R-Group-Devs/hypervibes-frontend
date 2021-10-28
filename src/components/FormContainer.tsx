@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import hyperVibesLogoPatternVertical from '../assets/images/hypervibes-logo-pattern-vertical.png';
 import hyperVibesLogoPatternHorizontal from '../assets/images/hypervibes-logo-pattern-horizontal.png';
-import threeLineBg from '../assets/images/three-line-bg.png';
 import stepOneIcon from '../assets/images/icons/step-1.svg';
+import star from '../assets/images/star.svg';
 
 interface Props {
   step: number;
@@ -25,6 +25,7 @@ const Container = styled.div`
   position: relative;
   background: #000;
   box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.8);
+  border: 1px solid #17ffe3;
 `;
 
 const Content = styled.div`
@@ -32,11 +33,22 @@ const Content = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  padding: 6em 4em;
+  padding: 5em 4em;
   width: 80vw;
   max-width: 784px;
-  background: url(${threeLineBg}) 0 8px no-repeat;
-  border: 1px solid #17ffe3;
+`;
+
+const ThreeLinePattern = styled.div`
+  display: flex;
+  flex-direction: column;
+  row-gap: 6px;
+  margin-top: 8px;
+`;
+
+const LinePattern = styled.div`
+  width: 90%;
+  max-width: 704px;
+  border-top: 1px solid #17ffe3;
 `;
 
 const StepIcon = styled.img`
@@ -45,10 +57,23 @@ const StepIcon = styled.img`
   right: 1em;
 `;
 
+const Star = styled.img`
+  position: absolute;
+  bottom: 1.5em;
+  left: 1.5em;
+`;
+
 export default ({ step, children }: Props) => (
   <BackgroundContainerHorizontal>
     <BackgroundContainerVertical>
       <Container>
+        <ThreeLinePattern>
+          <LinePattern />
+          <LinePattern />
+          <LinePattern />
+        </ThreeLinePattern>
+        <Star src={star} alt="" />
+
         <Content>
           {step === 1 && <StepIcon src={stepOneIcon} alt="1" />}
           {children}
