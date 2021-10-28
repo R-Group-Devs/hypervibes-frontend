@@ -8,7 +8,7 @@ const HYPERVIBES_SUBGRAPH_ENDPOINT =
 export default <QueryResult>(
   queryName: string,
   query: string,
-  queryOptions: Omit<UseQueryOptions<QueryResult, Error>, 'queryKey' | 'queryFn'>
+  queryOptions?: Omit<UseQueryOptions<QueryResult, Error>, 'queryKey' | 'queryFn'>
 ) =>
   useQuery<QueryResult, Error>(
     queryName,

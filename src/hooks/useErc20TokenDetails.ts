@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { useLazyErc20Contract } from './useErc20Contract';
 import { isAddress } from '@ethersproject/address';
+import { useLazyErc20Contract } from './useErc20Contract';
 
 export default (tokenAddress: string) => {
   const getErc20Contract = useLazyErc20Contract();

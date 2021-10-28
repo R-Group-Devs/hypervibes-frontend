@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import { useWallet } from 'use-wallet';
 import useContract from './useContract';
 import { getContract } from '../utils/contract';
@@ -12,9 +13,14 @@ export default (tokenAddress: string) => {
 export const useLazyErc20Contract = () => {
   const wallet = useWallet();
 
+  const fn = useCallback(
+    (tokenAddress: string) => getContract(tokenAddress, erc20Abi, wallet.ethereum),
+    [wallet]
+  );
+
   if (!wallet.ethereum) {
     return null;
   }
 
-  return (tokenAddress: string) => getContract(tokenAddress, erc20Abi, wallet.ethereum);
+  return fn;
 };
