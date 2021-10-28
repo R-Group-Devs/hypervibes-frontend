@@ -4,25 +4,11 @@ import { BigNumber } from '@ethersproject/bignumber';
 import useHyperVibesContract from './useHyperVibesContract';
 import useErc20Contract from './useErc20Contract';
 
-export interface Realm {
-  name: string;
-  description: string;
-  admins: { value: string }[];
-  allowedCollections: { value: string }[];
-  tokenAddress: string;
-  allowedInfusers: { value: string }[];
-  minClaimableTokenRate: number | null;
-  maxClaimableTokenRate: number | null;
-  minTokenInfusionAmount: number | null;
-  maxTokenInfusionAmount: number | null;
-  maxInfusibleTokens: number | null;
-  requireOwnership: 'yes' | 'no';
-  allowMultiInfusion: 'yes' | 'no';
-  allowAllCollections: 'yes' | 'no';
-  allowPublicInfusion: 'yes' | 'no';
+interface GlobalState {
+  realmWizard: RealmWizardValues;
 }
 
-const initialState: Record<'realmWizard', Realm> = {
+const initialState: GlobalState = {
   realmWizard: {
     name: '',
     description: '',
@@ -42,6 +28,24 @@ const initialState: Record<'realmWizard', Realm> = {
   },
 };
 
+export interface RealmWizardValues {
+  name: string;
+  description: string;
+  admins: { value: string }[];
+  allowedCollections: { value: string }[];
+  tokenAddress: string;
+  allowedInfusers: { value: string }[];
+  minClaimableTokenRate: number | null;
+  maxClaimableTokenRate: number | null;
+  minTokenInfusionAmount: number | null;
+  maxTokenInfusionAmount: number | null;
+  maxInfusibleTokens: number | null;
+  requireOwnership: 'yes' | 'no';
+  allowMultiInfusion: 'yes' | 'no';
+  allowAllCollections: 'yes' | 'no';
+  allowPublicInfusion: 'yes' | 'no';
+}
+
 const { useGlobalState } = createGlobalState(initialState);
 
 export default () => {
@@ -50,7 +54,7 @@ export default () => {
   const erc20Contract = useErc20Contract(realm.tokenAddress);
 
   const createRealm = useCallback(
-    async (realm: Realm) => {
+    async (realm: RealmWizardValues) => {
       const decimalExponent = await erc20Contract?.decimals();
       const decimals = BigNumber.from(10).pow(decimalExponent);
 
@@ -87,7 +91,7 @@ export default () => {
 
   return {
     realm,
-    updateRealm: (fields: Realm) => updateRealm({ ...realm, ...fields }),
+    updateRealm: (fields: RealmWizardValues) => updateRealm({ ...realm, ...fields }),
     createRealm,
     resetRealm: () => updateRealm(initialState.realmWizard),
   };

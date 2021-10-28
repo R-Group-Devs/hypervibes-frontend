@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { useForm, FormProvider } from 'react-hook-form';
 import { DevTool } from '@hookform/devtools';
 import { useHistory } from 'react-router-dom';
-import useCreateRealmWizard, { Realm } from '../hooks/useCreateRealmWizard';
+import useCreateRealmWizard, { RealmWizardValues } from '../hooks/useCreateRealmWizard';
 import InputGroup from '../components/InputGroup';
 import NumberInput from '../components/NumberInput';
 import RadioGroup from '../components/RadioGroup';
@@ -13,7 +13,7 @@ const Container = styled.div``;
 
 export default () => {
   const { realm, updateRealm, createRealm, resetRealm } = useCreateRealmWizard();
-  const methods = useForm<Realm>({ defaultValues: realm });
+  const methods = useForm<RealmWizardValues>({ defaultValues: realm });
   const history = useHistory();
 
   const onSubmit = methods.handleSubmit(async (data) => {

@@ -1,3 +1,3 @@
-export const HYPERVIBES_CONTRACT_ADDRESSES = {
+export const HYPERVIBES_CONTRACT_ADDRESSES: Record<string, string> = {
   3: '0x76e9f19D76Ae534cFb754AFE9D9CC52395E5fFaF',
 };

@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { useForm, FormProvider } from 'react-hook-form';
 import { DevTool } from '@hookform/devtools';
 import { useHistory } from 'react-router-dom';
-import useCreateRealmWizard, { Realm } from '../hooks/useCreateRealmWizard';
+import useCreateRealmWizard, { RealmWizardValues } from '../hooks/useCreateRealmWizard';
 import RadioGroup from '../components/RadioGroup';
 import RadioButton from '../components/RadioButton';
 import MultiAddressInput from '../components/MultiAddressInput';
@@ -12,7 +12,7 @@ const Container = styled.div``;
 
 export default () => {
   const { realm, updateRealm } = useCreateRealmWizard();
-  const methods = useForm<Realm>({ defaultValues: realm });
+  const methods = useForm<RealmWizardValues>({ defaultValues: realm });
   const allowAllCollections = methods.watch('allowAllCollections');
   const history = useHistory();
 

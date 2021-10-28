@@ -1,5 +1,6 @@
 {
   "name": "hypervibes-frontend",
+  "description": "Frontend app for the HyperVIBES project.",
   "version": "0.1.0",
   "type": "module",
   "dependencies": {

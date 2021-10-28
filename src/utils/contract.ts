@@ -8,5 +8,6 @@ export const getContract = (
 ) => {
   const provider = new Web3Provider(externalProvider);
   const signer = provider.getSigner();
+
   return new Contract(contractAddress, abi, signer);
 };

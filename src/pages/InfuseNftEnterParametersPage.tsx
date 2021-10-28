@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useForm, FormProvider } from 'react-hook-form';
 import { DevTool } from '@hookform/devtools';
@@ -6,6 +7,7 @@ import { useWallet } from 'use-wallet';
 import { BigNumber } from '@ethersproject/bignumber';
 import NumberInput from '../components/NumberInput';
 import SubmitButton from '../components/SubmitButton';
+import { useLazyErc20Contract } from '../hooks/useErc20Contract';
 import useErc20Allowance from '../hooks/useErc20Allowance';
 import useErc20ApproveAllowance from '../hooks/useErc20ApproveAllowance';
 import useRealmDetails from '../hooks/useRealmDetails';
@@ -36,15 +38,30 @@ export default () => {
     data: { token },
   } = useRealmDetails(realmId);
   const { infuseNft } = useInfuseNft();
+  const getErc20Contract = useLazyErc20Contract();
   const { allowance } = useErc20Allowance(token || '');
   const { approveAllowance } = useErc20ApproveAllowance();
-  const amount = methods.watch('amount');
+  const [decimals, setDecimals] = useState<BigNumber>();
 
-  // TODO: get decimals from collection ERC-20
-  const hasApprovedEnoughAllowance = allowance.gte(BigNumber.from(amount || 0).pow(18));
+  const amount = methods.watch('amount');
+  const hasApprovedEnoughAllowance = decimals
+    ? allowance.gte(BigNumber.from(amount || 0).mul(decimals))
+    : true;
+
+  useEffect(() => {
+    (async () => {
+      if (!decimals && token && getErc20Contract) {
+        const decimalExponent = await getErc20Contract(token)?.decimals();
+        setDecimals(BigNumber.from(10).pow(decimalExponent));
+      }
+    })();
+  }, [token, decimals, getErc20Contract]);
 
   const onSubmit = methods.handleSubmit(async (data) => {
     if (!hasApprovedEnoughAllowance) {
+      // TODO: subtract amount from current allowance
+      // long-term, how should we handle approvals? infinity seems bad,
+      // but maybe give the user an option to set between a min needed for infusion and infinity
       await approveAllowance(token || '', amount);
     } else {
       // TODO: how do we handle cases where use is not connected w/ wallet beforehand?

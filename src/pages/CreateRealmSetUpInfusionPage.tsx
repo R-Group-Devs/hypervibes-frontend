@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { useForm, FormProvider } from 'react-hook-form';
 import { DevTool } from '@hookform/devtools';
 import { useHistory } from 'react-router-dom';
-import useCreateRealmWizard, { Realm } from '../hooks/useCreateRealmWizard';
+import useCreateRealmWizard, { RealmWizardValues } from '../hooks/useCreateRealmWizard';
 import useErc20TokenDetails from '../hooks/useErc20TokenDetails';
 import RadioGroup from '../components/RadioGroup';
 import RadioButton from '../components/RadioButton';
@@ -22,7 +22,7 @@ const TokenSymbol = styled.div`
 
 export default () => {
   const { realm, updateRealm } = useCreateRealmWizard();
-  const methods = useForm<Realm>({ defaultValues: realm });
+  const methods = useForm<RealmWizardValues>({ defaultValues: realm });
   const allowPublicInfusion = methods.watch('allowPublicInfusion');
   const tokenAddress = methods.watch('tokenAddress');
   const { symbol } = useErc20TokenDetails(tokenAddress);

@@ -1,4 +1,5 @@
 import { useCallback } from 'react';
+import { useWallet } from 'use-wallet';
 import { isAddress } from '@ethersproject/address';
 import { BigNumber } from '@ethersproject/bignumber';
 import { useLazyErc20Contract } from './useErc20Contract';
@@ -6,19 +7,21 @@ import { HYPERVIBES_CONTRACT_ADDRESSES } from '../constants/contracts';
 
 export default () => {
   const getErc20Contract = useLazyErc20Contract();
+  const { chainId } = useWallet();
 
   const approveAllowance = useCallback(
     async (tokenAddress: string, amount: number) => {
-      if (isAddress(tokenAddress) && getErc20Contract) {
+      if (chainId && isAddress(tokenAddress) && getErc20Contract) {
+        const decimalExponent = await getErc20Contract(tokenAddress)?.decimals();
+        const decimals = BigNumber.from(10).pow(decimalExponent);
+
         await getErc20Contract(tokenAddress)?.approve(
-          // TODO - support multichain
-          HYPERVIBES_CONTRACT_ADDRESSES[3],
-          // TODO: get decimals from collection ERC-20
-          BigNumber.from(amount).pow(18)
+          HYPERVIBES_CONTRACT_ADDRESSES[chainId],
+          BigNumber.from(amount).mul(decimals)
         );
       }
     },
-    [getErc20Contract]
+    [chainId, getErc20Contract]
   );
 
   return {
