@@ -1,15 +1,31 @@
 import { createGlobalStyle } from 'styled-components';
+import bg from '../assets/images/bg.png';
 
 export default createGlobalStyle`
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    background: linear-gradient(#1c1c1c 20%, #183934 100%);
+    background-size: cover;
+    background-attachment: fixed;
+  }
+
   body {
     margin: 0;
-    background: #0b0c1d;
-    font-family: "Courier New", monospace;
+    background: url(${bg}) 0 0 no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
     color: #fff;
   }
 
+  body, button, input {
+    font-family: "Decima Mono", "Courier New", monospace;
+  }
+
   #root {
-    height: 100vh;
+    min-height: 100vh;
   }
 
   p {
@@ -18,6 +34,10 @@ export default createGlobalStyle`
 
   h2 {
     margin-bottom: 2em;
+  }
+
+  form {
+    width: 100%;
   }
 
   a {

@@ -1,5 +1,8 @@
-import ConnectWallet from './ConnectWallet';
+import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
+import ConnectWallet from './ConnectWallet';
+
+const Container = styled.div``;
 
 export default () => {
   const history = useHistory();
@@ -8,5 +11,9 @@ export default () => {
     return null;
   }
 
-  return <ConnectWallet />;
+  return (
+    <Container>
+      <ConnectWallet />
+    </Container>
+  );
 };

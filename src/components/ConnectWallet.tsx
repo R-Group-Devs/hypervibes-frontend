@@ -9,12 +9,29 @@ import { shortenAddress } from '../utils/address';
 
 const Container = styled.div`
   position: absolute;
-  top: 40px;
-  right: 300px;
+  top: 30px;
+  right: 50px;
 `;
 
-const ConnectWalletButton = styled(Button)`
-  font-size: 14px;
+const ConnectWalletButton = styled(Button)<{ isConnected: boolean }>`
+  padding: 1px;
+  height: 42px;
+  font-family: ${({ isConnected }) =>
+    isConnected ? "'Decima Mono', 'Courier New', monospace" : "'3616 Grammastile', sans-serif"};
+  font-size: ${({ isConnected }) => (isConnected ? '14px' : '8px')};
+  line-height: ${({ isConnected }) => (isConnected ? '14px' : '24px')};
+  background: linear-gradient(#bcff67, #17ffe3);
+
+  &:hover:not([disabled]) {
+    background: linear-gradient(#bcff67, #17ffe3);
+  }
+`;
+
+const ButtonBackground = styled.div`
+  padding: 1em 2.5em;
+  height: 100%;
+  background: #1c1c1c;
+  transition: background 0.2s;
 `;
 
 export default () => {
@@ -31,8 +48,10 @@ export default () => {
   return (
     <Container>
       {triedAutoConnect && (
-        <ConnectWalletButton onClick={openPortal}>
-          {wallet.account ? shortenAddress(wallet.account) : 'connect wallet'}
+        <ConnectWalletButton onClick={openPortal} isConnected={!!wallet.account}>
+          <ButtonBackground>
+            {wallet.account ? shortenAddress(wallet.account) : 'connect wallet'}
+          </ButtonBackground>
         </ConnectWalletButton>
       )}
 

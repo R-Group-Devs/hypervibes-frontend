@@ -15,7 +15,7 @@ const Overlay = styled.div`
   left: 0;
   width: 100%;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.6);
 `;
 
 const Modal = styled.div`
@@ -23,10 +23,10 @@ const Modal = styled.div`
   left: 50%;
   top: 50%;
   padding: 1em 2em;
-  width: 420px;
+  width: 480px;
   transform: translate(-50%, -50%);
   z-index: 1000;
-  background: #222438;
+  background: #1c1c1c;
 `;
 
 export const ModalHeading = styled.h3`
@@ -43,9 +43,10 @@ const CloseButton = styled(Button)`
   right: 1em;
   padding: 0.5em;
   background: none;
-  font-weight: 900;
+  font-size: 20px;
+  font-weight: 600;
 
-  &:hover {
+  &:hover:not([disabled]) {
     background: none;
   }
 `;
@@ -75,7 +76,9 @@ export default ({ isOpen, children, close }: Props) => {
             <Modal>
               {children}
 
-              <CloseButton onClick={close}>X</CloseButton>
+              <CloseButton size="sm" onClick={close}>
+                X
+              </CloseButton>
             </Modal>
           </Overlay>
         </animated.div>

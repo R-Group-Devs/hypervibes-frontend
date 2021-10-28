@@ -13,6 +13,7 @@ interface Props {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+  width: 100%;
 `;
 
 const ResolvedAddress = styled.div`
@@ -33,7 +34,7 @@ export default ({ name, required, label }: Props) => {
         label={label}
         required={required}
         validate={{
-          address: (value) => !value || isAddress(value),
+          address: (value) => !value || isAddress(value) || value.endsWith('.eth'),
         }}
       />
 
