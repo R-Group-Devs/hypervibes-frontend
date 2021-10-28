@@ -8,6 +8,7 @@ import { BigNumber } from '@ethersproject/bignumber';
 import NumberInput from '../components/NumberInput';
 import SubmitButton from '../components/SubmitButton';
 import { useLazyErc20Contract } from '../hooks/useErc20Contract';
+import useErc20TokenDetails from '../hooks/useErc20TokenDetails';
 import useErc20Allowance from '../hooks/useErc20Allowance';
 import useErc20ApproveAllowance from '../hooks/useErc20ApproveAllowance';
 import useRealmDetails from '../hooks/useRealmDetails';
@@ -29,6 +30,11 @@ const ButtonGroup = styled.div`
   column-gap: 2em;
 `;
 
+const TokenApprovalInfo = styled.div`
+  margin-top: 2em;
+  width: 520px;
+`;
+
 export default () => {
   const methods = useForm<FormValues>();
   const { account } = useWallet();
@@ -39,6 +45,7 @@ export default () => {
   } = useRealmDetails(realmId);
   const { infuseNft } = useInfuseNft();
   const getErc20Contract = useLazyErc20Contract();
+  const { symbol } = useErc20TokenDetails(token || '');
   const { allowance } = useErc20Allowance(token || '');
   const { approveAllowance } = useErc20ApproveAllowance();
   const [decimals, setDecimals] = useState<BigNumber>();
@@ -93,6 +100,23 @@ export default () => {
             <SubmitButton disabled={hasApprovedEnoughAllowance}>Approve</SubmitButton>
             <SubmitButton disabled={!hasApprovedEnoughAllowance}>Infuse</SubmitButton>
           </ButtonGroup>
+
+          {!hasApprovedEnoughAllowance && (
+            <TokenApprovalInfo>
+              {allowance.isZero() ? (
+                <p>
+                  You have not approved the <strong>HyperVIBES</strong> contract to move any of your{' '}
+                  <strong>{symbol}</strong> tokens.
+                </p>
+              ) : (
+                <p>
+                  You have only approved the <strong>HyperVIBES</strong> contract to move{' '}
+                  {allowance.div(BigNumber.from(10).pow(18)).toNumber()} of your{' '}
+                  <strong>{symbol}</strong> tokens.
+                </p>
+              )}
+            </TokenApprovalInfo>
+          )}
         </form>
 
         <DevTool control={methods.control} />

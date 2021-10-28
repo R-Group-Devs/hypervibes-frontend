@@ -12,6 +12,10 @@ export default createGlobalStyle`
     height: 100vh;
   }
 
+  p {
+    line-height: 24px;
+  }
+
   h2 {
     margin-bottom: 2em;
   }
