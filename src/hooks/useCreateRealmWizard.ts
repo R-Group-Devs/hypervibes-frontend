@@ -57,7 +57,7 @@ export default () => {
       return hyperVibesContract?.createRealm({
         name: realm.name,
         description: realm.description,
-        admins: realm.admins.map((x) => x.value),
+        admins: realm.admins.map((x) => x.value).filter(Boolean),
         infusers:
           realm.allowPublicInfusion === 'yes'
             ? []

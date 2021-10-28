@@ -2,6 +2,7 @@ export interface Realm {
   id: string;
   name: string;
   description: string;
+  allowAllCollections: boolean;
   realmCollections: { id: string; collection: Collection }[];
 }
 
