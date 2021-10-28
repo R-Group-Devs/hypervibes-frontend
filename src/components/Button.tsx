@@ -9,7 +9,11 @@ export default styled.button<{ size?: 'sm' | 'md'; inline?: boolean }>`
   color: #fff;
   border: none;
 
-  &:hover {
+  &:disabled {
+    opacity: 0.5;
+  }
+
+  &:hover:not([disabled]) {
     background: rgba(255, 255, 255, 0.5);
     cursor: pointer;
   }

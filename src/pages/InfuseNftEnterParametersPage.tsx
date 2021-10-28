@@ -1,3 +1,4 @@
+import styled from 'styled-components';
 import { useForm, FormProvider } from 'react-hook-form';
 import { DevTool } from '@hookform/devtools';
 import { useHistory, useParams } from 'react-router-dom';
@@ -20,6 +21,11 @@ interface Params {
   collection: string;
   tokenId: string;
 }
+
+const ButtonGroup = styled.div`
+  display: flex;
+  column-gap: 2em;
+`;
 
 export default () => {
   const methods = useForm<FormValues>();
@@ -66,7 +72,10 @@ export default () => {
           <NumberInput name="amount" label="Amount to Infuse" required />
           <NumberInput name="dailyRate" label="Daily Claimable Rate" required />
 
-          <SubmitButton>{hasApprovedEnoughAllowance ? 'Infuse' : 'Approve'}</SubmitButton>
+          <ButtonGroup>
+            <SubmitButton disabled={hasApprovedEnoughAllowance}>Approve</SubmitButton>
+            <SubmitButton disabled={!hasApprovedEnoughAllowance}>Infuse</SubmitButton>
+          </ButtonGroup>
         </form>
 
         <DevTool control={methods.control} />
