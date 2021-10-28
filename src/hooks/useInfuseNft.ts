@@ -19,22 +19,6 @@ export default () => {
 
   const infuseNft = useCallback(
     async (infusion: Infusion) => {
-      console.log(
-        JSON.stringify(
-          {
-            realmId: infusion.realmId,
-            collection: infusion.collection,
-            tokenId: infusion.tokenId,
-            infuser: infusion.infuser,
-            dailyRate: BigNumber.from(infusion.dailyRate).mul(decimals),
-            amount: BigNumber.from(infusion.amount).mul(decimals),
-            comment: '',
-          },
-          null,
-          2
-        )
-      );
-
       return hyperVibesContract?.infuse({
         realmId: infusion.realmId,
         collection: infusion.collection,

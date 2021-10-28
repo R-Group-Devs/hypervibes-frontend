@@ -8,7 +8,9 @@ interface Props {
 
 const Container = styled.div`
   display: flex;
-  column-gap: 1em;
+  flex-wrap: wrap;
+  column-gap: 2em;
+  row-gap: 2em;
 `;
 
 export default ({ realms }: Props) => (

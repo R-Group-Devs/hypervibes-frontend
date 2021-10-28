@@ -6,6 +6,8 @@ const Container = styled.div`
   padding: 1em 2em;
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.2);
+  width: 200px;
+  height: 120px;
 `;
 
 const StyledLink = styled(Link)`

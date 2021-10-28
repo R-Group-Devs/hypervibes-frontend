@@ -4,6 +4,7 @@ import WalletProvider from './providers/WalletProvider';
 import QueryProvider from './providers/QueryProvider';
 import NftProvider from './providers/NftProvider';
 import PlaceholderPage from './pages/PlaceholderPage';
+import ChooseYourPathPage from './pages/ChooseYourPathPage';
 import CreateRealmBasicInfoPage from './pages/CreateRealmBasicInfoPage';
 import CreateRealmSelectCollectionsPage from './pages/CreateRealmSelectCollectionsPage';
 import CreateRealmSetUpInfusionPage from './pages/CreateRealmSetUpInfusionPage';
@@ -14,6 +15,11 @@ import InfuseNftSelectCollectionPage from './pages/InfuseNftSelectCollectionPage
 import InfuseNftSelectTokenPage from './pages/InfuseNftSelectTokenPage';
 import InfuseNftEnterParametersPage from './pages/InfuseNftEnterParametersPage';
 import InfuseNftSuccessPage from './pages/InfuseNftSuccessPage';
+import ClaimTokensSelectRealmPage from './pages/ClaimTokensSelectRealmPage';
+import ClaimTokensSelectCollectionPage from './pages/ClaimTokensSelectCollectionPage';
+import ClaimTokensSelectTokenPage from './pages/ClaimTokensSelectTokenPage';
+import ClaimTokensEnterParametersPage from './pages/ClaimTokensEnterParametersPage';
+import ClaimTokensSuccessPage from './pages/ClaimTokensSuccessPage';
 import NftListPage from './pages/NftListPage';
 import NotFoundPage from './pages/NotFoundPage';
 import GlobalStyle from './components/GlobalStyle';
@@ -33,6 +39,10 @@ export default () => (
             <Switch>
               <Route exact path="/">
                 <PlaceholderPage />
+              </Route>
+
+              <Route path="/app">
+                <ChooseYourPathPage />
               </Route>
 
               <Redirect exact from="/realm/create" to="/realm/create/basic-info" />
@@ -77,6 +87,28 @@ export default () => (
 
               <Route path="/infuse/success">
                 <InfuseNftSuccessPage />
+              </Route>
+
+              <Redirect exact from="/claim" to="/claim/select-realm" />
+
+              <Route path="/claim/select-realm">
+                <ClaimTokensSelectRealmPage />
+              </Route>
+
+              <Route path="/claim/realm/:realmId/select-collection">
+                <ClaimTokensSelectCollectionPage />
+              </Route>
+
+              <Route path="/claim/realm/:realmId/collection/:collection/select-token">
+                <ClaimTokensSelectTokenPage />
+              </Route>
+
+              <Route path="/claim/realm/:realmId/collection/:collection/token/:tokenId">
+                <ClaimTokensEnterParametersPage />
+              </Route>
+
+              <Route path="/claim/success">
+                <ClaimTokensSuccessPage />
               </Route>
 
               <Route path="/nfts">

@@ -8,7 +8,7 @@ interface Props {
 
 const Container = styled.div`
   display: flex;
-  column-gap: 1em;
+  column-gap: 2em;
 `;
 
 export default ({ collections }: Props) => (
