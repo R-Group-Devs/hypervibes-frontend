@@ -1,14 +1,6 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-
-const Container = styled.div`
-  display: flex;
-  width: 100%;
-  height: 100%;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-`;
+import CenteredContent from './CenteredContent';
 
 const H1 = styled.h1`
   margin-top: 0;
@@ -25,10 +17,10 @@ const H2 = styled.h2`
 `;
 
 export default () => (
-  <Container>
+  <CenteredContent>
     <H1>something went wrong :(</H1>
     <H2>
       <Link to="/">go back home</Link>
     </H2>
-  </Container>
+  </CenteredContent>
 );

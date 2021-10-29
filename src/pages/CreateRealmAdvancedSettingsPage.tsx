@@ -51,6 +51,13 @@ export default () => {
             </InputGroup>
 
             <InputGroup
+              label="Maximum Infusible Tokens"
+              description="The maximum number of tokens that can be infused in total into an NFT."
+            >
+              <NumberInput name="maxInfusibleTokens" label="Maximum" required />
+            </InputGroup>
+
+            <InputGroup
               label="Claimable Token Rate"
               description="The minimum and maximum configurable daily rates that infused tokens are made claimable by the NFT holder."
             >
@@ -59,10 +66,10 @@ export default () => {
             </InputGroup>
 
             <InputGroup
-              label="Maximum Infusible Tokens"
-              description="The maximum number of tokens that can be infused in total into an NFT."
+              label="Minimum Claimable Token Amount"
+              description="The minimum number of tokens that can be claimed at one time by an NFT holder."
             >
-              <NumberInput name="maxInfusibleTokens" label="Maximum" required />
+              <NumberInput name="minClaimAmount" label="Minimum" required />
             </InputGroup>
 
             <SwitchGroup name="requireOwnership" label="Require NFT ownership?">

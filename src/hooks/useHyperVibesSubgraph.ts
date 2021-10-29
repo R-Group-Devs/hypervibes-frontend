@@ -4,8 +4,8 @@ import { useWallet } from 'use-wallet';
 
 const HYPERVIBES_SUBGRAPH_ENDPOINTS: Record<string, string> = {
   // TODO: replace w/ mainnet URL
-  1: 'https://api.thegraph.com/subgraphs/name/r-group-devs/hypervibes-ropsten',
-  3: 'https://api.thegraph.com/subgraphs/name/r-group-devs/hypervibes-ropsten',
+  1: 'https://api.thegraph.com/subgraphs/name/r-group-devs/hypervibes-rinkeby',
+  4: 'https://api.thegraph.com/subgraphs/name/r-group-devs/hypervibes-rinkeby',
 };
 
 export default <QueryResult>(

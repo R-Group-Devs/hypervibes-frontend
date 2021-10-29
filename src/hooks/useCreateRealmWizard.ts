@@ -21,6 +21,7 @@ const initialState: GlobalState = {
     minTokenInfusionAmount: null,
     maxTokenInfusionAmount: null,
     maxInfusibleTokens: null,
+    minClaimAmount: null,
     requireOwnership: 'no',
     allowMultiInfusion: 'yes',
     allowAllCollections: 'yes',
@@ -40,6 +41,7 @@ export interface RealmWizardValues {
   minTokenInfusionAmount: number | null;
   maxTokenInfusionAmount: number | null;
   maxInfusibleTokens: number | null;
+  minClaimAmount: number | null;
   requireOwnership: 'yes' | 'no';
   allowMultiInfusion: 'yes' | 'no';
   allowAllCollections: 'yes' | 'no';
@@ -78,6 +80,7 @@ export default () => {
             minInfusionAmount: BigNumber.from(realm.minTokenInfusionAmount || 0).mul(decimals),
             maxInfusionAmount: BigNumber.from(realm.maxTokenInfusionAmount || 0).mul(decimals),
             maxTokenBalance: BigNumber.from(realm.maxInfusibleTokens || 0).mul(decimals),
+            minClaimAmount: BigNumber.from(realm.minClaimAmount || 0).mul(decimals),
             requireNftIsOwned: realm.requireOwnership === 'yes',
             allowMultiInfuse: realm.allowMultiInfusion === 'yes',
             allowAllCollections: realm.allowAllCollections === 'yes',

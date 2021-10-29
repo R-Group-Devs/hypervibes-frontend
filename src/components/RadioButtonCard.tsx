@@ -43,8 +43,10 @@ export default ({ name, id, label, children }: Props) => {
   const value = watch(name);
 
   return (
-    <Container onClick={() => setValue(name, id)}>
-      <Card isSelected={value === id}>{children}</Card>
+    <Container>
+      <Card isSelected={value === id} onClick={() => setValue(name, id)}>
+        {children}
+      </Card>
       <Label>{label}</Label>
     </Container>
   );
