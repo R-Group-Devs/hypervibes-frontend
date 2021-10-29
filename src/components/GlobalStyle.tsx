@@ -6,6 +6,16 @@ export default createGlobalStyle`
     box-sizing: border-box;
   }
 
+  ::selection {
+    background: #17ffe3;
+    color: #000;
+  }
+
+  ::-moz-selection {
+    background: #17ffe3;
+    color: #000;
+  }
+
   html {
     background: linear-gradient(#1c1c1c 20%, #183934 100%);
     background-size: cover;
