@@ -37,7 +37,24 @@ export default () => {
     <Container>
       <FormProvider {...methods}>
         <FormContainer
-          steps={['Basic Info', 'Select Collections', 'Set up Infusion', 'Configure Settings']}
+          steps={[
+            {
+              label: 'Basic Info',
+              path: 'basic-info',
+            },
+            {
+              label: 'Select Collections',
+              path: 'select-collections',
+            },
+            {
+              label: 'Set up Infusion',
+              path: 'set-up-infusion',
+            },
+            {
+              label: 'Configure Settings',
+              path: 'advanced-settings',
+            },
+          ]}
           activeStep={1}
         >
           <PageHeading src={heading} alt="Choose Your Path" />

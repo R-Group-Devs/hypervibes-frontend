@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import FormSteps from './FormSteps';
+import FormSteps, { FormStep } from './FormSteps';
 import hyperVibesLogoPatternVertical from '../assets/images/hypervibes-logo-pattern-vertical.png';
 import hyperVibesLogoPatternHorizontal from '../assets/images/hypervibes-logo-pattern-horizontal.png';
 import stepOneIcon from '../assets/images/icons/step-1.svg';
 import star from '../assets/images/star.svg';
 
 interface Props {
-  steps: string[];
+  steps: FormStep[];
   activeStep: number;
   children: React.ReactNode;
 }
