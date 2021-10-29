@@ -2,6 +2,9 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import CenteredContent from '../components/CenteredContent';
 import heading from '../assets/images/headings/choose-your-path.svg';
+import createRealmImage from '../assets/images/create-realm.png';
+import infuseNftImage from '../assets/images/infuse-nft.png';
+import claimTokensImage from '../assets/images/claim-tokens.png';
 
 const Container = styled.div`
   display: flex;
@@ -23,6 +26,15 @@ const Path = styled.div`
   background: #1c1c1c;
   border: 1px solid #fff;
   border-radius: 30px;
+  transition: all 0.2s;
+
+  &:hover {
+    box-shadow: 0 0 20px 4px #bcff67;
+  }
+`;
+
+const PathImage = styled.img`
+  width: 100%;
 `;
 
 const PathLabel = styled.h3`
@@ -47,7 +59,9 @@ export default () => {
 
       <Container>
         <StyledLink to="/realm/create">
-          <Path></Path>
+          <Path>
+            <PathImage src={createRealmImage} alt="Create Realm" />
+          </Path>
 
           <PathLabel>
             Create a new
@@ -57,7 +71,9 @@ export default () => {
         </StyledLink>
 
         <StyledLink to="/infuse">
-          <Path></Path>
+          <Path>
+            <PathImage src={infuseNftImage} alt="Infuse NFT" />
+          </Path>
 
           <PathLabel>
             Infuse an NFT
@@ -67,7 +83,9 @@ export default () => {
         </StyledLink>
 
         <StyledLink to="/claim">
-          <Path></Path>
+          <Path>
+            <PathImage src={claimTokensImage} alt="Claim Tokens" />
+          </Path>
 
           <PathLabel>
             Claim tokens

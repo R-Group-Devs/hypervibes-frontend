@@ -13,8 +13,8 @@ import BackButton from '../components/BackButton';
 import SubmitButton from '../components/SubmitButton';
 import { CREATE_REALM_STEPS } from '../constants/formSteps';
 import heading from '../assets/images/headings/select-collections.svg';
-import infuseAnyImage from '../assets/images/infuse-any.svg';
-import infuseSpecificImage from '../assets/images/infuse-specific.svg';
+import infuseAnyImage from '../assets/images/infuse-any.png';
+import infuseSpecificImage from '../assets/images/infuse-specific.png';
 
 const Container = styled.div``;
 

@@ -16,7 +16,7 @@ import SubmitButton from '../components/SubmitButton';
 import { CREATE_REALM_STEPS } from '../constants/formSteps';
 import heading from '../assets/images/headings/set-up-infusion.svg';
 import allowAnyInfuserImage from '../assets/images/allow-any-infuser.svg';
-import infuseSpecificImage from '../assets/images/infuse-specific.svg';
+import allowSpecificInfusersImage from '../assets/images/allow-specific-infusers.png';
 
 const Container = styled.div`
   position: relative;
@@ -24,8 +24,8 @@ const Container = styled.div`
 
 const TokenSymbol = styled.div`
   position: absolute;
-  top: 7.5em;
-  right: 8em;
+  top: 14.5em;
+  right: 5em;
 `;
 
 export default () => {
@@ -60,7 +60,7 @@ export default () => {
                 id="no"
                 label="Only allow specific addresses to infuse"
               >
-                <img src={infuseSpecificImage} alt="Infuse specific" />
+                <img src={allowSpecificInfusersImage} alt="Infuse specific" />
               </RadioButtonCard>
             </RadioGroup>
 
