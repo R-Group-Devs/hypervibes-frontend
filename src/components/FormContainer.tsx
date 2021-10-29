@@ -39,7 +39,7 @@ const Content = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  padding: 5em 4em;
+  padding: 5em 4em 4.5em;
   width: 80vw;
   max-width: 784px;
 `;

@@ -13,7 +13,7 @@ interface Props {
 
 const Container = styled.div`
   position: absolute;
-  margin-top: -3.75em;
+  margin-top: -3.5em;
   width: 80vw;
   max-width: 784px;
   z-index: 1;
