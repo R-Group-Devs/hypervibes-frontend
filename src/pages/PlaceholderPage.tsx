@@ -1,18 +1,11 @@
 import styled from 'styled-components';
-
-const Container = styled.div`
-  display: flex;
-  width: 100%;
-  height: 100%;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-`;
+import CenteredContent from '../components/CenteredContent';
 
 const H1 = styled.h1`
   margin-top: 0;
   margin-bottom: 0.25em;
-  font-size: 28px;
+  font-size: 18px;
+  font-family: '3616 Grammastile', sans-serif;
   letter-spacing: 5px;
 `;
 
@@ -24,8 +17,8 @@ const H2 = styled.h2`
 `;
 
 export default () => (
-  <Container>
+  <CenteredContent>
     <H1>&#8725;&#8725; hypervibes &#8725;&#8725;</H1>
     <H2>coming soon</H2>
-  </Container>
+  </CenteredContent>
 );
