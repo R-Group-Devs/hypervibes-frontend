@@ -19,12 +19,17 @@ const RadioGroup = styled.div`
   column-gap: 2em;
 `;
 
+const Label = styled.h3`
+  margin-bottom: 1.5em;
+  text-transform: uppercase;
+`;
+
 export default ({ name, label, children }: Props) => {
   const { formState } = useFormContext();
 
   return (
     <Container>
-      <h3>{label}</h3>
+      <Label>{label}</Label>
 
       <RadioGroup>{children}</RadioGroup>
       <FormFieldErrorMessage error={formState.errors[name]} />

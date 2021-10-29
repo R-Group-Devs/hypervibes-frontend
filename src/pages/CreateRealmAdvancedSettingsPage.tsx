@@ -3,11 +3,17 @@ import { useForm, FormProvider } from 'react-hook-form';
 import { DevTool } from '@hookform/devtools';
 import { useHistory } from 'react-router-dom';
 import useCreateRealmWizard, { RealmWizardValues } from '../hooks/useCreateRealmWizard';
+import FormContainer from '../components/FormContainer';
+import FormHeading from '../components/FormHeading';
 import InputGroup from '../components/InputGroup';
 import NumberInput from '../components/NumberInput';
-import RadioGroup from '../components/RadioGroup';
-import RadioButton from '../components/RadioButton';
+import SwitchGroup from '../components/SwitchGroup';
+import Switch from '../components/Switch';
+import ButtonGroup from '../components/ButtonGroup';
+import BackButton from '../components/BackButton';
 import SubmitButton from '../components/SubmitButton';
+import { CREATE_REALM_STEPS } from '../constants/formSteps';
+import heading from '../assets/images/headings/advanced-settings.svg';
 
 const Container = styled.div``;
 
@@ -32,39 +38,54 @@ export default () => {
 
   return (
     <Container>
-      <h2>Configure Settings</h2>
-
       <FormProvider {...methods}>
-        <form onSubmit={onSubmit}>
-          <InputGroup label="Claimable Token Rate">
-            <NumberInput name="minClaimableTokenRate" label="Minimum" required />
-            <NumberInput name="maxClaimableTokenRate" label="Maximum" required />
-          </InputGroup>
+        <FormContainer steps={CREATE_REALM_STEPS} activeStep={4}>
+          <FormHeading src={heading} alt="Select Collections" />
+          <form onSubmit={onSubmit}>
+            <InputGroup
+              label="Token Infusion Amount"
+              description="The minimum and maximum number of tokens which can be infused at one time by an infuser."
+            >
+              <NumberInput name="minTokenInfusionAmount" label="Minimum" required />
+              <NumberInput name="maxTokenInfusionAmount" label="Maximum" required />
+            </InputGroup>
 
-          <InputGroup label="Token Infusion Amount">
-            <NumberInput name="minTokenInfusionAmount" label="Minimum" required />
-            <NumberInput name="maxTokenInfusionAmount" label="Maximum" required />
-          </InputGroup>
+            <InputGroup
+              label="Claimable Token Rate"
+              description="The minimum and maximum configurable daily rates at which infused tokens are made available for claiming by the NFT holder."
+            >
+              <NumberInput name="minClaimableTokenRate" label="Minimum" required />
+              <NumberInput name="maxClaimableTokenRate" label="Maximum" required />
+            </InputGroup>
 
-          <NumberInput name="maxInfusibleTokens" label="Maximum Infusible Tokens" required />
+            <InputGroup
+              label="Maximum Infusible Tokens"
+              description="The maximum number of tokens which can be infused in total into an NFT."
+            >
+              <NumberInput name="maxInfusibleTokens" label="Maximum" required />
+            </InputGroup>
 
-          <RadioGroup name="requireOwnership" label="Require NFT ownership?">
-            <RadioButton name="requireOwnership" id="yes" label="Yes" required />
-            <RadioButton name="requireOwnership" id="no" label="No" required />
-          </RadioGroup>
+            <SwitchGroup name="requireOwnership" label="Require NFT ownership?">
+              <Switch name="requireOwnership" id="yes" label="Yes" />
+              <Switch name="requireOwnership" id="no" label="No" />
+            </SwitchGroup>
 
-          <RadioGroup
-            name="allowMultiInfusion"
-            label="Allow infusing tokens into the same NFT more than once?"
-          >
-            <RadioButton name="allowMultiInfusion" id="yes" label="Yes" required />
-            <RadioButton name="allowMultiInfusion" id="no" label="No" required />
-          </RadioGroup>
+            <SwitchGroup
+              name="allowMultiInfusion"
+              label="Allow infusing tokens into the same NFT more than once?"
+            >
+              <Switch name="allowMultiInfusion" id="yes" label="Yes" />
+              <Switch name="allowMultiInfusion" id="no" label="No" />
+            </SwitchGroup>
 
-          <SubmitButton>Create Realm</SubmitButton>
-        </form>
+            <ButtonGroup>
+              <BackButton path="set-up-infusion" />
+              <SubmitButton size="lg">Create Realm</SubmitButton>
+            </ButtonGroup>
+          </form>
 
-        <DevTool control={methods.control} />
+          <DevTool control={methods.control} />
+        </FormContainer>
       </FormProvider>
     </Container>
   );

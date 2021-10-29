@@ -12,7 +12,7 @@ export const CREATE_REALM_STEPS = [
     path: 'set-up-infusion',
   },
   {
-    label: 'Configure Settings',
+    label: 'Advanced Settings',
     path: 'advanced-settings',
   },
 ];

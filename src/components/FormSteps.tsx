@@ -22,7 +22,11 @@ const Container = styled.div`
 const ProgressBar = styled.div<{ progress: number }>`
   margin-bottom: 15px;
   height: 6px;
-  background: linear-gradient(to right, #bcff67 0%, transparent ${({ progress }) => progress}%);
+  background: linear-gradient(
+    to right,
+    #bcff67 ${({ progress }) => progress / 2}%,
+    transparent ${({ progress }) => progress}%
+  );
   border-radius: 20px;
 `;
 
