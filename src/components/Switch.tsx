@@ -22,10 +22,10 @@ const Option = styled.div<{ isSelected: boolean }>`
   text-transform: uppercase;
   border: ${({ isSelected }) => (isSelected ? '2px solid transparent' : '2px solid #fff')};
   border-radius: 10px;
-  transition: all 0.2s;
 
   &:hover {
-    border: 2px solid #17ffe3;
+    border: ${({ isSelected }) => (isSelected ? '2px solid transparent' : '2px solid #17ffe3')};
+    transition: all 0.2s;
     cursor: pointer;
   }
 `;
