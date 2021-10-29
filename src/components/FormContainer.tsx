@@ -18,12 +18,14 @@ interface Props {
 const BackgroundContainerVertical = styled.div`
   padding-left: 3em;
   background: url(${hyperVibesLogoPatternVertical}) left top repeat-y;
+  background-size: 24px 388px;
 `;
 
 const BackgroundContainerHorizontal = styled.div`
   padding-bottom: 3em;
   margin-left: -3em;
   background: url(${hyperVibesLogoPatternHorizontal}) left bottom repeat-x;
+  background-size: 388px 24px;
 `;
 
 const BorderContainer = styled.div`
