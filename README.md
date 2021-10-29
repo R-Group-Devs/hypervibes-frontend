@@ -29,6 +29,13 @@ Install dependencies:
 $ yarn
 ```
 
+Generate **Ethereum** and **Rinkeby** RPC endpoints using [Infura](https://infura.io/) or [Alchemy](https://www.alchemy.com/) and add the following environment variables to a `.env.local` file:
+
+```
+REACT_APP_ETHEREUM_RPC_URL=???
+REACT_APP_RINKEBY_RPC_URL=???
+```
+
 Run the app in development mode:
 
 ```sh
