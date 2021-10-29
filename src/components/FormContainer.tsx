@@ -4,6 +4,7 @@ import FormSteps, { FormStep } from './FormSteps';
 import hyperVibesLogoPatternVertical from '../assets/images/hypervibes-logo-pattern-vertical.png';
 import hyperVibesLogoPatternHorizontal from '../assets/images/hypervibes-logo-pattern-horizontal.png';
 import stepOneIcon from '../assets/images/icons/step-1.svg';
+import stepTwoIcon from '../assets/images/icons/step-2.svg';
 import star from '../assets/images/star.svg';
 
 interface Props {
@@ -86,6 +87,7 @@ export default ({ steps, activeStep, children }: Props) => (
 
             <Content>
               {activeStep === 1 && <StepIcon src={stepOneIcon} alt="1" />}
+              {activeStep === 2 && <StepIcon src={stepTwoIcon} alt="2" />}
               {children}
             </Content>
           </Container>

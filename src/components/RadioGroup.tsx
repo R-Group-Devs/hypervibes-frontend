@@ -10,7 +10,7 @@ interface Props {
 }
 
 const Container = styled.div`
-  margin-bottom: 1.5em;
+  margin-bottom: 0.5em;
 `;
 
 const RadioGroup = styled.div`

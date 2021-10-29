@@ -4,24 +4,16 @@ import { DevTool } from '@hookform/devtools';
 import { useHistory } from 'react-router-dom';
 import useCreateRealmWizard, { RealmWizardValues } from '../hooks/useCreateRealmWizard';
 import FormContainer from '../components/FormContainer';
+import FormHeading from '../components/FormHeading';
 import TextInput from '../components/TextInput';
 import MultiAddressInput from '../components/MultiAddressInput';
+import ButtonGroup from '../components/ButtonGroup';
 import BackButton from '../components/BackButton';
 import SubmitButton from '../components/SubmitButton';
+import { CREATE_REALM_STEPS } from '../constants/formSteps';
 import heading from '../assets/images/headings/create-your-realm.svg';
 
 const Container = styled.div``;
-
-const PageHeading = styled.img`
-  margin-bottom: 3em;
-`;
-
-const ButtonGroup = styled.div`
-  display: flex;
-  justify-content: center;
-  column-gap: 4em;
-  margin-top: 3em;
-`;
 
 export default () => {
   const { realm, updateRealm } = useCreateRealmWizard();
@@ -36,28 +28,8 @@ export default () => {
   return (
     <Container>
       <FormProvider {...methods}>
-        <FormContainer
-          steps={[
-            {
-              label: 'Basic Info',
-              path: 'basic-info',
-            },
-            {
-              label: 'Select Collections',
-              path: 'select-collections',
-            },
-            {
-              label: 'Set up Infusion',
-              path: 'set-up-infusion',
-            },
-            {
-              label: 'Configure Settings',
-              path: 'advanced-settings',
-            },
-          ]}
-          activeStep={1}
-        >
-          <PageHeading src={heading} alt="Choose Your Path" />
+        <FormContainer steps={CREATE_REALM_STEPS} activeStep={1}>
+          <FormHeading src={heading} alt="Choose Your Path" />
 
           <form onSubmit={onSubmit}>
             <TextInput name="name" label="Name Your Realm" required maxLength={30} />

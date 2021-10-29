@@ -2,12 +2,11 @@ import { useFormContext } from 'react-hook-form';
 import styled from 'styled-components';
 import Label from './Label';
 
-interface Props {
+export interface Props {
   name: string;
   id: string;
   label: string;
   required?: boolean;
-  maxLength?: number;
 }
 
 const Container = styled.div``;

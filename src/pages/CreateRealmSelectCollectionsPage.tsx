@@ -3,10 +3,18 @@ import { useForm, FormProvider } from 'react-hook-form';
 import { DevTool } from '@hookform/devtools';
 import { useHistory } from 'react-router-dom';
 import useCreateRealmWizard, { RealmWizardValues } from '../hooks/useCreateRealmWizard';
+import FormContainer from '../components/FormContainer';
+import FormHeading from '../components/FormHeading';
 import RadioGroup from '../components/RadioGroup';
-import RadioButton from '../components/RadioButton';
+import RadioButtonCard from '../components/RadioButtonCard';
 import MultiAddressInput from '../components/MultiAddressInput';
+import ButtonGroup from '../components/ButtonGroup';
+import BackButton from '../components/BackButton';
 import SubmitButton from '../components/SubmitButton';
+import { CREATE_REALM_STEPS } from '../constants/formSteps';
+import heading from '../assets/images/headings/select-collections.svg';
+import infuseAnyImage from '../assets/images/infuse-any.svg';
+import infuseSpecificImage from '../assets/images/infuse-specific.svg';
 
 const Container = styled.div``;
 
@@ -23,33 +31,41 @@ export default () => {
 
   return (
     <Container>
-      <h2>Select Collections</h2>
-
       <FormProvider {...methods}>
-        <form onSubmit={onSubmit}>
-          <RadioGroup name="allowAllCollections" label="">
-            <RadioButton
-              name="allowAllCollections"
-              id="yes"
-              label="Allow any collection to be infused"
-              required
-            />
-            <RadioButton
-              name="allowAllCollections"
-              id="no"
-              label="Only allow specific collections to be infused"
-              required
-            />
-          </RadioGroup>
+        <FormContainer steps={CREATE_REALM_STEPS} activeStep={2}>
+          <FormHeading src={heading} alt="Select Collections" />
 
-          {allowAllCollections === 'no' && (
-            <MultiAddressInput name="allowedCollections" label="Allowed collections" required />
-          )}
+          <form onSubmit={onSubmit}>
+            <RadioGroup name="allowAllCollections" label="">
+              <RadioButtonCard
+                name="allowAllCollections"
+                id="yes"
+                label="Allow any collection to be infused"
+              >
+                <img src={infuseAnyImage} alt="Infuse any" />
+              </RadioButtonCard>
 
-          <SubmitButton>Next</SubmitButton>
-        </form>
+              <RadioButtonCard
+                name="allowAllCollections"
+                id="no"
+                label="Only allow specific collections to be infused"
+              >
+                <img src={infuseSpecificImage} alt="Infuse specific" />
+              </RadioButtonCard>
+            </RadioGroup>
 
-        <DevTool control={methods.control} />
+            {allowAllCollections === 'no' && (
+              <MultiAddressInput name="allowedCollections" label="Allowed collections" required />
+            )}
+
+            <ButtonGroup>
+              <BackButton path="basic-info" />
+              <SubmitButton>Next</SubmitButton>
+            </ButtonGroup>
+          </form>
+
+          <DevTool control={methods.control} />
+        </FormContainer>
       </FormProvider>
     </Container>
   );

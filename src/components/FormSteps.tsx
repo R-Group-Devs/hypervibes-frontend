@@ -31,11 +31,11 @@ const Steps = styled.div`
   justify-content: space-between;
 `;
 
-const Step = styled(Link)<{ isActive: boolean }>`
+const Step = styled(Link)<{ $isActive: boolean }>`
   font-size: 14px;
   text-transform: uppercase;
-  font-weight: ${({ isActive }) => (isActive ? 600 : 400)};
-  color: ${({ isActive }) => (isActive ? '#fff' : '#777')};
+  font-weight: ${({ $isActive }) => ($isActive ? 600 : 400)};
+  color: ${({ $isActive }) => ($isActive ? '#fff' : '#777')};
 
   &:hover {
     color: #fff;
@@ -48,7 +48,7 @@ export default ({ steps, activeStep }: Props) => (
     <ProgressBar progress={(activeStep / steps.length) * 100} />
     <Steps>
       {steps.map((step, index) => (
-        <Step isActive={activeStep === index + 1} to={step.path}>
+        <Step key={step.label} $isActive={activeStep === index + 1} to={step.path}>
           {step.label}
         </Step>
       ))}
