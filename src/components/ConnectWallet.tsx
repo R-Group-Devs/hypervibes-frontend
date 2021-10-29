@@ -10,22 +10,28 @@ import { shortenAddress } from '../utils/address';
 const Container = styled.div`
   position: absolute;
   top: 30px;
-  right: 300px;
+  right: 50px;
 `;
 
 const ConnectWalletButton = styled(Button)<{ isConnected: boolean }>`
-  padding: 1em 3em;
-  height: 44px;
-  font-family: '3616 Grammastile', sans-serif;
+  padding: 1px;
+  height: 42px;
   font-family: ${({ isConnected }) =>
     isConnected ? "'Decima Mono', 'Courier New', monospace" : "'3616 Grammastile', sans-serif"};
-  font-size: ${({ isConnected }) => (isConnected ? '14px' : '10px')};
-  background: none;
-  border: 1px solid #17ffe3;
+  font-size: ${({ isConnected }) => (isConnected ? '14px' : '8px')};
+  line-height: ${({ isConnected }) => (isConnected ? '14px' : '24px')};
+  background: linear-gradient(#bcff67, #17ffe3);
 
   &:hover:not([disabled]) {
-    background: none;
+    background: linear-gradient(#bcff67, #17ffe3);
   }
+`;
+
+const ButtonBackground = styled.div`
+  padding: 1em 2.5em;
+  height: 100%;
+  background: #1c1c1c;
+  transition: background 0.2s;
 `;
 
 export default () => {
@@ -43,7 +49,9 @@ export default () => {
     <Container>
       {triedAutoConnect && (
         <ConnectWalletButton onClick={openPortal} isConnected={!!wallet.account}>
-          {wallet.account ? shortenAddress(wallet.account) : 'connect wallet'}
+          <ButtonBackground>
+            {wallet.account ? shortenAddress(wallet.account) : 'connect wallet'}
+          </ButtonBackground>
         </ConnectWalletButton>
       )}
 

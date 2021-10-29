@@ -34,7 +34,7 @@ export default ({ name, required, label }: Props) => {
         label={label}
         required={required}
         validate={{
-          address: (value) => !value || isAddress(value),
+          address: (value) => !value || isAddress(value) || value.endsWith('.eth'),
         }}
       />
 
