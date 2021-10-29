@@ -57,7 +57,7 @@ const RemoveButton = styled.button<{ isVisible: boolean }>`
   right: 0;
   margin-top: 1.4em;
   margin-left: 1em;
-  padding: 1em 0 0 2em;
+  padding: 1em 0.5em 0 2em;
   align-self: flex-start;
   font-size: 14px;
   visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
