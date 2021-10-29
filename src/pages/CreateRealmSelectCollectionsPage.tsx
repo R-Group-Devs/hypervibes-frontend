@@ -55,7 +55,12 @@ export default () => {
             </RadioGroup>
 
             {allowAllCollections === 'no' && (
-              <MultiAddressInput name="allowedCollections" label="Allowed collections" required />
+              <MultiAddressInput
+                name="allowedCollections"
+                label="Allowed collections"
+                addMoreText="Add more collections"
+                required
+              />
             )}
 
             <ButtonGroup>

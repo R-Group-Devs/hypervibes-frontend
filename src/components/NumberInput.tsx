@@ -18,8 +18,8 @@ const StyledInput = styled(Input)`
   padding-top: 1.5em;
   padding-left: 0.5em;
   padding-right: 0.5em;
-  border: 2px solid #fff;
   border-radius: 10px;
+  border-width: 2px;
   -moz-appearance: textfield;
 
   &::-webkit-outer-spin-button,

@@ -10,7 +10,7 @@ interface Props {
 }
 
 const Container = styled.div`
-  margin-top: 3em;
+  margin-top: 1.7em;
   margin-bottom: 0.5em;
 `;
 
@@ -22,6 +22,7 @@ const RadioGroup = styled.div`
 const Label = styled.h3`
   margin-bottom: 1.5em;
   text-transform: uppercase;
+  font-size: 18px;
 `;
 
 export default ({ name, label, children }: Props) => {

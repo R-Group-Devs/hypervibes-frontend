@@ -7,7 +7,9 @@ interface Props {
   children: React.ReactNode;
 }
 
-const Container = styled.div``;
+const Container = styled.div`
+  margin-top: 1.7em;
+`;
 
 const Label = styled.div`
   font-size: 18px;
@@ -23,6 +25,8 @@ const InputGroup = styled.div`
 
 const Description = styled.p`
   margin-bottom: 2em;
+  font-size: 14px;
+  font-weight: 300;
 `;
 
 export default ({ label, description, children }: Props) => (

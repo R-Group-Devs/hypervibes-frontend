@@ -17,6 +17,7 @@ const SubmitButton = styled.button<{ size: 'md' | 'lg' }>`
   margin-top: 2em;
   padding-left: ${({ size }) => (size === 'md' ? '2.5em' : '2em')};
   width: ${({ size }) => (size === 'md' ? '182px' : '327px')};
+  height: 48px;
   font-family: '3616 Grammastile', sans-serif;
   font-size: 12px;
   line-height: 20px;

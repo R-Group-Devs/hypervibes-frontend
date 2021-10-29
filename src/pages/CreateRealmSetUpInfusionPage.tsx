@@ -3,7 +3,6 @@ import { useForm, FormProvider } from 'react-hook-form';
 import { DevTool } from '@hookform/devtools';
 import { useHistory } from 'react-router-dom';
 import useCreateRealmWizard, { RealmWizardValues } from '../hooks/useCreateRealmWizard';
-import useErc20TokenDetails from '../hooks/useErc20TokenDetails';
 import FormContainer from '../components/FormContainer';
 import FormHeading from '../components/FormHeading';
 import RadioGroup from '../components/RadioGroup';
@@ -18,22 +17,12 @@ import heading from '../assets/images/headings/set-up-infusion.svg';
 import allowAnyInfuserImage from '../assets/images/allow-any-infuser.svg';
 import allowSpecificInfusersImage from '../assets/images/allow-specific-infusers.png';
 
-const Container = styled.div`
-  position: relative;
-`;
-
-const TokenSymbol = styled.div`
-  position: absolute;
-  top: 14.5em;
-  right: 5em;
-`;
+const Container = styled.div``;
 
 export default () => {
   const { realm, updateRealm } = useCreateRealmWizard();
   const methods = useForm<RealmWizardValues>({ defaultValues: realm });
   const allowPublicInfusion = methods.watch('allowPublicInfusion');
-  const tokenAddress = methods.watch('tokenAddress');
-  const { symbol } = useErc20TokenDetails(tokenAddress);
   const history = useHistory();
 
   const onSubmit = methods.handleSubmit((data) => {
@@ -47,8 +36,13 @@ export default () => {
         <FormContainer steps={CREATE_REALM_STEPS} activeStep={3}>
           <FormHeading src={heading} alt="Select Collections" />
           <form onSubmit={onSubmit}>
-            <AddressInput name="tokenAddress" label="ERC-20 Token Address" required />
-            <TokenSymbol>{symbol}</TokenSymbol>
+            <AddressInput
+              name="tokenAddress"
+              label="Token Address"
+              description="The ERC-20 contract address of the token you want to infuse."
+              required
+              showTokenSymbol
+            />
 
             <RadioGroup name="allowPublicInfusion" label="">
               <RadioButtonCard name="allowPublicInfusion" id="yes" label="Allow anyone to infuse">
@@ -65,7 +59,12 @@ export default () => {
             </RadioGroup>
 
             {allowPublicInfusion === 'no' && (
-              <MultiAddressInput name="allowedInfusers" label="Allowed infusers" required />
+              <MultiAddressInput
+                name="allowedInfusers"
+                label="Allowed infusers"
+                addMoreText="Add more infusers"
+                required
+              />
             )}
 
             <ButtonGroup>

@@ -15,18 +15,18 @@ const Option = styled.div<{ isSelected: boolean }>`
   justify-content: center;
   width: 264px;
   height: 64px;
-  font-size: 24px;
+  font-size: 20px;
   font-weight: ${({ isSelected }) => (isSelected ? 600 : 400)};
   background: ${({ isSelected }) =>
-    isSelected ? 'linear-gradient(rgba(188, 255, 103, 0.8), rgba(23, 255, 227, 0.8))' : 'none'};
+    isSelected ? 'linear-gradient(rgba(188, 255, 103, 0.8), rgba(23, 255, 227, 0.8)) 40%' : 'none'};
   text-transform: uppercase;
   border: ${({ isSelected }) => (isSelected ? '2px solid transparent' : '2px solid #fff')};
   border-radius: 10px;
   transition: all 0.2s;
 
   &:hover {
+    border: 2px solid #17ffe3;
     cursor: pointer;
-    border: 2px solid #bcff67;
   }
 `;
 

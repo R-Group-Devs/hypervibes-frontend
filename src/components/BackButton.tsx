@@ -8,10 +8,8 @@ interface Props {
 }
 
 const BackButton = styled(Button)`
-  position: relative;
-  top: 0.25em;
   display: flex;
-  margin-top: 2em;
+  margin-top: 2.1em;
   padding-left: 0;
   padding-right: 0;
   width: 182px;

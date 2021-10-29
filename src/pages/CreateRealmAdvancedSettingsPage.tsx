@@ -44,7 +44,7 @@ export default () => {
           <form onSubmit={onSubmit}>
             <InputGroup
               label="Token Infusion Amount"
-              description="The minimum and maximum number of tokens which can be infused at one time by an infuser."
+              description="The minimum and maximum number of tokens that can be infused at one time by an infuser."
             >
               <NumberInput name="minTokenInfusionAmount" label="Minimum" required />
               <NumberInput name="maxTokenInfusionAmount" label="Maximum" required />
@@ -52,7 +52,7 @@ export default () => {
 
             <InputGroup
               label="Claimable Token Rate"
-              description="The minimum and maximum configurable daily rates at which infused tokens are made available for claiming by the NFT holder."
+              description="The minimum and maximum configurable daily rates that infused tokens are made claimable by the NFT holder."
             >
               <NumberInput name="minClaimableTokenRate" label="Minimum" required />
               <NumberInput name="maxClaimableTokenRate" label="Maximum" required />
@@ -60,7 +60,7 @@ export default () => {
 
             <InputGroup
               label="Maximum Infusible Tokens"
-              description="The maximum number of tokens which can be infused in total into an NFT."
+              description="The maximum number of tokens that can be infused in total into an NFT."
             >
               <NumberInput name="maxInfusibleTokens" label="Maximum" required />
             </InputGroup>
