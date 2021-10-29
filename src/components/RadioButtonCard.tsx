@@ -17,14 +17,20 @@ const Card = styled.div<{ isSelected: boolean }>`
   width: 310px;
   height: 138px;
   background: #0b0b0b;
-  border: ${({ isSelected }) => (isSelected ? '2px solid #bcff67' : '1px solid #fff')};
+  border-width: 1px;
+  border-style: solid;
+  border-color: ${({ isSelected }) => (isSelected ? '#bcff67' : '#fff')};
+  outline-width: 1px;
+  outline-style: solid;
+  outline-color: ${({ isSelected }) => (isSelected ? '#bcff67' : 'transparent')};
   box-shadow: ${({ isSelected }) => (isSelected ? '0 0 40px 0 #bcff67' : 'none')};
   border-radius: 20px;
   transition: all 0.2s;
 
   &:hover {
+    border-color: #bcff67;
+    outline-color: #bcff67;
     cursor: pointer;
-    border: 2px solid #bcff67;
   }
 `;
 

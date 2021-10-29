@@ -14,10 +14,40 @@ import BackButton from '../components/BackButton';
 import SubmitButton from '../components/SubmitButton';
 import { CREATE_REALM_STEPS } from '../constants/formSteps';
 import heading from '../assets/images/headings/set-up-infusion.svg';
-import allowAnyInfuserImage from '../assets/images/allow-any-infuser.svg';
+import allowAnyInfuserImage from '../assets/images/allow-any-infuser.png';
+import allowAnyInfuserSelectedImage from '../assets/images/allow-any-infuser-selected.png';
 import allowSpecificInfusersImage from '../assets/images/allow-specific-infusers.png';
+import allowSpecificInfusersSelectedImage from '../assets/images/allow-specific-infusers-selected.png';
 
 const Container = styled.div``;
+
+const InfusionOptionImage = styled.div`
+  width: 100%;
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: background-image 0.2s;
+`;
+
+const AllowAnyInfuser = styled(InfusionOptionImage)<{ isSelected: boolean }>`
+  background-image: ${({ isSelected }) =>
+    isSelected ? `url(${allowAnyInfuserSelectedImage})` : `url(${allowAnyInfuserImage})`};
+
+  &:hover {
+    background-image: url(${allowAnyInfuserSelectedImage});
+  }
+`;
+
+const AllowSpecificInfusers = styled(InfusionOptionImage)<{ isSelected: boolean }>`
+  background-image: ${({ isSelected }) =>
+    isSelected
+      ? `url(${allowSpecificInfusersSelectedImage})`
+      : `url(${allowSpecificInfusersImage})`};
+
+  &:hover {
+    background-image: url(${allowSpecificInfusersSelectedImage});
+  }
+`;
 
 export default () => {
   const { realm, updateRealm } = useCreateRealmWizard();
@@ -46,7 +76,7 @@ export default () => {
 
             <RadioGroup name="allowPublicInfusion" label="">
               <RadioButtonCard name="allowPublicInfusion" id="yes" label="Allow anyone to infuse">
-                <img src={allowAnyInfuserImage} alt="Infuse any" />
+                <AllowAnyInfuser isSelected={allowPublicInfusion === 'yes'} />
               </RadioButtonCard>
 
               <RadioButtonCard
@@ -54,7 +84,7 @@ export default () => {
                 id="no"
                 label="Only allow specific addresses to infuse"
               >
-                <img src={allowSpecificInfusersImage} alt="Infuse specific" />
+                <AllowSpecificInfusers isSelected={allowPublicInfusion === 'no'} />
               </RadioButtonCard>
             </RadioGroup>
 
