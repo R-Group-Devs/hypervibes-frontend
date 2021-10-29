@@ -23,11 +23,15 @@ const BackgroundContainerHorizontal = styled.div`
   background: url(${hyperVibesLogoPatternHorizontal}) left bottom repeat-x;
 `;
 
-const Container = styled.div`
+const BorderContainer = styled.div`
   position: relative;
-  background: #000;
+  padding: 1px;
   box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.8);
-  border: 1px solid #17ffe3;
+  background: linear-gradient(#17ffe3, #000);
+`;
+
+const Container = styled.div`
+  background: #000;
 `;
 
 const Content = styled.div`
@@ -44,7 +48,7 @@ const ThreeLinePattern = styled.div`
   display: flex;
   flex-direction: column;
   row-gap: 6px;
-  margin-top: 8px;
+  padding-top: 8px;
 `;
 
 const LinePattern = styled.div`
@@ -71,19 +75,21 @@ export default ({ steps, activeStep, children }: Props) => (
 
     <BackgroundContainerHorizontal>
       <BackgroundContainerVertical>
-        <Container>
-          <ThreeLinePattern>
-            <LinePattern />
-            <LinePattern />
-            <LinePattern />
-          </ThreeLinePattern>
-          <Star src={star} alt="" />
+        <BorderContainer>
+          <Container>
+            <ThreeLinePattern>
+              <LinePattern />
+              <LinePattern />
+              <LinePattern />
+            </ThreeLinePattern>
+            <Star src={star} alt="" />
 
-          <Content>
-            {activeStep === 1 && <StepIcon src={stepOneIcon} alt="1" />}
-            {children}
-          </Content>
-        </Container>
+            <Content>
+              {activeStep === 1 && <StepIcon src={stepOneIcon} alt="1" />}
+              {children}
+            </Content>
+          </Container>
+        </BorderContainer>
       </BackgroundContainerVertical>
     </BackgroundContainerHorizontal>
   </>
