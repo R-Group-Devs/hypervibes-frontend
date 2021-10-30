@@ -85,7 +85,7 @@ export default ({
   return (
     <>
       <StyledLabel name={`${name}.0.value`}>{label}</StyledLabel>
-      <Description>{description}</Description>
+      {description && <Description>{description}</Description>}
 
       {fields.map((field, index) => (
         <Container key={field.id}>

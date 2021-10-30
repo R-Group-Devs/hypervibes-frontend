@@ -8,7 +8,7 @@ interface Props {
 }
 
 const Label = styled.label<{ isRequired: boolean }>`
-  margin: 1.5em 0 0.75em;
+  margin: 1.5em 0 0.5em;
   display: block;
   font-size: 18px;
   font-weight: 600;
