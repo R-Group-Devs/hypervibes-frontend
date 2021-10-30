@@ -10,12 +10,14 @@ import stepFourIcon from '../assets/images/icons/step-4.svg';
 import star from '../assets/images/star.svg';
 
 interface Props {
+  name: string;
   steps: FormStep[];
   activeStep: number;
   children: React.ReactNode;
 }
 
 const BackgroundContainerVertical = styled.div`
+  position: relative;
   padding-left: 3em;
   background: url(${hyperVibesLogoPatternVertical}) left top repeat-y;
   background-size: 24px 388px;
@@ -49,6 +51,20 @@ const Content = styled.div`
   max-width: 784px;
 `;
 
+const NameTab = styled.div`
+  position: absolute;
+  top: 0;
+  right: -44px;
+  padding: 20px 10px;
+  width: 44px;
+  display: inline-block;
+  font-family: '3616 Grammastile', sans-serif;
+  font-size: 14px;
+  color: #000;
+  background: #bcff67;
+  writing-mode: vertical-rl;
+`;
+
 const ThreeLinePattern = styled.div`
   display: flex;
   flex-direction: column;
@@ -74,12 +90,13 @@ const Star = styled.img`
   left: 1.5em;
 `;
 
-export default ({ steps, activeStep, children }: Props) => (
+export default ({ name, steps, activeStep, children }: Props) => (
   <>
     <FormSteps steps={steps} activeStep={activeStep} />
 
     <BackgroundContainerHorizontal>
       <BackgroundContainerVertical>
+        <NameTab>{name}</NameTab>
         <BorderContainer>
           <Container>
             <ThreeLinePattern>

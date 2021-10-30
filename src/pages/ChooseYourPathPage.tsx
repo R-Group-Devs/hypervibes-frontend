@@ -29,6 +29,8 @@ const Path = styled.div`
   transition: all 0.2s;
 
   &:hover {
+    outline: 1px solid #17ffe3;
+    border-color: #17ffe3;
     box-shadow: 0 0 20px 4px #bcff67;
   }
 `;

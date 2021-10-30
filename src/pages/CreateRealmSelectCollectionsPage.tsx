@@ -32,7 +32,7 @@ export default () => {
   return (
     <Container>
       <FormProvider {...methods}>
-        <FormContainer steps={CREATE_REALM_STEPS} activeStep={2}>
+        <FormContainer name="Create Realm" steps={CREATE_REALM_STEPS} activeStep={2}>
           <FormHeading src={heading} alt="Select Collections" />
 
           <form onSubmit={onSubmit}>

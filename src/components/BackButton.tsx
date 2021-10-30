@@ -25,6 +25,7 @@ const StyledLink = styled(Link)`
   align-items: center;
   justify-content: center;
   width: 100%;
+  color: #fff;
 
   &:hover {
     text-decoration: none;
