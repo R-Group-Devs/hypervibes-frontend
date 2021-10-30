@@ -26,6 +26,7 @@ import NftListPage from './pages/NftListPage';
 import NotFoundPage from './pages/NotFoundPage';
 import GlobalStyle from './components/GlobalStyle';
 import Header from './components/Header';
+import SocialLinks from './components/SocialLinks';
 import AppErrorMessage from './components/AppErrorMessage';
 
 const AppContainer = styled.div`
@@ -49,6 +50,7 @@ export default () => (
           <ErrorBoundary fallback={<AppErrorMessage />}>
             <AppContainer>
               <Header />
+              <SocialLinks />
 
               <Switch>
                 <Route exact path="/">

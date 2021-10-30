@@ -149,7 +149,11 @@ export default ({ isOpen, close }: Props) => {
                 >
                   <WalletLink>{isAddressCopied ? 'Copied' : 'Copy address'}</WalletLink>
                 </CopyToClipboard>
-                <WalletLink href={`https://etherscan.io/address/${wallet.account}`} target="_blank">
+                <WalletLink
+                  href={`https://etherscan.io/address/${wallet.account}`}
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   View on explorer
                 </WalletLink>
               </div>
