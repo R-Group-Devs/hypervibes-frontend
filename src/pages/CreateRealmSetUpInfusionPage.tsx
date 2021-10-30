@@ -30,6 +30,8 @@ const InfusionOptionImage = styled.div`
 `;
 
 const AllowAnyInfuser = styled(InfusionOptionImage)<{ isSelected: boolean }>`
+  background-size: 45%;
+
   background-image: ${({ isSelected }) =>
     isSelected ? `url(${allowAnyInfuserSelectedImage})` : `url(${allowAnyInfuserImage})`};
 
@@ -39,6 +41,8 @@ const AllowAnyInfuser = styled(InfusionOptionImage)<{ isSelected: boolean }>`
 `;
 
 const AllowSpecificInfusers = styled(InfusionOptionImage)<{ isSelected: boolean }>`
+  background-size: 41%;
+
   background-image: ${({ isSelected }) =>
     isSelected
       ? `url(${allowSpecificInfusersSelectedImage})`
