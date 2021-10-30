@@ -5,6 +5,9 @@ import heading from '../assets/images/headings/choose-your-path.svg';
 import createRealmImage from '../assets/images/create-realm.png';
 import infuseNftImage from '../assets/images/infuse-nft.png';
 import claimTokensImage from '../assets/images/claim-tokens.png';
+import star from '../assets/images/star.svg';
+import plus from '../assets/images/plus.svg';
+import flag from '../assets/images/flag.svg';
 
 const Container = styled.div`
   display: flex;
@@ -15,12 +18,16 @@ const PageHeading = styled.img`
   margin: 3em 0 4em;
 `;
 
-const Path = styled.div`
+const PathCard = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
+  justify-content: center;
   padding: 1em 2em;
   width: 32vh;
   height: 50vh;
+  min-width: 200px;
+  min-height: 305px;
   max-width: 332px;
   max-height: 508px;
   background: #1c1c1c;
@@ -35,8 +42,8 @@ const Path = styled.div`
   }
 `;
 
-const PathImage = styled.img`
-  width: 100%;
+const PathImage = styled.img<{ width?: string }>`
+  width: ${({ width }) => (width ? width : '100%')};
 `;
 
 const PathLabel = styled.h3`
@@ -54,6 +61,15 @@ const StyledLink = styled(Link)`
   }
 `;
 
+const CardFlourish = styled.img<{ position: 'top' | 'bottom' }>`
+  position: absolute;
+  top: ${({ position }) => (position === 'top' ? '20px' : 'auto')};
+  right: ${({ position }) => (position === 'top' ? '20px' : 'auto')};
+  bottom: ${({ position }) => (position === 'bottom' ? '20px' : 'auto')};
+  left: ${({ position }) => (position === 'bottom' ? '20px' : 'auto')};
+  height: 9%;
+`;
+
 export default () => {
   return (
     <CenteredContent>
@@ -61,9 +77,11 @@ export default () => {
 
       <Container>
         <StyledLink to="/realm/create">
-          <Path>
+          <PathCard>
             <PathImage src={createRealmImage} alt="Create Realm" />
-          </Path>
+            <CardFlourish src={star} position="top" alt="" />
+            <CardFlourish src={star} position="bottom" alt="" />
+          </PathCard>
 
           <PathLabel>
             Create a new
@@ -73,9 +91,11 @@ export default () => {
         </StyledLink>
 
         <StyledLink to="/infuse">
-          <Path>
-            <PathImage src={infuseNftImage} alt="Infuse NFT" />
-          </Path>
+          <PathCard>
+            <PathImage src={infuseNftImage} width="85%" alt="Infuse NFT" />
+            <CardFlourish src={plus} position="top" alt="" />
+            <CardFlourish src={plus} position="bottom" alt="" />
+          </PathCard>
 
           <PathLabel>
             Infuse an NFT
@@ -85,9 +105,11 @@ export default () => {
         </StyledLink>
 
         <StyledLink to="/claim">
-          <Path>
+          <PathCard>
             <PathImage src={claimTokensImage} alt="Claim Tokens" />
-          </Path>
+            <CardFlourish src={flag} position="top" alt="" />
+            <CardFlourish src={flag} position="bottom" alt="" />
+          </PathCard>
 
           <PathLabel>
             Claim tokens
