@@ -50,7 +50,13 @@ export default ({ name, label, required = false, ...rest }: Props) => {
         type="number"
         id={name}
         hasError={formState.errors[name]}
-        {...register(name, { required, valueAsNumber: true })}
+        {...register(name, {
+          required,
+          valueAsNumber: true,
+          validate: {
+            minValue: (value) => !value || value >= 0,
+          },
+        })}
         {...rest}
       />
 
