@@ -3,6 +3,7 @@ import { useFormContext, Validate } from 'react-hook-form';
 import Label from './Label';
 import Input from './Input';
 import FormFieldErrorMessage from './FormFieldErrorMessage';
+import { getDeep } from '../utils/object';
 
 interface Props {
   name: string;
@@ -43,13 +44,13 @@ export default ({
       <Input
         type="text"
         id={name}
-        hasError={formState.errors[name]}
+        hasError={getDeep(formState.errors, name)}
         spellCheck={false}
         {...register(name, { required, maxLength, validate })}
         {...rest}
       />
 
-      <FormFieldErrorMessage error={formState.errors[name]} maxLength={maxLength} />
+      <FormFieldErrorMessage error={getDeep(formState.errors, name)} maxLength={maxLength} />
     </div>
   );
 };
