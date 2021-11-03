@@ -20,12 +20,6 @@ const StyledInput = styled(Input)`
   padding-right: 0.5em;
   border-radius: 10px;
   border-width: 2px;
-  -moz-appearance: textfield;
-
-  &::-webkit-outer-spin-button,
-  &::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-  }
 `;
 
 const StyledLabel = styled(Label)`
@@ -47,14 +41,14 @@ export default ({ name, label, required = false, ...rest }: Props) => {
       </StyledLabel>
 
       <StyledInput
-        type="number"
+        type="text"
         id={name}
         hasError={formState.errors[name]}
         {...register(name, {
           required,
           valueAsNumber: true,
           validate: {
-            minValue: (value) => !value || value >= 0,
+            minValue: (value) => !value || parseFloat(value) >= 0,
           },
         })}
         {...rest}
