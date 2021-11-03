@@ -1,4 +1,3 @@
-import React from 'react';
 import { UseWalletProvider } from 'use-wallet';
 
 interface Props {
