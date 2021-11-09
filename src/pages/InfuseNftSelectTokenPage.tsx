@@ -12,7 +12,7 @@ export default () => {
   const methods = useForm<FormValues>();
   const history = useHistory();
 
-  const onSubmit = methods.handleSubmit((data) => {
+  const onSubmit = methods.handleSubmit(data => {
     history.push(`token/${data.tokenId}`);
   });
 

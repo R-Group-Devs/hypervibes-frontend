@@ -21,9 +21,11 @@ export default ({ error, maxLength }: Props) => (
   <Container>
     <Message isVisible={!!error}>
       {error?.type === 'required' && 'This field is required.'}
-      {error?.type === 'maxLength' && `This field must be shorter ${maxLength} characters.`}
+      {error?.type === 'maxLength' &&
+        `This field must be shorter ${maxLength} characters.`}
       {error?.type === 'minValue' && 'Enter a value higher than zero.'}
-      {error?.type === 'address' && 'Enter a valid Ethereum address or ENS name.'}
+      {error?.type === 'address' &&
+        'Enter a valid Ethereum address or ENS name.'}
     </Message>
   </Container>
 );

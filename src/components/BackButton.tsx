@@ -38,7 +38,7 @@ const ArrowLeftIcon = styled.img`
 `;
 
 export default ({ path, ...rest }: Props) => (
-  <BackButton onClick={(e) => e.preventDefault()} {...rest}>
+  <BackButton onClick={e => e.preventDefault()} {...rest}>
     <StyledLink to={path}>
       <ArrowLeftIcon src={arrowLeft} alt="" />
       Back

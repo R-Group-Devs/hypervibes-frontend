@@ -2,7 +2,9 @@ import styled from 'styled-components';
 import { useForm, FormProvider } from 'react-hook-form';
 import { DevTool } from '@hookform/devtools';
 import { useHistory } from 'react-router-dom';
-import useCreateRealmWizard, { RealmWizardValues } from '../hooks/useCreateRealmWizard';
+import useCreateRealmWizard, {
+  RealmWizardValues,
+} from '../hooks/useCreateRealmWizard';
 import FormContainer from '../components/FormContainer';
 import FormHeading from '../components/FormHeading';
 import RadioGroup from '../components/RadioGroup';
@@ -33,14 +35,18 @@ const AllowAnyInfuser = styled(InfusionOptionImage)<{ isSelected: boolean }>`
   background-size: 45%;
 
   background-image: ${({ isSelected }) =>
-    isSelected ? `url(${allowAnyInfuserSelectedImage})` : `url(${allowAnyInfuserImage})`};
+    isSelected
+      ? `url(${allowAnyInfuserSelectedImage})`
+      : `url(${allowAnyInfuserImage})`};
 
   &:hover {
     background-image: url(${allowAnyInfuserSelectedImage});
   }
 `;
 
-const AllowSpecificInfusers = styled(InfusionOptionImage)<{ isSelected: boolean }>`
+const AllowSpecificInfusers = styled(InfusionOptionImage)<{
+  isSelected: boolean;
+}>`
   background-size: 41%;
 
   background-image: ${({ isSelected }) =>
@@ -59,7 +65,7 @@ export default () => {
   const allowPublicInfusion = methods.watch('allowPublicInfusion');
   const history = useHistory();
 
-  const onSubmit = methods.handleSubmit((data) => {
+  const onSubmit = methods.handleSubmit(data => {
     updateRealm(data);
     history.push('advanced-settings');
   });
@@ -67,7 +73,11 @@ export default () => {
   return (
     <Container>
       <FormProvider {...methods}>
-        <FormContainer name="Create Realm" steps={CREATE_REALM_STEPS} activeStep={3}>
+        <FormContainer
+          name="Create Realm"
+          steps={CREATE_REALM_STEPS}
+          activeStep={3}
+        >
           <FormHeading src={heading} alt="Select Collections" />
           <form onSubmit={onSubmit}>
             <AddressInput
@@ -79,7 +89,11 @@ export default () => {
             />
 
             <RadioGroup name="allowPublicInfusion" label="">
-              <RadioButtonCard name="allowPublicInfusion" id="yes" label="Allow anyone to infuse">
+              <RadioButtonCard
+                name="allowPublicInfusion"
+                id="yes"
+                label="Allow anyone to infuse"
+              >
                 <AllowAnyInfuser isSelected={allowPublicInfusion === 'yes'} />
               </RadioButtonCard>
 
@@ -88,7 +102,9 @@ export default () => {
                 id="no"
                 label="Only allow specific addresses to infuse"
               >
-                <AllowSpecificInfusers isSelected={allowPublicInfusion === 'no'} />
+                <AllowSpecificInfusers
+                  isSelected={allowPublicInfusion === 'no'}
+                />
               </RadioButtonCard>
             </RadioGroup>
 

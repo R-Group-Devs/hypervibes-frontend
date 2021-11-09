@@ -22,8 +22,10 @@ const Card = styled.div<{ isSelected: boolean }>`
   border-color: ${({ isSelected }) => (isSelected ? '#bcff67' : '#fff')};
   outline-width: 1px;
   outline-style: solid;
-  outline-color: ${({ isSelected }) => (isSelected ? '#bcff67' : 'transparent')};
-  box-shadow: ${({ isSelected }) => (isSelected ? '0 0 40px 0 #bcff67' : 'none')};
+  outline-color: ${({ isSelected }) =>
+    isSelected ? '#bcff67' : 'transparent'};
+  box-shadow: ${({ isSelected }) =>
+    isSelected ? '0 0 40px 0 #bcff67' : 'none'};
   border-radius: 20px;
   transition: all 0.2s;
 

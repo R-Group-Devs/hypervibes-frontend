@@ -50,7 +50,10 @@ export default ({
         {...rest}
       />
 
-      <FormFieldErrorMessage error={getDeep(formState.errors, name)} maxLength={maxLength} />
+      <FormFieldErrorMessage
+        error={getDeep(formState.errors, name)}
+        maxLength={maxLength}
+      />
     </div>
   );
 };

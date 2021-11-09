@@ -88,16 +88,23 @@ export default ({
 
       {fields.map((field, index) => (
         <Container key={field.id}>
-          <Input name={`${name}.${index}.value` as const} required={required} {...rest} />
+          <Input
+            name={`${name}.${index}.value` as const}
+            required={required}
+            {...rest}
+          />
 
-          <RemoveButton isVisible={fields.length > 1} onClick={() => remove(index)}>
+          <RemoveButton
+            isVisible={fields.length > 1}
+            onClick={() => remove(index)}
+          >
             Remove
           </RemoveButton>
         </Container>
       ))}
 
       <AddAnotherButton
-        onClick={(e) => {
+        onClick={e => {
           e.preventDefault();
           append({ value: '' });
         }}

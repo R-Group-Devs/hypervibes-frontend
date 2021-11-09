@@ -2,7 +2,9 @@ import styled from 'styled-components';
 import { useForm, FormProvider } from 'react-hook-form';
 import { DevTool } from '@hookform/devtools';
 import { useHistory } from 'react-router-dom';
-import useCreateRealmWizard, { RealmWizardValues } from '../hooks/useCreateRealmWizard';
+import useCreateRealmWizard, {
+  RealmWizardValues,
+} from '../hooks/useCreateRealmWizard';
 import FormContainer from '../components/FormContainer';
 import FormHeading from '../components/FormHeading';
 import TextInput from '../components/TextInput';
@@ -20,7 +22,7 @@ export default () => {
   const methods = useForm<RealmWizardValues>({ defaultValues: realm });
   const history = useHistory();
 
-  const onSubmit = methods.handleSubmit((data) => {
+  const onSubmit = methods.handleSubmit(data => {
     updateRealm(data);
     history.push('select-collections');
   });
@@ -28,12 +30,26 @@ export default () => {
   return (
     <Container>
       <FormProvider {...methods}>
-        <FormContainer name="Create Realm" steps={CREATE_REALM_STEPS} activeStep={1}>
+        <FormContainer
+          name="Create Realm"
+          steps={CREATE_REALM_STEPS}
+          activeStep={1}
+        >
           <FormHeading src={heading} alt="Choose Your Path" />
 
           <form onSubmit={onSubmit}>
-            <TextInput name="name" label="Name Your Realm" required maxLength={30} />
-            <TextInput name="description" label="Description" required maxLength={150} />
+            <TextInput
+              name="name"
+              label="Name Your Realm"
+              required
+              maxLength={30}
+            />
+            <TextInput
+              name="description"
+              label="Description"
+              required
+              maxLength={150}
+            />
             <MultiAddressInput
               name="admins"
               label="Admin(s)"

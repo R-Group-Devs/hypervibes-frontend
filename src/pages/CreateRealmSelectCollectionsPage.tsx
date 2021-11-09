@@ -2,7 +2,9 @@ import styled from 'styled-components';
 import { useForm, FormProvider } from 'react-hook-form';
 import { DevTool } from '@hookform/devtools';
 import { useHistory } from 'react-router-dom';
-import useCreateRealmWizard, { RealmWizardValues } from '../hooks/useCreateRealmWizard';
+import useCreateRealmWizard, {
+  RealmWizardValues,
+} from '../hooks/useCreateRealmWizard';
 import FormContainer from '../components/FormContainer';
 import FormHeading from '../components/FormHeading';
 import RadioGroup from '../components/RadioGroup';
@@ -24,7 +26,7 @@ export default () => {
   const allowAllCollections = methods.watch('allowAllCollections');
   const history = useHistory();
 
-  const onSubmit = methods.handleSubmit((data) => {
+  const onSubmit = methods.handleSubmit(data => {
     updateRealm(data);
     history.push('set-up-infusion');
   });
@@ -32,7 +34,11 @@ export default () => {
   return (
     <Container>
       <FormProvider {...methods}>
-        <FormContainer name="Create Realm" steps={CREATE_REALM_STEPS} activeStep={2}>
+        <FormContainer
+          name="Create Realm"
+          steps={CREATE_REALM_STEPS}
+          activeStep={2}
+        >
           <FormHeading src={heading} alt="Select Collections" />
 
           <form onSubmit={onSubmit}>

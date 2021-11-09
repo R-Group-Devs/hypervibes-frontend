@@ -11,7 +11,10 @@ const HYPERVIBES_SUBGRAPH_ENDPOINTS: Record<string, string> = {
 export default <QueryResult>(
   queryName: string,
   query: string,
-  queryOptions?: Omit<UseQueryOptions<QueryResult, Error>, 'queryKey' | 'queryFn'>
+  queryOptions?: Omit<
+    UseQueryOptions<QueryResult, Error>,
+    'queryKey' | 'queryFn'
+  >
 ) => {
   const { chainId = 1 } = useWallet();
 

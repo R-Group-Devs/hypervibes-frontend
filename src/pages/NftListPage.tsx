@@ -9,8 +9,12 @@ const Container = styled.div`
 
 export default () => (
   <Container>
-    {tokenIds.map((tokenId) => (
-      <Nft key={tokenId} contractAddress="0xd07dc4262bcdbf85190c01c996b4c06a461d2430" tokenId={tokenId} />
+    {tokenIds.map(tokenId => (
+      <Nft
+        key={tokenId}
+        contractAddress="0xd07dc4262bcdbf85190c01c996b4c06a461d2430"
+        tokenId={tokenId}
+      />
     ))}
   </Container>
 );

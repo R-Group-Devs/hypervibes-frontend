@@ -23,7 +23,11 @@ export default () => (
       <img src={twitterIcon} alt="Twitter" />
     </a>
 
-    <a href="https://github.com/R-Group-Devs/hypervibes-contracts" target="_blank" rel="noreferrer">
+    <a
+      href="https://github.com/R-Group-Devs/hypervibes-contracts"
+      target="_blank"
+      rel="noreferrer"
+    >
       <img src={githubIcon} alt="GitHub" />
     </a>
   </Container>

@@ -67,7 +67,7 @@ export default ({ isOpen, children, close }: Props) => {
         <animated.div style={styles}>
           <Overlay
             ref={overlay}
-            onClick={(e) => {
+            onClick={e => {
               if (e.target === overlay.current) {
                 close();
               }

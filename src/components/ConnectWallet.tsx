@@ -17,7 +17,9 @@ const ConnectWalletButton = styled(Button)<{ isConnected: boolean }>`
   padding: 1px;
   height: 42px;
   font-family: ${({ isConnected }) =>
-    isConnected ? "'Decima Mono', 'Courier New', monospace" : "'3616 Grammastile', sans-serif"};
+    isConnected
+      ? "'Decima Mono', 'Courier New', monospace"
+      : "'3616 Grammastile', sans-serif"};
   font-size: ${({ isConnected }) => (isConnected ? '14px' : '8px')};
   line-height: ${({ isConnected }) => (isConnected ? '14px' : '24px')};
   background: linear-gradient(#bcff67, #17ffe3);
@@ -48,7 +50,10 @@ export default () => {
   return (
     <Container>
       {triedAutoConnect && (
-        <ConnectWalletButton onClick={openPortal} isConnected={!!wallet.account}>
+        <ConnectWalletButton
+          onClick={openPortal}
+          isConnected={!!wallet.account}
+        >
           <ButtonBackground>
             {wallet.account ? shortenAddress(wallet.account) : 'connect wallet'}
           </ButtonBackground>

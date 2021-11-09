@@ -12,7 +12,9 @@ export default () => {
   const approveAllowance = useCallback(
     async (tokenAddress: string, amount: number) => {
       if (chainId && isAddress(tokenAddress) && getErc20Contract) {
-        const decimalExponent = await getErc20Contract(tokenAddress)?.decimals();
+        const decimalExponent = await getErc20Contract(
+          tokenAddress
+        )?.decimals();
         const decimals = BigNumber.from(10).pow(decimalExponent);
 
         await getErc20Contract(tokenAddress)?.approve(

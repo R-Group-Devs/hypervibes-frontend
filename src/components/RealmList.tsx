@@ -15,7 +15,7 @@ const Container = styled.div`
 
 export default ({ realms }: Props) => (
   <Container>
-    {realms.map((realm) => (
+    {realms.map(realm => (
       <RealmCard key={realm.id} {...realm} />
     ))}
   </Container>
