@@ -16,7 +16,6 @@ import useInfuseNft from '../hooks/useInfuseNft';
 
 interface FormValues {
   amount: number;
-  dailyRate: number;
 }
 
 interface Params {
@@ -79,7 +78,6 @@ export default () => {
           tokenId: parseInt(tokenId, 10),
           infuser: account,
           amount: data.amount,
-          dailyRate: data.dailyRate,
         });
 
         history.push(`/infuse/success`);
@@ -94,7 +92,6 @@ export default () => {
       <FormProvider {...methods}>
         <form onSubmit={onSubmit}>
           <NumberInput name="amount" label="Amount to Infuse" required />
-          <NumberInput name="dailyRate" label="Daily Claimable Rate" required />
 
           <ButtonGroup>
             <SubmitButton disabled={hasApprovedEnoughAllowance}>Approve</SubmitButton>

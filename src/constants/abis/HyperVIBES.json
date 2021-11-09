@@ -141,12 +141,6 @@
       },
       {
         "indexed": false,
-        "internalType": "uint256",
-        "name": "dailyRate",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
         "internalType": "string",
         "name": "comment",
         "type": "string"
@@ -299,6 +293,86 @@
             "type": "uint256"
           }
         ],
+        "internalType": "struct ClaimInput[]",
+        "name": "batch",
+        "type": "tuple[]"
+      }
+    ],
+    "name": "batchClaim",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "realmId",
+            "type": "uint256"
+          },
+          {
+            "internalType": "contract IERC721",
+            "name": "collection",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "tokenId",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "infuser",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "amount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "string",
+            "name": "comment",
+            "type": "string"
+          }
+        ],
+        "internalType": "struct InfuseInput[]",
+        "name": "batch",
+        "type": "tuple[]"
+      }
+    ],
+    "name": "batchInfuse",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "realmId",
+            "type": "uint256"
+          },
+          {
+            "internalType": "contract IERC721",
+            "name": "collection",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "tokenId",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "amount",
+            "type": "uint256"
+          }
+        ],
         "internalType": "struct ClaimInput",
         "name": "input",
         "type": "tuple"
@@ -331,17 +405,12 @@
                 "type": "address"
               },
               {
+                "internalType": "uint256",
+                "name": "dailyRate",
+                "type": "uint256"
+              },
+              {
                 "components": [
-                  {
-                    "internalType": "uint256",
-                    "name": "minDailyRate",
-                    "type": "uint256"
-                  },
-                  {
-                    "internalType": "uint256",
-                    "name": "maxDailyRate",
-                    "type": "uint256"
-                  },
                   {
                     "internalType": "uint256",
                     "name": "minInfusionAmount",
@@ -459,11 +528,6 @@
             "internalType": "address",
             "name": "infuser",
             "type": "address"
-          },
-          {
-            "internalType": "uint256",
-            "name": "dailyRate",
-            "type": "uint256"
           },
           {
             "internalType": "uint256",
@@ -679,17 +743,12 @@
         "type": "address"
       },
       {
+        "internalType": "uint256",
+        "name": "dailyRate",
+        "type": "uint256"
+      },
+      {
         "components": [
-          {
-            "internalType": "uint256",
-            "name": "minDailyRate",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "maxDailyRate",
-            "type": "uint256"
-          },
           {
             "internalType": "uint256",
             "name": "minInfusionAmount",
@@ -759,11 +818,6 @@
     ],
     "name": "tokenData",
     "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "dailyRate",
-        "type": "uint256"
-      },
       {
         "internalType": "uint256",
         "name": "balance",

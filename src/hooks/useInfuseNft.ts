@@ -7,7 +7,6 @@ export interface Infusion {
   collection: string;
   tokenId: number;
   infuser: string;
-  dailyRate: number;
   amount: number;
 }
 
@@ -24,7 +23,6 @@ export default () => {
         collection: infusion.collection,
         tokenId: infusion.tokenId,
         infuser: infusion.infuser,
-        dailyRate: BigNumber.from(infusion.dailyRate).mul(decimals),
         amount: BigNumber.from(infusion.amount).mul(decimals),
         comment: '',
       });
