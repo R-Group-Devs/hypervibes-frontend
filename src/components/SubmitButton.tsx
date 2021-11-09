@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 import submitButtonBackground from '../assets/images/submit-button-bg.png';
 import submitButtonBackgroundLarge from '../assets/images/submit-button-bg-lg.png';

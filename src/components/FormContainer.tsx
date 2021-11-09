@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 import FormSteps, { FormStep } from './FormSteps';
 import hyperVibesLogoPatternVertical from '../assets/images/hypervibes-logo-pattern-vertical.png';

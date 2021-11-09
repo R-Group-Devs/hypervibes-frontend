@@ -1,7 +1,70 @@
 import { createGlobalStyle } from 'styled-components';
+import DecimaMonoProLt from '../assets/fonts/DecimaMonoProLt.woff2';
+import DecimaMonoProLtItalic from '../assets/fonts/DecimaMonoProLt-Italic.woff2';
+import DecimaMonoPro from '../assets/fonts/DecimaMonoPro.woff2';
+import DecimaMonoProBold from '../assets/fonts/DecimaMonoPro-Bold.woff2';
+import DecimaMonoProItalic from '../assets/fonts/DecimaMonoPro-Italic.woff2';
+import DecimaMonoProBoldItalic from '../assets/fonts/DecimaMonoPro-BoldItalic.woff2';
+import ThreeSixOneSixGrammastileRegular from '../assets/fonts/3616Grammastile-Regular.woff2';
 import bg from '../assets/images/bg.png';
 
 export default createGlobalStyle`
+  @font-face {
+    font-family: 'Decima Mono';
+    src: url(${DecimaMonoProLt}) format('woff2');
+    font-weight: 300;
+    font-style: normal;
+    font-display: block;
+  }
+
+  @font-face {
+    font-family: 'Decima Mono';
+    src: url(${DecimaMonoProLtItalic}) format('woff2');
+    font-weight: 300;
+    font-style: italic;
+    font-display: block;
+  }
+
+  @font-face {
+    font-family: 'Decima Mono';
+    src: url(${DecimaMonoPro}) format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: block;
+  }
+
+  @font-face {
+    font-family: 'Decima Mono';
+    src: url(${DecimaMonoProBold}) format('woff2');
+    font-weight: 600;
+    font-style: normal;
+    font-display: block;
+  }
+
+  @font-face {
+    font-family: 'Decima Mono';
+    src: url(${DecimaMonoProItalic}) format('woff2');
+    font-weight: 400;
+    font-style: italic;
+    font-display: block;
+  }
+
+  @font-face {
+    font-family: 'Decima Mono';
+    src: url(${DecimaMonoProBoldItalic}) format('woff2');
+    font-weight: 600;
+    font-style: italic;
+    font-display: block;
+  }
+
+  @font-face {
+    font-family: '3616 Grammastile';
+    src: url(${ThreeSixOneSixGrammastileRegular}) format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: block;
+  }
+
   * {
     box-sizing: border-box;
   }

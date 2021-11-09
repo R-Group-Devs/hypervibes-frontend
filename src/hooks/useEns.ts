@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useWallet } from 'use-wallet';
-import { getENS, ResolvedENS } from 'get-ens/dist/index';
+import { getENS, ResolvedENS } from 'get-ens';
 import { JsonRpcProvider } from '@ethersproject/providers';
 import { RPC_URLS } from '../constants/rpc';
 

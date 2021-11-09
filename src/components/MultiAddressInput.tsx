@@ -75,7 +75,6 @@ export default ({
   label,
   description,
   required,
-  maxLength,
   addMoreText = 'Add more',
   ...rest
 }: Props) => {

@@ -1,8 +1,25 @@
 {
+  "root": true,
   "extends": [
-    "react-app"
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:import/recommended",
+    "plugin:import/typescript",
+    "plugin:react/recommended",
+    "plugin:react/jsx-runtime",
+    "plugin:react-hooks/recommended"
   ],
+  "settings": {
+    "import/resolver": {
+      "typescript": {}
+    },
+    "react": {
+      "version": "detect"
+    }
+  },
   "rules": {
-    "import/no-anonymous-default-export": "off"
+    "@typescript-eslint/explicit-module-boundary-types": 0,
+    "import/no-anonymous-default-export": 0,
+    "react/display-name": 0
   }
 }
