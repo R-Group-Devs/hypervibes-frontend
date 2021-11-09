@@ -37,7 +37,12 @@ const ArrowRightIcon = styled.img`
   margin-left: 0.5em;
 `;
 
-export default ({ size = 'md', disabled = false, children, ...rest }: Props) => (
+export default ({
+  size = 'md',
+  disabled = false,
+  children,
+  ...rest
+}: Props) => (
   <SubmitButton size={size} disabled={disabled} {...rest}>
     {children}
 

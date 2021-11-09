@@ -52,7 +52,11 @@ export default ({ steps, activeStep }: Props) => (
     <ProgressBar progress={(activeStep / steps.length) * 100} />
     <Steps>
       {steps.map((step, index) => (
-        <Step key={step.label} $isActive={activeStep === index + 1} to={step.path}>
+        <Step
+          key={step.label}
+          $isActive={activeStep === index + 1}
+          to={step.path}
+        >
           {step.label}
         </Step>
       ))}

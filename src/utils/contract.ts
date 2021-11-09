@@ -1,4 +1,8 @@
-import { Web3Provider, ExternalProvider, JsonRpcFetchFunc } from '@ethersproject/providers';
+import {
+  Web3Provider,
+  ExternalProvider,
+  JsonRpcFetchFunc,
+} from '@ethersproject/providers';
 import { Contract, ContractInterface } from '@ethersproject/contracts';
 
 export const getContract = (

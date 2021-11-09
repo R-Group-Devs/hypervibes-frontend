@@ -34,7 +34,13 @@ const TokenSymbol = styled.div`
   background: #000;
 `;
 
-export default ({ name, label, description, required, showTokenSymbol }: Props) => {
+export default ({
+  name,
+  label,
+  description,
+  required,
+  showTokenSymbol,
+}: Props) => {
   const { watch } = useFormContext();
   const value = watch(name);
   const { address } = useEns(value);
@@ -48,7 +54,8 @@ export default ({ name, label, description, required, showTokenSymbol }: Props) 
         description={description}
         required={required}
         validate={{
-          address: (value) => !value || isAddress(value) || value.endsWith('.eth'),
+          address: value =>
+            !value || isAddress(value) || value.endsWith('.eth'),
         }}
       />
 

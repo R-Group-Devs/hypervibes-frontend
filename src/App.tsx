@@ -1,4 +1,9 @@
-import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from 'react-router-dom';
 import { ErrorBoundary } from 'react-error-boundary';
 import styled from 'styled-components';
 import WalletProvider from './providers/WalletProvider';
@@ -61,7 +66,11 @@ export default () => (
                   <ChooseYourPathPage />
                 </Route>
 
-                <Redirect exact from="/realm/create" to="/realm/create/basic-info" />
+                <Redirect
+                  exact
+                  from="/realm/create"
+                  to="/realm/create/basic-info"
+                />
 
                 <Route path="/realm/create/basic-info">
                   <CreateRealmBasicInfoPage />

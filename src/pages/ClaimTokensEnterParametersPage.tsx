@@ -23,7 +23,7 @@ export default () => {
   const { realmId, collection, tokenId } = useParams<Params>();
   const { claimTokens } = useClaimTokens();
 
-  const onSubmit = methods.handleSubmit(async (data) => {
+  const onSubmit = methods.handleSubmit(async data => {
     // TODO: how do we handle cases where use is not connected w/ wallet beforehand?
     if (account) {
       await claimTokens({

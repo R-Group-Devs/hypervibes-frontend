@@ -14,7 +14,8 @@ export const useLazyErc20Contract = () => {
   const wallet = useWallet();
 
   const fn = useCallback(
-    (tokenAddress: string) => getContract(tokenAddress, erc20Abi, wallet.ethereum),
+    (tokenAddress: string) =>
+      getContract(tokenAddress, erc20Abi, wallet.ethereum),
     [wallet]
   );
 

@@ -48,7 +48,7 @@ export default ({ name, label, required = false, ...rest }: Props) => {
           required,
           valueAsNumber: true,
           validate: {
-            minValue: (value) => !value || parseFloat(value) >= 0,
+            minValue: value => !value || parseFloat(value) >= 0,
           },
         })}
         {...rest}

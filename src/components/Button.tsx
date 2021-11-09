@@ -6,7 +6,9 @@ export default styled.button<{ size?: 'sm' | 'md'; inline?: boolean }>`
   background: rgba(255, 255, 255, 0.4);
   font-size: ${({ size }) => (size === 'sm' ? '14px' : '12px')};
   font-family: ${({ size }) =>
-    size === 'sm' ? "'Decima Mono', 'Courier New', monospace" : "'3616 Grammastile', sans-serif"};
+    size === 'sm'
+      ? "'Decima Mono', 'Courier New', monospace"
+      : "'3616 Grammastile', sans-serif"};
   color: #fff;
   border: none;
 

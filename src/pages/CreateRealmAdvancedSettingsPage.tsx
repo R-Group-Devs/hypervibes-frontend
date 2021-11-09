@@ -2,7 +2,9 @@ import styled from 'styled-components';
 import { useForm, FormProvider } from 'react-hook-form';
 import { DevTool } from '@hookform/devtools';
 import { useHistory } from 'react-router-dom';
-import useCreateRealmWizard, { RealmWizardValues } from '../hooks/useCreateRealmWizard';
+import useCreateRealmWizard, {
+  RealmWizardValues,
+} from '../hooks/useCreateRealmWizard';
 import FormContainer from '../components/FormContainer';
 import FormHeading from '../components/FormHeading';
 import InputGroup from '../components/InputGroup';
@@ -18,11 +20,12 @@ import heading from '../assets/images/headings/advanced-settings.svg';
 const Container = styled.div``;
 
 export default () => {
-  const { realm, updateRealm, createRealm, resetRealm } = useCreateRealmWizard();
+  const { realm, updateRealm, createRealm, resetRealm } =
+    useCreateRealmWizard();
   const methods = useForm<RealmWizardValues>({ defaultValues: realm });
   const history = useHistory();
 
-  const onSubmit = methods.handleSubmit(async (data) => {
+  const onSubmit = methods.handleSubmit(async data => {
     updateRealm(data);
 
     // TODO - move this logic to a `useEffect` block that fires on `realm` dependency change
@@ -39,15 +42,27 @@ export default () => {
   return (
     <Container>
       <FormProvider {...methods}>
-        <FormContainer name="Create Realm" steps={CREATE_REALM_STEPS} activeStep={4}>
+        <FormContainer
+          name="Create Realm"
+          steps={CREATE_REALM_STEPS}
+          activeStep={4}
+        >
           <FormHeading src={heading} alt="Select Collections" />
           <form onSubmit={onSubmit}>
             <InputGroup
               label="Token Infusion Amount"
               description="The minimum and maximum number of tokens that can be infused at one time by an infuser."
             >
-              <NumberInput name="minTokenInfusionAmount" label="Minimum" required />
-              <NumberInput name="maxTokenInfusionAmount" label="Maximum" required />
+              <NumberInput
+                name="minTokenInfusionAmount"
+                label="Minimum"
+                required
+              />
+              <NumberInput
+                name="maxTokenInfusionAmount"
+                label="Maximum"
+                required
+              />
             </InputGroup>
 
             <InputGroup
@@ -61,7 +76,11 @@ export default () => {
               label="Claimable Token Rate"
               description="The daily rate that infused tokens are made claimable by the NFT holder."
             >
-              <NumberInput name="claimableTokenRate" label="Daily Rate" required />
+              <NumberInput
+                name="claimableTokenRate"
+                label="Daily Rate"
+                required
+              />
             </InputGroup>
 
             <InputGroup

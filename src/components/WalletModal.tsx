@@ -62,7 +62,9 @@ const WalletLink = styled.a`
 
 export default ({ isOpen, close }: Props) => {
   const wallet = useWallet();
-  const connectedWallet = wallet.connector ? SUPPORTED_WALLETS[wallet.connector] : null;
+  const connectedWallet = wallet.connector
+    ? SUPPORTED_WALLETS[wallet.connector]
+    : null;
   const [isChangingWallets, setIsChangingWallets] = useState(false);
   const [isAddressCopied, setIsAddressCopied] = useState(false);
 
@@ -85,18 +87,20 @@ export default ({ isOpen, close }: Props) => {
           <ModalHeading>Select a wallet</ModalHeading>
 
           <ModalContent>
-            {Object.values(SUPPORTED_WALLETS).map(({ name, connector, iconURL }) => (
-              <WalletProviderOption
-                key={name}
-                onClick={() => {
-                  wallet.connect(connector);
-                  setIsChangingWallets(false);
-                }}
-              >
-                <h4>{name}</h4>
-                <WalletProviderIcon src={iconURL} alt={name} />
-              </WalletProviderOption>
-            ))}
+            {Object.values(SUPPORTED_WALLETS).map(
+              ({ name, connector, iconURL }) => (
+                <WalletProviderOption
+                  key={name}
+                  onClick={() => {
+                    wallet.connect(connector);
+                    setIsChangingWallets(false);
+                  }}
+                >
+                  <h4>{name}</h4>
+                  <WalletProviderIcon src={iconURL} alt={name} />
+                </WalletProviderOption>
+              )
+            )}
           </ModalContent>
         </>
       )}
@@ -115,52 +119,68 @@ export default ({ isOpen, close }: Props) => {
                 <h4>{connectedWallet.name}</h4>
                 <h5>{connectedWallet.description}</h5>
               </div>
-              <WalletProviderIcon src={connectedWallet.iconURL} alt={connectedWallet.name} />
+              <WalletProviderIcon
+                src={connectedWallet.iconURL}
+                alt={connectedWallet.name}
+              />
             </WalletProviderInfo>
           </ModalContent>
         </>
       )}
 
-      {wallet.status === 'connected' && wallet.account && connectedWallet && !isChangingWallets && (
-        <>
-          <ModalHeading>
-            <span>Account</span>
-            <DisconnectWalletButton size="sm" inline onClick={() => wallet.reset()}>
-              Disconnect
-            </DisconnectWalletButton>
-          </ModalHeading>
+      {wallet.status === 'connected' &&
+        wallet.account &&
+        connectedWallet &&
+        !isChangingWallets && (
+          <>
+            <ModalHeading>
+              <span>Account</span>
+              <DisconnectWalletButton
+                size="sm"
+                inline
+                onClick={() => wallet.reset()}
+              >
+                Disconnect
+              </DisconnectWalletButton>
+            </ModalHeading>
 
-          <ModalContent>
-            <ConnectedWalletInfo>
-              <ConnectedWalletInfoHeading>
-                Connected with {connectedWallet.name}
-                <Button size="sm" inline onClick={() => setIsChangingWallets(true)}>
-                  Change
-                </Button>
-              </ConnectedWalletInfoHeading>
-              <h3>{shortenAddress(wallet.account)}</h3>
+            <ModalContent>
+              <ConnectedWalletInfo>
+                <ConnectedWalletInfoHeading>
+                  Connected with {connectedWallet.name}
+                  <Button
+                    size="sm"
+                    inline
+                    onClick={() => setIsChangingWallets(true)}
+                  >
+                    Change
+                  </Button>
+                </ConnectedWalletInfoHeading>
+                <h3>{shortenAddress(wallet.account)}</h3>
 
-              <div>
-                <CopyToClipboard
-                  text={wallet.account}
-                  onCopy={() => {
-                    setIsAddressCopied(true);
-                  }}
-                >
-                  <WalletLink>{isAddressCopied ? 'Copied' : 'Copy address'}</WalletLink>
-                </CopyToClipboard>
-                <WalletLink
-                  href={`https://etherscan.io/address/${wallet.account}`}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  View on explorer
-                </WalletLink>
-              </div>
-            </ConnectedWalletInfo>
-          </ModalContent>
-        </>
-      )}
+                <div>
+                  <CopyToClipboard
+                    text={wallet.account}
+                    onCopy={() => {
+                      setIsAddressCopied(true);
+                    }}
+                  >
+                    <WalletLink>
+                      {isAddressCopied ? 'Copied' : 'Copy address'}
+                    </WalletLink>
+                  </CopyToClipboard>
+                  <WalletLink
+                    href={`https://etherscan.io/address/${wallet.account}`}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    View on explorer
+                  </WalletLink>
+                </div>
+              </ConnectedWalletInfo>
+            </ModalContent>
+          </>
+        )}
     </Modal>
   );
 };

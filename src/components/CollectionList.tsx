@@ -13,7 +13,7 @@ const Container = styled.div`
 
 export default ({ collections }: Props) => (
   <Container>
-    {collections.map((collection) => (
+    {collections.map(collection => (
       <CollectionCard key={collection.id} {...collection} />
     ))}
   </Container>

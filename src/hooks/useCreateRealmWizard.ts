@@ -61,23 +61,31 @@ export default () => {
       return hyperVibesContract?.createRealm({
         name: realm.name,
         description: realm.description,
-        admins: realm.admins.map((x) => x.value).filter(Boolean),
+        admins: realm.admins.map(x => x.value).filter(Boolean),
         infusers:
           realm.allowPublicInfusion === 'yes'
             ? []
-            : realm.allowedInfusers.map((x) => x.value).filter(Boolean),
+            : realm.allowedInfusers.map(x => x.value).filter(Boolean),
         collections:
           realm.allowAllCollections === 'yes'
             ? []
-            : realm.allowedCollections.map((x) => x.value).filter(Boolean),
+            : realm.allowedCollections.map(x => x.value).filter(Boolean),
         config: {
           token: realm.tokenAddress,
           dailyRate: realm.claimableTokenRate,
           constraints: {
-            minInfusionAmount: BigNumber.from(realm.minTokenInfusionAmount || 0).mul(decimals),
-            maxInfusionAmount: BigNumber.from(realm.maxTokenInfusionAmount || 0).mul(decimals),
-            maxTokenBalance: BigNumber.from(realm.maxInfusibleTokens || 0).mul(decimals),
-            minClaimAmount: BigNumber.from(realm.minClaimAmount || 0).mul(decimals),
+            minInfusionAmount: BigNumber.from(
+              realm.minTokenInfusionAmount || 0
+            ).mul(decimals),
+            maxInfusionAmount: BigNumber.from(
+              realm.maxTokenInfusionAmount || 0
+            ).mul(decimals),
+            maxTokenBalance: BigNumber.from(realm.maxInfusibleTokens || 0).mul(
+              decimals
+            ),
+            minClaimAmount: BigNumber.from(realm.minClaimAmount || 0).mul(
+              decimals
+            ),
             requireNftIsOwned: realm.requireOwnership === 'yes',
             allowMultiInfuse: realm.allowMultiInfusion === 'yes',
             allowAllCollections: realm.allowAllCollections === 'yes',
@@ -91,7 +99,8 @@ export default () => {
 
   return {
     realm,
-    updateRealm: (fields: RealmWizardValues) => updateRealm({ ...realm, ...fields }),
+    updateRealm: (fields: RealmWizardValues) =>
+      updateRealm({ ...realm, ...fields }),
     createRealm,
     resetRealm: () => updateRealm(initialState.realmWizard),
   };

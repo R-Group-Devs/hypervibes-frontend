@@ -63,7 +63,7 @@ export default () => {
     })();
   }, [token, decimals, getErc20Contract]);
 
-  const onSubmit = methods.handleSubmit(async (data) => {
+  const onSubmit = methods.handleSubmit(async data => {
     if (!hasApprovedEnoughAllowance) {
       // TODO: subtract amount from current allowance
       // long-term, how should we handle approvals? infinity seems bad,
@@ -94,20 +94,25 @@ export default () => {
           <NumberInput name="amount" label="Amount to Infuse" required />
 
           <ButtonGroup>
-            <SubmitButton disabled={hasApprovedEnoughAllowance}>Approve</SubmitButton>
-            <SubmitButton disabled={!hasApprovedEnoughAllowance}>Infuse</SubmitButton>
+            <SubmitButton disabled={hasApprovedEnoughAllowance}>
+              Approve
+            </SubmitButton>
+            <SubmitButton disabled={!hasApprovedEnoughAllowance}>
+              Infuse
+            </SubmitButton>
           </ButtonGroup>
 
           {!hasApprovedEnoughAllowance && (
             <TokenApprovalInfo>
               {allowance.isZero() ? (
                 <p>
-                  You have not approved the <strong>HyperVIBES</strong> contract to move any of your{' '}
-                  <strong>{symbol}</strong> tokens.
+                  You have not approved the <strong>HyperVIBES</strong> contract
+                  to move any of your <strong>{symbol}</strong> tokens.
                 </p>
               ) : (
                 <p>
-                  You have only approved the <strong>HyperVIBES</strong> contract to move{' '}
+                  You have only approved the <strong>HyperVIBES</strong>{' '}
+                  contract to move{' '}
                   {allowance.div(BigNumber.from(10).pow(18)).toNumber()} of your{' '}
                   <strong>{symbol}</strong> tokens.
                 </p>

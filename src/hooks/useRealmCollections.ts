@@ -35,8 +35,9 @@ export default (id: string) => {
       description: res.data?.realms[0].description,
       allowAllCollections: res.data?.realms[0].allowAllCollections,
       collections:
-        res.data?.realms[0].realmCollections.map((realmCollection) => realmCollection.collection) ||
-        [],
+        res.data?.realms[0].realmCollections.map(
+          realmCollection => realmCollection.collection
+        ) || [],
     },
   };
 };

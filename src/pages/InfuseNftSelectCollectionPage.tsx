@@ -24,7 +24,7 @@ export default () => {
     return null;
   }
 
-  const onSubmit = methods.handleSubmit((data) => {
+  const onSubmit = methods.handleSubmit(data => {
     history.push(`collection/${data.collectionAddress}/select-token`);
   });
 
@@ -35,7 +35,11 @@ export default () => {
       {data.allowAllCollections ? (
         <FormProvider {...methods}>
           <form onSubmit={onSubmit}>
-            <AddressInput name="collectionAddress" label="Collection Address" required />
+            <AddressInput
+              name="collectionAddress"
+              label="Collection Address"
+              required
+            />
 
             <SubmitButton>Next</SubmitButton>
           </form>
