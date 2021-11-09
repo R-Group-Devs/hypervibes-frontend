@@ -59,10 +59,9 @@ export default () => {
 
             <InputGroup
               label="Claimable Token Rate"
-              description="The minimum and maximum configurable daily rates that infused tokens are made claimable by the NFT holder."
+              description="The daily rate that infused tokens are made claimable by the NFT holder."
             >
-              <NumberInput name="minClaimableTokenRate" label="Minimum" required />
-              <NumberInput name="maxClaimableTokenRate" label="Maximum" required />
+              <NumberInput name="claimableTokenRate" label="Daily Rate" required />
             </InputGroup>
 
             <InputGroup

@@ -8,7 +8,6 @@ import useClaimTokens from '../hooks/useClaimTokens';
 
 interface FormValues {
   amount: number;
-  dailyRate: number;
 }
 
 interface Params {

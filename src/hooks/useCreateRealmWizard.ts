@@ -16,8 +16,7 @@ const initialState: GlobalState = {
     allowedCollections: [{ value: '' }],
     tokenAddress: '',
     allowedInfusers: [{ value: '' }],
-    minClaimableTokenRate: null,
-    maxClaimableTokenRate: null,
+    claimableTokenRate: null,
     minTokenInfusionAmount: null,
     maxTokenInfusionAmount: null,
     maxInfusibleTokens: null,
@@ -36,8 +35,7 @@ export interface RealmWizardValues {
   allowedCollections: { value: string }[];
   tokenAddress: string;
   allowedInfusers: { value: string }[];
-  minClaimableTokenRate: number | null;
-  maxClaimableTokenRate: number | null;
+  claimableTokenRate: number | null;
   minTokenInfusionAmount: number | null;
   maxTokenInfusionAmount: number | null;
   maxInfusibleTokens: number | null;
@@ -74,9 +72,8 @@ export default () => {
             : realm.allowedCollections.map((x) => x.value).filter(Boolean),
         config: {
           token: realm.tokenAddress,
+          dailyRate: realm.claimableTokenRate,
           constraints: {
-            minDailyRate: BigNumber.from(realm.minClaimableTokenRate || 0).mul(decimals),
-            maxDailyRate: BigNumber.from(realm.maxClaimableTokenRate || 0).mul(decimals),
             minInfusionAmount: BigNumber.from(realm.minTokenInfusionAmount || 0).mul(decimals),
             maxInfusionAmount: BigNumber.from(realm.maxTokenInfusionAmount || 0).mul(decimals),
             maxTokenBalance: BigNumber.from(realm.maxInfusibleTokens || 0).mul(decimals),
