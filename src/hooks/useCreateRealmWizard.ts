@@ -72,7 +72,7 @@ export default () => {
             : realm.allowedCollections.map(x => x.value).filter(Boolean),
         config: {
           token: realm.tokenAddress,
-          dailyRate: realm.claimableTokenRate,
+          dailyRate: BigNumber.from(realm.claimableTokenRate).mul(decimals),
           constraints: {
             minInfusionAmount: BigNumber.from(
               realm.minTokenInfusionAmount || 0
