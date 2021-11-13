@@ -15,10 +15,50 @@ import BackButton from '../components/BackButton';
 import SubmitButton from '../components/SubmitButton';
 import { CREATE_REALM_STEPS } from '../constants/formSteps';
 import heading from '../assets/images/headings/select-collections.svg';
-import infuseAnyImage from '../assets/images/infuse-any.png';
-import infuseSpecificImage from '../assets/images/infuse-specific.png';
+import allowAnyCollectionImage from '../assets/images/allow-any-collection.png';
+import allowAnyCollectionSelectedImage from '../assets/images/allow-any-collection-selected.png';
+import allowSpecificCollectionsImage from '../assets/images/allow-specific-collections.png';
+import allowSpecificCollectionsSelectedImage from '../assets/images/allow-specific-collections-selected.png';
 
 const Container = styled.div``;
+
+const CollectionOptionImage = styled.div`
+  width: 100%;
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: background-image 0.2s;
+`;
+
+const AllowAnyCollection = styled(CollectionOptionImage)<{
+  isSelected: boolean;
+}>`
+  background-size: 45%;
+
+  background-image: ${({ isSelected }) =>
+    isSelected
+      ? `url(${allowAnyCollectionSelectedImage})`
+      : `url(${allowAnyCollectionImage})`};
+
+  &:hover {
+    background-image: url(${allowAnyCollectionSelectedImage});
+  }
+`;
+
+const AllowSpecificCollections = styled(CollectionOptionImage)<{
+  isSelected: boolean;
+}>`
+  background-size: 23%;
+
+  background-image: ${({ isSelected }) =>
+    isSelected
+      ? `url(${allowSpecificCollectionsSelectedImage})`
+      : `url(${allowSpecificCollectionsImage})`};
+
+  &:hover {
+    background-image: url(${allowSpecificCollectionsSelectedImage});
+  }
+`;
 
 export default () => {
   const { realm, updateRealm } = useCreateRealmWizard();
@@ -48,7 +88,9 @@ export default () => {
                 id="yes"
                 label="Allow any collection to be infused"
               >
-                <img src={infuseAnyImage} alt="Infuse any" />
+                <AllowAnyCollection
+                  isSelected={allowAllCollections === 'yes'}
+                />
               </RadioButtonCard>
 
               <RadioButtonCard
@@ -56,7 +98,9 @@ export default () => {
                 id="no"
                 label="Only allow specific collections to be infused"
               >
-                <img src={infuseSpecificImage} alt="Infuse specific" />
+                <AllowSpecificCollections
+                  isSelected={allowAllCollections === 'no'}
+                />
               </RadioButtonCard>
             </RadioGroup>
 

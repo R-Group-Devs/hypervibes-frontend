@@ -15,7 +15,7 @@ import ChooseYourPathPage from './pages/ChooseYourPathPage';
 import CreateRealmBasicInfoPage from './pages/CreateRealmBasicInfoPage';
 import CreateRealmSelectCollectionsPage from './pages/CreateRealmSelectCollectionsPage';
 import CreateRealmSetUpInfusionPage from './pages/CreateRealmSetUpInfusionPage';
-import CreateRealmAdvancedSettingsPage from './pages/CreateRealmAdvancedSettingsPage';
+import CreateRealmSetUpClaimingPage from './pages/CreateRealmSetUpClaimingPage';
 import CreateRealmSuccessPage from './pages/CreateRealmSuccessPage';
 import InfuseNftSelectRealmPage from './pages/InfuseNftSelectRealmPage';
 import InfuseNftSelectCollectionPage from './pages/InfuseNftSelectCollectionPage';
@@ -84,8 +84,8 @@ export default () => (
                   <CreateRealmSetUpInfusionPage />
                 </Route>
 
-                <Route path="/realm/create/advanced-settings">
-                  <CreateRealmAdvancedSettingsPage />
+                <Route path="/realm/create/set-up-claiming">
+                  <CreateRealmSetUpClaimingPage />
                 </Route>
 
                 <Route path="/realm/create/success">

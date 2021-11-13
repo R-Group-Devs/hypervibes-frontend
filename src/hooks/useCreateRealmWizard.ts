@@ -16,6 +16,7 @@ const initialState: GlobalState = {
     allowedCollections: [{ value: '' }],
     tokenAddress: '',
     allowedInfusers: [{ value: '' }],
+    allowedClaimers: [{ value: '' }],
     claimableTokenRate: null,
     minTokenInfusionAmount: null,
     maxInfusibleTokens: null,
@@ -24,6 +25,7 @@ const initialState: GlobalState = {
     allowMultiInfusion: 'yes',
     allowAllCollections: 'yes',
     allowPublicInfusion: 'yes',
+    allowPublicClaiming: 'yes',
   },
 };
 
@@ -34,6 +36,7 @@ export interface RealmWizardValues {
   allowedCollections: { value: string }[];
   tokenAddress: string;
   allowedInfusers: { value: string }[];
+  allowedClaimers: { value: string }[];
   claimableTokenRate: number | null;
   minTokenInfusionAmount: number | null;
   maxInfusibleTokens: number | null;
@@ -42,6 +45,7 @@ export interface RealmWizardValues {
   allowMultiInfusion: 'yes' | 'no';
   allowAllCollections: 'yes' | 'no';
   allowPublicInfusion: 'yes' | 'no';
+  allowPublicClaiming: 'yes' | 'no';
 }
 
 const { useGlobalState } = createGlobalState(initialState);
@@ -64,9 +68,10 @@ export default () => {
           realm.allowPublicInfusion === 'yes'
             ? []
             : realm.allowedInfusers.map(x => x.value).filter(Boolean),
-        // TODO: need a wizard step to allow realm creator the ability to
-        // specify an allowlist of claimers
-        claimers: [],
+        claimers:
+          realm.allowPublicClaiming === 'yes'
+            ? []
+            : realm.allowedClaimers.map(x => x.value).filter(Boolean),
         collections:
           realm.allowAllCollections === 'yes'
             ? []
@@ -88,8 +93,7 @@ export default () => {
             allowMultiInfuse: realm.allowMultiInfusion === 'yes',
             allowAllCollections: realm.allowAllCollections === 'yes',
             allowPublicInfusion: realm.allowPublicInfusion === 'yes',
-            // TODO: need a wizard option to decide if public claiming is allowed
-            allowPublicClaiming: true,
+            allowPublicClaiming: realm.allowPublicClaiming === 'yes',
           },
         },
       });

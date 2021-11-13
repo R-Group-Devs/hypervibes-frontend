@@ -35,7 +35,7 @@ export default () => {
           steps={CREATE_REALM_STEPS}
           activeStep={1}
         >
-          <FormHeading src={heading} alt="Choose Your Path" />
+          <FormHeading src={heading} alt="Create Your Realm" />
 
           <form onSubmit={onSubmit}>
             <TextInput

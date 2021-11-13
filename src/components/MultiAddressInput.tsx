@@ -14,6 +14,10 @@ interface Props {
 }
 
 const Container = styled.div`
+  margin-bottom: 4em;
+`;
+
+const InputContainer = styled.div`
   position: relative;
   width: 100%;
 `;
@@ -82,12 +86,12 @@ export default ({
   const { fields, append, remove } = useFieldArray({ control, name });
 
   return (
-    <>
+    <Container>
       <StyledLabel name={`${name}.0.value`}>{label}</StyledLabel>
       {description && <Description>{description}</Description>}
 
       {fields.map((field, index) => (
-        <Container key={field.id}>
+        <InputContainer key={field.id}>
           <Input
             name={`${name}.${index}.value` as const}
             required={required}
@@ -100,7 +104,7 @@ export default ({
           >
             Remove
           </RemoveButton>
-        </Container>
+        </InputContainer>
       ))}
 
       <AddAnotherButton
@@ -112,6 +116,6 @@ export default ({
         <PlusIcon src={plusIcon} alt="+" />
         <span>{addMoreText}</span>
       </AddAnotherButton>
-    </>
+    </Container>
   );
 };

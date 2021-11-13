@@ -7,22 +7,64 @@ import useCreateRealmWizard, {
 } from '../hooks/useCreateRealmWizard';
 import FormContainer from '../components/FormContainer';
 import FormHeading from '../components/FormHeading';
+import RadioGroup from '../components/RadioGroup';
+import RadioButtonCard from '../components/RadioButtonCard';
 import InputGroup from '../components/InputGroup';
+import MultiAddressInput from '../components/MultiAddressInput';
 import NumberInput from '../components/NumberInput';
-import SwitchGroup from '../components/SwitchGroup';
-import Switch from '../components/Switch';
 import ButtonGroup from '../components/ButtonGroup';
 import BackButton from '../components/BackButton';
 import SubmitButton from '../components/SubmitButton';
 import { CREATE_REALM_STEPS } from '../constants/formSteps';
-import heading from '../assets/images/headings/advanced-settings.svg';
+import heading from '../assets/images/headings/set-up-claiming.svg';
+import allowAnyClaimerImage from '../assets/images/allow-any-claimer.png';
+import allowAnyClaimerSelectedImage from '../assets/images/allow-any-claimer-selected.png';
+import allowSpecificClaimersImage from '../assets/images/allow-specific-addresses.png';
+import allowSpecificClaimersSelectedImage from '../assets/images/allow-specific-addresses-selected.png';
 
 const Container = styled.div``;
+
+const ClaimerOptionImage = styled.div`
+  width: 100%;
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: background-image 0.2s;
+`;
+
+const AllowAnyClaimer = styled(ClaimerOptionImage)<{ isSelected: boolean }>`
+  background-size: 78%;
+
+  background-image: ${({ isSelected }) =>
+    isSelected
+      ? `url(${allowAnyClaimerSelectedImage})`
+      : `url(${allowAnyClaimerImage})`};
+
+  &:hover {
+    background-image: url(${allowAnyClaimerSelectedImage});
+  }
+`;
+
+const AllowSpecificClaimers = styled(ClaimerOptionImage)<{
+  isSelected: boolean;
+}>`
+  background-size: 41%;
+
+  background-image: ${({ isSelected }) =>
+    isSelected
+      ? `url(${allowSpecificClaimersSelectedImage})`
+      : `url(${allowSpecificClaimersImage})`};
+
+  &:hover {
+    background-image: url(${allowSpecificClaimersSelectedImage});
+  }
+`;
 
 export default () => {
   const { realm, updateRealm, createRealm, resetRealm } =
     useCreateRealmWizard();
   const methods = useForm<RealmWizardValues>({ defaultValues: realm });
+  const allowPublicClaiming = methods.watch('allowPublicClaiming');
   const history = useHistory();
 
   const onSubmit = methods.handleSubmit(async data => {
@@ -47,25 +89,36 @@ export default () => {
           steps={CREATE_REALM_STEPS}
           activeStep={4}
         >
-          <FormHeading src={heading} alt="Select Collections" />
+          <FormHeading src={heading} alt="Set up Claiming" />
           <form onSubmit={onSubmit}>
-            <InputGroup
-              label="Token Infusion Amount"
-              description="The minimum and maximum number of tokens that can be infused at one time by an infuser."
-            >
-              <NumberInput
-                name="minTokenInfusionAmount"
-                label="Minimum"
+            <RadioGroup name="allowPublicClaiming" label="">
+              <RadioButtonCard
+                name="allowPublicClaiming"
+                id="yes"
+                label="Allow anyone to claim"
+              >
+                <AllowAnyClaimer isSelected={allowPublicClaiming === 'yes'} />
+              </RadioButtonCard>
+
+              <RadioButtonCard
+                name="allowPublicClaiming"
+                id="no"
+                label="Only allow specific addresses to claim"
+              >
+                <AllowSpecificClaimers
+                  isSelected={allowPublicClaiming === 'no'}
+                />
+              </RadioButtonCard>
+            </RadioGroup>
+
+            {allowPublicClaiming === 'no' && (
+              <MultiAddressInput
+                name="allowedClaimers"
+                label="Allowed claimers"
+                addMoreText="Add more claimers"
                 required
               />
-            </InputGroup>
-
-            <InputGroup
-              label="Maximum Infusible Tokens"
-              description="The maximum number of tokens that can be infused in total into an NFT."
-            >
-              <NumberInput name="maxInfusibleTokens" label="Maximum" required />
-            </InputGroup>
+            )}
 
             <InputGroup
               label="Claimable Token Rate"
@@ -84,19 +137,6 @@ export default () => {
             >
               <NumberInput name="minClaimAmount" label="Minimum" required />
             </InputGroup>
-
-            <SwitchGroup name="requireOwnership" label="Require NFT ownership?">
-              <Switch name="requireOwnership" id="yes" label="Yes" />
-              <Switch name="requireOwnership" id="no" label="No" />
-            </SwitchGroup>
-
-            <SwitchGroup
-              name="allowMultiInfusion"
-              label="Allow infusing tokens into the same NFT more than once?"
-            >
-              <Switch name="allowMultiInfusion" id="yes" label="Yes" />
-              <Switch name="allowMultiInfusion" id="no" label="No" />
-            </SwitchGroup>
 
             <ButtonGroup>
               <BackButton path="set-up-infusion" />
