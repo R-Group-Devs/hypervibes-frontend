@@ -18,7 +18,6 @@ const initialState: GlobalState = {
     allowedInfusers: [{ value: '' }],
     claimableTokenRate: null,
     minTokenInfusionAmount: null,
-    maxTokenInfusionAmount: null,
     maxInfusibleTokens: null,
     minClaimAmount: null,
     requireOwnership: 'no',
@@ -37,7 +36,6 @@ export interface RealmWizardValues {
   allowedInfusers: { value: string }[];
   claimableTokenRate: number | null;
   minTokenInfusionAmount: number | null;
-  maxTokenInfusionAmount: number | null;
   maxInfusibleTokens: number | null;
   minClaimAmount: number | null;
   requireOwnership: 'yes' | 'no';
@@ -66,6 +64,9 @@ export default () => {
           realm.allowPublicInfusion === 'yes'
             ? []
             : realm.allowedInfusers.map(x => x.value).filter(Boolean),
+        // TODO: need a wizard step to allow realm creator the ability to
+        // specify an allowlist of claimers
+        claimers: [],
         collections:
           realm.allowAllCollections === 'yes'
             ? []
@@ -77,9 +78,6 @@ export default () => {
             minInfusionAmount: BigNumber.from(
               realm.minTokenInfusionAmount || 0
             ).mul(decimals),
-            maxInfusionAmount: BigNumber.from(
-              realm.maxTokenInfusionAmount || 0
-            ).mul(decimals),
             maxTokenBalance: BigNumber.from(realm.maxInfusibleTokens || 0).mul(
               decimals
             ),
@@ -90,6 +88,8 @@ export default () => {
             allowMultiInfuse: realm.allowMultiInfusion === 'yes',
             allowAllCollections: realm.allowAllCollections === 'yes',
             allowPublicInfusion: realm.allowPublicInfusion === 'yes',
+            // TODO: need a wizard option to decide if public claiming is allowed
+            allowPublicClaiming: true,
           },
         },
       });
