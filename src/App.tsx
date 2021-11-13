@@ -20,7 +20,7 @@ import CreateRealmSuccessPage from './pages/CreateRealmSuccessPage';
 import InfuseNftSelectRealmPage from './pages/InfuseNftSelectRealmPage';
 import InfuseNftSelectCollectionPage from './pages/InfuseNftSelectCollectionPage';
 import InfuseNftSelectTokenPage from './pages/InfuseNftSelectTokenPage';
-import InfuseNftEnterParametersPage from './pages/InfuseNftEnterParametersPage';
+import InfuseNftEnterInfusionAmountPage from './pages/InfuseNftEnterInfusionAmountPage';
 import InfuseNftSuccessPage from './pages/InfuseNftSuccessPage';
 import ClaimTokensSelectRealmPage from './pages/ClaimTokensSelectRealmPage';
 import ClaimTokensSelectCollectionPage from './pages/ClaimTokensSelectCollectionPage';
@@ -107,7 +107,7 @@ export default () => (
                 </Route>
 
                 <Route path="/infuse/realm/:realmId/collection/:collection/token/:tokenId">
-                  <InfuseNftEnterParametersPage />
+                  <InfuseNftEnterInfusionAmountPage />
                 </Route>
 
                 <Route path="/infuse/success">

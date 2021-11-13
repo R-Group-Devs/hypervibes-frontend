@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 import useCreateRealmWizard, {
   RealmWizardValues,
 } from '../hooks/useCreateRealmWizard';
-import FormContainer from '../components/FormContainer';
+import CreateRealmContainer from '../components/CreateRealmContainer';
 import FormHeading from '../components/FormHeading';
 import RadioGroup from '../components/RadioGroup';
 import RadioButtonCard from '../components/RadioButtonCard';
@@ -77,7 +77,7 @@ export default () => {
   return (
     <Container>
       <FormProvider {...methods}>
-        <FormContainer
+        <CreateRealmContainer
           name="Create Realm"
           steps={CREATE_REALM_STEPS}
           activeStep={3}
@@ -162,7 +162,7 @@ export default () => {
           </form>
 
           <DevTool control={methods.control} />
-        </FormContainer>
+        </CreateRealmContainer>
       </FormProvider>
     </Container>
   );

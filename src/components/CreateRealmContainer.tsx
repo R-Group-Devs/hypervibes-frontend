@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import FormSteps, { FormStep } from './FormSteps';
-import hyperVibesLogoPatternVertical from '../assets/images/hypervibes-logo-pattern-vertical.png';
-import hyperVibesLogoPatternHorizontal from '../assets/images/hypervibes-logo-pattern-horizontal.png';
+import borderPatternVertical from '../assets/images/create-realm-border-pattern-vertical.png';
+import borderPatternHorizontal from '../assets/images/create-realm-border-pattern-horizontal.png';
 import stepOneIcon from '../assets/images/icons/step-1.svg';
 import stepTwoIcon from '../assets/images/icons/step-2.svg';
 import stepThreeIcon from '../assets/images/icons/step-3.svg';
@@ -18,14 +18,14 @@ interface Props {
 const BackgroundContainerVertical = styled.div`
   position: relative;
   padding-left: 3em;
-  background: url(${hyperVibesLogoPatternVertical}) left top repeat-y;
+  background: url(${borderPatternVertical}) left top repeat-y;
   background-size: 24px 388px;
 `;
 
 const BackgroundContainerHorizontal = styled.div`
   padding-bottom: 3em;
   margin-left: -3em;
-  background: url(${hyperVibesLogoPatternHorizontal}) left bottom repeat-x;
+  background: url(${borderPatternHorizontal}) left bottom repeat-x;
   background-size: 388px 24px;
 `;
 

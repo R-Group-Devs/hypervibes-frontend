@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 import useCreateRealmWizard, {
   RealmWizardValues,
 } from '../hooks/useCreateRealmWizard';
-import FormContainer from '../components/FormContainer';
+import CreateRealmContainer from '../components/CreateRealmContainer';
 import FormHeading from '../components/FormHeading';
 import TextInput from '../components/TextInput';
 import MultiAddressInput from '../components/MultiAddressInput';
@@ -30,7 +30,7 @@ export default () => {
   return (
     <Container>
       <FormProvider {...methods}>
-        <FormContainer
+        <CreateRealmContainer
           name="Create Realm"
           steps={CREATE_REALM_STEPS}
           activeStep={1}
@@ -62,7 +62,7 @@ export default () => {
               <SubmitButton>Next</SubmitButton>
             </ButtonGroup>
           </form>
-        </FormContainer>
+        </CreateRealmContainer>
 
         <DevTool control={methods.control} />
       </FormProvider>

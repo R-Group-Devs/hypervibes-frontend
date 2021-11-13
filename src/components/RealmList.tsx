@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import RealmCard from './RealmCard';
+import Card from './Card';
 import { Realm } from '../types';
 
 interface Props {
@@ -8,6 +8,7 @@ interface Props {
 
 const Container = styled.div`
   display: flex;
+  width: 100%;
   flex-wrap: wrap;
   column-gap: 2em;
   row-gap: 2em;
@@ -16,7 +17,11 @@ const Container = styled.div`
 export default ({ realms }: Props) => (
   <Container>
     {realms.map(realm => (
-      <RealmCard key={realm.id} {...realm} />
+      <Card
+        key={realm.id}
+        name={realm.name}
+        url={`realm/${realm.id}/select-collection`}
+      />
     ))}
   </Container>
 );

@@ -40,7 +40,7 @@ export default () => {
 
   return {
     data: [
-      ...(res.data?.account.realmInfusers.map(
+      ...(res.data?.account?.realmInfusers.map(
         infusibleRealm => infusibleRealm.realm
       ) || []),
       ...(res.data?.realms || []),

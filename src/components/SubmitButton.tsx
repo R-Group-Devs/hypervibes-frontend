@@ -27,6 +27,11 @@ const SubmitButton = styled.button<{ size: 'md' | 'lg' }>`
       : `url(${submitButtonBackgroundLarge}) 0 0 no-repeat`};
   border: none;
 
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
   &:hover:not([disabled]) {
     cursor: pointer;
   }

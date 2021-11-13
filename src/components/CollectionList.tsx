@@ -1,5 +1,6 @@
 import styled from 'styled-components';
-import CollectionCard from './CollectionCard';
+import Card from './Card';
+import { shortenAddress } from '../utils/address';
 import { Collection } from '../types';
 
 interface Props {
@@ -8,13 +9,20 @@ interface Props {
 
 const Container = styled.div`
   display: flex;
+  width: 100%;
+  flex-wrap: wrap;
   column-gap: 2em;
+  row-gap: 2em;
 `;
 
 export default ({ collections }: Props) => (
   <Container>
     {collections.map(collection => (
-      <CollectionCard key={collection.id} {...collection} />
+      <Card
+        key={collection.id}
+        name={shortenAddress(collection.address)}
+        url={`collection/${collection.id}/select-token`}
+      />
     ))}
   </Container>
 );
