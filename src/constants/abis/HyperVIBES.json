@@ -79,6 +79,44 @@
       },
       {
         "indexed": true,
+        "internalType": "address",
+        "name": "claimer",
+        "type": "address"
+      }
+    ],
+    "name": "ClaimerAdded",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "realmId",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "claimer",
+        "type": "address"
+      }
+    ],
+    "name": "ClaimerRemoved",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "realmId",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
         "internalType": "contract IERC721",
         "name": "collection",
         "type": "address"
@@ -203,7 +241,7 @@
         "type": "address"
       }
     ],
-    "name": "InfusionProxyAdded",
+    "name": "ProxyAdded",
     "type": "event"
   },
   {
@@ -222,7 +260,7 @@
         "type": "address"
       }
     ],
-    "name": "InfusionProxyRemoved",
+    "name": "ProxyRemoved",
     "type": "event"
   },
   {
@@ -251,6 +289,19 @@
     "type": "event"
   },
   {
+    "inputs": [],
+    "name": "FEEL_FREE_TO_USE_HYPERVIBES_IN_ANY_WAY_YOU_WANT",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "uint256",
@@ -263,7 +314,7 @@
         "type": "address"
       }
     ],
-    "name": "allowInfusionProxy",
+    "name": "allowProxy",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -418,11 +469,6 @@
                   },
                   {
                     "internalType": "uint256",
-                    "name": "maxInfusionAmount",
-                    "type": "uint256"
-                  },
-                  {
-                    "internalType": "uint256",
                     "name": "maxTokenBalance",
                     "type": "uint256"
                   },
@@ -444,6 +490,11 @@
                   {
                     "internalType": "bool",
                     "name": "allowPublicInfusion",
+                    "type": "bool"
+                  },
+                  {
+                    "internalType": "bool",
+                    "name": "allowPublicClaiming",
                     "type": "bool"
                   },
                   {
@@ -472,6 +523,11 @@
             "type": "address[]"
           },
           {
+            "internalType": "address[]",
+            "name": "claimers",
+            "type": "address[]"
+          },
+          {
             "internalType": "contract IERC721[]",
             "name": "collections",
             "type": "address[]"
@@ -495,12 +551,41 @@
         "type": "uint256"
       },
       {
+        "internalType": "contract IERC721",
+        "name": "collection",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "tokenId",
+        "type": "uint256"
+      }
+    ],
+    "name": "currentMinedTokens",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "realmId",
+        "type": "uint256"
+      },
+      {
         "internalType": "address",
         "name": "proxy",
         "type": "address"
       }
     ],
-    "name": "denyInfusionProxy",
+    "name": "denyProxy",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -582,6 +667,30 @@
         "type": "uint256"
       },
       {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "isClaimer",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      },
+      {
         "internalType": "contract IERC721",
         "name": "",
         "type": "address"
@@ -640,7 +749,7 @@
         "type": "address"
       }
     ],
-    "name": "isInfusionProxy",
+    "name": "isProxy",
     "outputs": [
       {
         "internalType": "bool",
@@ -678,6 +787,16 @@
           {
             "internalType": "address[]",
             "name": "infusersToRemove",
+            "type": "address[]"
+          },
+          {
+            "internalType": "address[]",
+            "name": "claimersToAdd",
+            "type": "address[]"
+          },
+          {
+            "internalType": "address[]",
+            "name": "claimersToRemove",
             "type": "address[]"
           },
           {
@@ -756,11 +875,6 @@
           },
           {
             "internalType": "uint256",
-            "name": "maxInfusionAmount",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
             "name": "maxTokenBalance",
             "type": "uint256"
           },
@@ -782,6 +896,11 @@
           {
             "internalType": "bool",
             "name": "allowPublicInfusion",
+            "type": "bool"
+          },
+          {
+            "internalType": "bool",
+            "name": "allowPublicClaiming",
             "type": "bool"
           },
           {
