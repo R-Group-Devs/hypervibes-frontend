@@ -58,11 +58,6 @@ export default () => {
                 label="Minimum"
                 required
               />
-              <NumberInput
-                name="maxTokenInfusionAmount"
-                label="Maximum"
-                required
-              />
             </InputGroup>
 
             <InputGroup
