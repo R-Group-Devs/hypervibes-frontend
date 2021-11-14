@@ -94,7 +94,7 @@ export default () => {
     tokenId
   );
   const currentMinedTokensNumber = parseFloat(
-    currentMinedTokens.div(decimals).toString()
+    currentMinedTokens?.div(decimals).toString()
   );
 
   const [formErrors, setFormErrors] = useState<string[]>([]);
