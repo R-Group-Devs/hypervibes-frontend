@@ -8,6 +8,7 @@ interface Props {
   name: string;
   label: string;
   required?: boolean;
+  validate?: (value: number) => boolean | string;
 }
 
 const Container = styled.div`
@@ -15,6 +16,7 @@ const Container = styled.div`
 `;
 
 const StyledInput = styled(Input)`
+  max-width: 270px;
   padding-top: 1.5em;
   padding-left: 0.5em;
   padding-right: 0.5em;
@@ -31,7 +33,13 @@ const StyledLabel = styled(Label)`
   text-transform: none;
 `;
 
-export default ({ name, label, required = false, ...rest }: Props) => {
+export default ({
+  name,
+  label,
+  required = false,
+  validate,
+  ...rest
+}: Props) => {
   const { register, formState } = useFormContext();
 
   return (
@@ -49,6 +57,7 @@ export default ({ name, label, required = false, ...rest }: Props) => {
           valueAsNumber: true,
           validate: {
             minValue: value => !value || parseFloat(value) >= 0,
+            custom: value => !validate || validate(value),
           },
         })}
         {...rest}

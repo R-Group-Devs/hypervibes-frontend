@@ -26,6 +26,7 @@ export default ({ error, maxLength }: Props) => (
       {error?.type === 'minValue' && 'Enter a value higher than zero.'}
       {error?.type === 'address' &&
         'Enter a valid Ethereum address or ENS name.'}
+      {error?.type === 'custom' && error?.message}
     </Message>
   </Container>
 );

@@ -135,7 +135,15 @@ export default () => {
               label="Minimum Claimable Token Amount"
               description="The minimum number of tokens that can be claimed at one time by an NFT holder."
             >
-              <NumberInput name="minClaimAmount" label="Minimum" required />
+              <NumberInput
+                name="minClaimAmount"
+                label="Minimum"
+                required
+                validate={value =>
+                  value <= (realm?.maxInfusibleTokens || 0) ||
+                  'Must be less than or equal to maximum infusible tokens defined in the Set up Infusion step.'
+                }
+              />
             </InputGroup>
 
             <ButtonGroup>

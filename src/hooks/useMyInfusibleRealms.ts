@@ -17,11 +17,6 @@ export default () => {
     'infusibleRealms',
     gql`
       query {
-        realms(where: { allowPublicInfusion: true }) {
-          id
-          name
-          description
-        }
         account(id: "${account?.toLowerCase()}") {
           id
           realmInfusers {
@@ -32,6 +27,11 @@ export default () => {
               description
             }
           }
+        }
+        realms(where: { allowPublicInfusion: true }) {
+          id
+          name
+          description
         }
       }
     `,

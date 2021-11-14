@@ -71,7 +71,7 @@ export default () => {
 
   const onSubmit = methods.handleSubmit(data => {
     updateRealm(data);
-    history.push('advanced-settings');
+    history.push('set-up-claiming');
   });
 
   return (
