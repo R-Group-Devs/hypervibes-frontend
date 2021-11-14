@@ -29,5 +29,6 @@ export interface Nft {
 }
 
 export interface Infusion {
+  balance: string;
   lastClaimAtTimestamp: string;
 }

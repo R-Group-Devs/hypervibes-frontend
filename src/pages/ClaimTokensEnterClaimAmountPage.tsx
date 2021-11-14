@@ -12,6 +12,7 @@ import NftCard from '../components/NftCard';
 import SubmitButton from '../components/SubmitButton';
 import useClaimTokens from '../hooks/useClaimTokens';
 import useErc721IsApproved from '../hooks/useErc721IsApproved';
+import useErc20Decimals from '../hooks/useErc20Decimals';
 import useRealmDetails from '../hooks/useRealmDetails';
 import useNftDetails from '../hooks/useNftDetails';
 import heading from '../assets/images/headings/claim-tokens.svg';
@@ -56,9 +57,11 @@ export default () => {
     data: { allowPublicClaiming, claimers },
   } = useRealmDetails(realmId);
   const {
-    data: { lastClaimAtTimestamp },
+    data: { claimableAmount, lastClaimAtTimestamp },
   } = useNftDetails(collection, tokenId);
+  const decimals = useErc20Decimals(collection);
   const [formErrors, setFormErrors] = useState<string[]>([]);
+  const claimableAmountNumber = claimableAmount.div(decimals).toString();
 
   const onSubmit = methods.handleSubmit(async data => {
     let hasErrors = false;
@@ -117,7 +120,15 @@ export default () => {
                 label="Amount to claim"
                 description="The total number of XYZ tokens to claim."
               >
-                <NumberInput name="amount" label="Amount " required />
+                <NumberInput
+                  name="amount"
+                  label={`Amount (Max: ${claimableAmountNumber})`}
+                  required
+                  validate={value =>
+                    value <= parseInt(claimableAmountNumber, 10) ||
+                    'You cannot claim more than the maximum.'
+                  }
+                />
               </InputGroup>
             </FormContent>
           </Content>
