@@ -13,6 +13,7 @@ import SubmitButton from '../components/SubmitButton';
 import useClaimTokens from '../hooks/useClaimTokens';
 import useErc721IsApproved from '../hooks/useErc721IsApproved';
 import useRealmDetails from '../hooks/useRealmDetails';
+import useNftDetails from '../hooks/useNftDetails';
 import heading from '../assets/images/headings/claim-tokens.svg';
 
 interface FormValues {
@@ -54,6 +55,9 @@ export default () => {
   const {
     data: { allowPublicClaiming, claimers },
   } = useRealmDetails(realmId);
+  const {
+    data: { lastClaimAtTimestamp },
+  } = useNftDetails(collection, tokenId);
   const [formErrors, setFormErrors] = useState<string[]>([]);
 
   const onSubmit = methods.handleSubmit(async data => {
@@ -66,6 +70,15 @@ export default () => {
       setFormErrors([
         ...formErrors,
         'You lack claim permissions in this realm for this NFT. Try another.',
+      ]);
+
+      hasErrors = true;
+    }
+
+    if (!lastClaimAtTimestamp) {
+      setFormErrors([
+        ...formErrors,
+        'This NFT is not infused with any tokens.',
       ]);
 
       hasErrors = true;

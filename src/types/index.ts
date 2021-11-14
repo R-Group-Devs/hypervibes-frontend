@@ -23,3 +23,11 @@ export interface Collection {
   id: string;
   address: string;
 }
+
+export interface Nft {
+  infusions: Infusion[];
+}
+
+export interface Infusion {
+  lastClaimAtTimestamp: string;
+}
