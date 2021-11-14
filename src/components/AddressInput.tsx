@@ -54,8 +54,7 @@ export default ({
         description={description}
         required={required}
         validate={{
-          address: value =>
-            !value || isAddress(value) || value.endsWith('.eth'),
+          address: value => !value || isAddress(value),
         }}
       />
 

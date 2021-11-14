@@ -26,8 +26,7 @@ export default ({ error, minValue, maxLength }: Props) => (
         `This field must be shorter ${maxLength} characters.`}
       {error?.type === 'minValue' &&
         `Enter a value ${minValue === 0 ? 'zero' : minValue} or higher.`}
-      {error?.type === 'address' &&
-        'Enter a valid Ethereum address or ENS name.'}
+      {error?.type === 'address' && 'Enter a valid Ethereum address.'}
       {error?.type === 'custom' && error?.message}
     </Message>
   </Container>
