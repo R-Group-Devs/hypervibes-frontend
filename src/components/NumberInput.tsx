@@ -9,6 +9,7 @@ interface Props {
   label: string;
   required?: boolean;
   min?: number;
+  onChange?: (value: number) => void;
   validate?: (value: number) => boolean | string;
 }
 
@@ -39,6 +40,7 @@ export default ({
   label,
   required = false,
   min = 0,
+  onChange,
   validate,
   ...rest
 }: Props) => {
@@ -57,6 +59,7 @@ export default ({
         {...register(name, {
           required,
           valueAsNumber: true,
+          onChange,
           validate: {
             minValue: value => value === undefined || parseFloat(value) >= min,
             custom: value => !validate || validate(value),
