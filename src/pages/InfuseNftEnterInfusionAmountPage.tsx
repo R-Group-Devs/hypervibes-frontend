@@ -70,8 +70,10 @@ export default () => {
     token,
     minInfusionAmount,
     requireNftIsOwned,
+    allowAllCollections,
     allowPublicInfusion,
     infusers,
+    collections,
   } = realmDetails;
   const { symbol } = useErc20TokenDetails(token || '');
   const { allowance } = useErc20Allowance(token || '');
@@ -122,6 +124,15 @@ export default () => {
       setFormErrors([
         ...formErrors,
         'You lack infuse permissions within this realm. Try another.',
+      ]);
+
+      hasErrors = true;
+    }
+
+    if (!allowAllCollections && !collections?.includes(collection)) {
+      setFormErrors([
+        ...formErrors,
+        'NFTs in this collections cannot be infused within this realm. Try another.',
       ]);
 
       hasErrors = true;

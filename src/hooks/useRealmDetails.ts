@@ -18,10 +18,16 @@ export default (id: string) => {
           token
           minInfusionAmount
           requireNftIsOwned
+          allowAllCollections
           allowPublicInfusion
           realmInfusers {
             account {
               id
+              address
+            }
+          }
+          realmCollections {
+            collection {
               address
             }
           }
@@ -32,6 +38,9 @@ export default (id: string) => {
 
   const realm = res.data?.realms[0];
   const infusers = realm?.realmInfusers.map(infuser => infuser.account.address);
+  const collections = realm?.realmCollections.map(
+    collection => collection.collection.address
+  );
 
   return {
     data: {
@@ -41,8 +50,10 @@ export default (id: string) => {
       token: realm?.token,
       minInfusionAmount: realm?.minInfusionAmount,
       requireNftIsOwned: realm?.requireNftIsOwned,
+      allowAllCollections: realm?.allowAllCollections,
       allowPublicInfusion: realm?.allowPublicInfusion,
       infusers,
+      collections,
     },
   };
 };
