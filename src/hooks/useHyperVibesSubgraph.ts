@@ -14,13 +14,20 @@ const HYPERVIBES_SUBGRAPH_ENDPOINTS: Record<string, string> = {
     'https://api.thegraph.com/subgraphs/name/r-group-devs/hypervibes-mumbai',
 };
 
+interface QueryOptions {
+  chainId?: number;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  variables?: Record<string, any>;
+}
+
 export default <QueryResult>(
   queryName: string,
   query: string,
   queryOptions?: Omit<
     UseQueryOptions<QueryResult, Error>,
     'queryKey' | 'queryFn'
-  > & { chainId?: number }
+  > &
+    QueryOptions
 ) => {
   const { chainId: connectedChainId } = useWallet();
   const chainId = queryOptions?.chainId ?? connectedChainId ?? 1;
@@ -29,7 +36,12 @@ export default <QueryResult>(
     // including chain id in the cache key to ensure we don't mix cached queries
     // across chains
     `${chainId}:${queryName}`,
-    async () => request(HYPERVIBES_SUBGRAPH_ENDPOINTS[chainId], query),
+    async () =>
+      request(
+        HYPERVIBES_SUBGRAPH_ENDPOINTS[chainId],
+        query,
+        queryOptions?.variables
+      ),
     queryOptions
   );
 };
