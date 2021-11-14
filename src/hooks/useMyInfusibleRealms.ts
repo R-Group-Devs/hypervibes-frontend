@@ -25,6 +25,7 @@ export default () => {
               id
               name
               description
+              requireNftIsOwned
             }
           }
         }
@@ -32,6 +33,7 @@ export default () => {
           id
           name
           description
+          requireNftIsOwned
         }
       }
     `,

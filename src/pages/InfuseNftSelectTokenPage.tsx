@@ -2,7 +2,7 @@ import { useForm, FormProvider } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import InfuseNftContainer from '../components/InfuseNftContainer';
 import FormHeading from '../components/FormHeading';
-import TextInput from '../components/TextInput';
+import NumberInput from '../components/TextInput';
 import SubmitButton from '../components/SubmitButton';
 import heading from '../assets/images/headings/select-nft.svg';
 
@@ -24,7 +24,7 @@ export default () => {
 
       <FormProvider {...methods}>
         <form onSubmit={onSubmit}>
-          <TextInput name="tokenId" label="Token ID" required />
+          <NumberInput name="tokenId" label="Token ID" required />
 
           <SubmitButton>Next</SubmitButton>
         </form>

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import useErc721Contract from './useErc721Contract';
 
 export default (tokenAddress: string, tokenId?: string) => {
@@ -20,4 +20,15 @@ export default (tokenAddress: string, tokenId?: string) => {
   }, [contract, tokenId, setOwnerOf]);
 
   return ownerOf;
+};
+
+export const useLazyErc721OwnerOf = (tokenAddress: string) => {
+  const contract = useErc721Contract(tokenAddress);
+
+  const fn = useCallback(
+    async (tokenId: string) => contract?.ownerOf(tokenId),
+    [contract]
+  );
+
+  return fn;
 };
