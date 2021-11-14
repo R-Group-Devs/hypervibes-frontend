@@ -11,7 +11,6 @@ import flag from '../assets/images/flag.svg';
 
 const Container = styled.div`
   display: flex;
-  column-gap: 4em;
 `;
 
 const PageHeading = styled.img`
@@ -23,6 +22,7 @@ const PathCard = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: 0 2em;
   padding: 1em 2em;
   width: 32vh;
   height: 50vh;

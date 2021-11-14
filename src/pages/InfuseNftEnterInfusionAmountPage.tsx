@@ -47,7 +47,6 @@ const CardContainer = styled.div`
 const ButtonGroup = styled.div`
   margin-top: 4em;
   display: flex;
-  column-gap: 2em;
 `;
 
 const TokenApprovalInfo = styled.div`

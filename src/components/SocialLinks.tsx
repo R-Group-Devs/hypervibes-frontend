@@ -8,27 +8,39 @@ const Container = styled.div`
   top: 570px;
   left: 32px;
   display: flex;
-  column-gap: 32px;
   transform: rotate(-90deg);
   transform-origin: top left;
 `;
 
+const SocialLink = styled.a`
+  margin-right: 32px;
+  display: inline-block;
+`;
+
 export default () => (
   <Container>
-    <a href="https://discord.gg/E9hsASB8Hk" target="_blank" rel="noreferrer">
+    <SocialLink
+      href="https://discord.gg/E9hsASB8Hk"
+      target="_blank"
+      rel="noreferrer"
+    >
       <img src={discordIcon} alt="Discord" />
-    </a>
+    </SocialLink>
 
-    <a href="https://twitter.com/raribledao" target="_blank" rel="noreferrer">
+    <SocialLink
+      href="https://twitter.com/raribledao"
+      target="_blank"
+      rel="noreferrer"
+    >
       <img src={twitterIcon} alt="Twitter" />
-    </a>
+    </SocialLink>
 
-    <a
+    <SocialLink
       href="https://github.com/R-Group-Devs/hypervibes-contracts"
       target="_blank"
       rel="noreferrer"
     >
       <img src={githubIcon} alt="GitHub" />
-    </a>
+    </SocialLink>
   </Container>
 );

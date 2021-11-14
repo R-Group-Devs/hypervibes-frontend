@@ -13,6 +13,7 @@ const Option = styled.div<{ isSelected: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-right: 1.5em;
   width: 264px;
   height: 64px;
   font-size: 20px;

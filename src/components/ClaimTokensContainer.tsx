@@ -61,11 +61,11 @@ const NameTab = styled.div`
 const ThreeLinePattern = styled.div`
   display: flex;
   flex-direction: column;
-  row-gap: 6px;
-  padding-top: 8px;
+  padding-top: 2px;
 `;
 
 const LinePattern = styled.div`
+  margin-top: 6px;
   width: 100%;
   border-top: 1px solid #ff6b6b;
 `;

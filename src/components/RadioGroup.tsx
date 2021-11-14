@@ -15,7 +15,6 @@ const Container = styled.div`
 
 const RadioGroup = styled.div`
   display: flex;
-  column-gap: 2em;
 `;
 
 export default ({ name, label, children }: Props) => {

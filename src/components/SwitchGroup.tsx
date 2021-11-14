@@ -13,9 +13,8 @@ const Container = styled.div`
   margin-bottom: 0.5em;
 `;
 
-const RadioGroup = styled.div`
+const SwitchGroup = styled.div`
   display: flex;
-  column-gap: 2em;
 `;
 
 const Label = styled.h3`
@@ -31,7 +30,7 @@ export default ({ name, label, children }: Props) => {
     <Container>
       <Label>{label}</Label>
 
-      <RadioGroup>{children}</RadioGroup>
+      <SwitchGroup>{children}</SwitchGroup>
       <FormFieldErrorMessage error={formState.errors[name]} />
     </Container>
   );

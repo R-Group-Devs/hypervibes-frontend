@@ -11,8 +11,6 @@ const Container = styled.div`
   display: flex;
   width: 100%;
   flex-wrap: wrap;
-  column-gap: 2em;
-  row-gap: 2em;
 `;
 
 const EmptyState = styled.div`

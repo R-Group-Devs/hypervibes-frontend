@@ -14,6 +14,7 @@ const Card = styled.div<{ isSelected: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-right: 2em;
   width: 310px;
   height: 138px;
   background: #0b0b0b;

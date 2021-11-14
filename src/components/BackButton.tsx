@@ -9,7 +9,7 @@ interface Props {
 
 const BackButton = styled(Button)`
   display: flex;
-  margin-top: 2.1em;
+  margin-top: 1.8em;
   padding-left: 0;
   padding-right: 0;
   width: 182px;

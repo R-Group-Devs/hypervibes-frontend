@@ -18,7 +18,6 @@ const Label = styled.div`
 
 const InputGroup = styled.div`
   display: flex;
-  column-gap: 2em;
   margin-bottom: 2em;
 `;
 
