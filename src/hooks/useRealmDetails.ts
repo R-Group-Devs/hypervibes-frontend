@@ -16,17 +16,21 @@ export default (id: string) => {
           name
           description
           token
+          minInfusionAmount
         }
       }
     `
   );
 
+  const realm = res.data?.realms[0];
+
   return {
     data: {
-      id: res.data?.realms[0].id,
-      name: res.data?.realms[0].name,
-      description: res.data?.realms[0].description,
-      token: res.data?.realms[0].token,
+      id: realm?.id,
+      name: realm?.name,
+      description: realm?.description,
+      token: realm?.token,
+      minInfusionAmount: realm?.minInfusionAmount,
     },
   };
 };

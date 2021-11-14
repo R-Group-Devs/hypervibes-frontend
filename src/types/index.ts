@@ -3,6 +3,7 @@ export interface Realm {
   name: string;
   description: string;
   token: string;
+  minInfusionAmount: string;
   allowAllCollections: boolean;
   realmCollections: { id: string; collection: Collection }[];
 }

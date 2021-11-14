@@ -59,7 +59,7 @@ export default () => {
   const history = useHistory();
   const { realmId, collection, tokenId } = useParams<Params>();
   const {
-    data: { token },
+    data: { token, minInfusionAmount },
   } = useRealmDetails(realmId);
   const { infuseNft } = useInfuseNft();
   const getErc20Contract = useLazyErc20Contract();
@@ -69,6 +69,13 @@ export default () => {
   const [decimals, setDecimals] = useState<BigNumber>();
 
   const amount = methods.watch('amount');
+  const minInfusionAmountBn = decimals
+    ? BigNumber.from(minInfusionAmount || 0)
+    : BigNumber.from(0);
+  const minInfusionAmountInt = decimals
+    ? minInfusionAmountBn.div(decimals).toString()
+    : BigNumber.from(0);
+
   const hasApprovedEnoughAllowance = decimals
     ? allowance.gte(BigNumber.from(amount || 0).mul(decimals))
     : false;
@@ -120,7 +127,20 @@ export default () => {
                 label="Amount to infuse"
                 description="The total number of XYZ tokens to infuse."
               >
-                <NumberInput name="amount" label="Amount" required />
+                <NumberInput
+                  name="amount"
+                  label="Amount"
+                  required
+                  validate={value => {
+                    const amountBn = decimals
+                      ? BigNumber.from(value || 0).mul(decimals)
+                      : BigNumber.from(0);
+                    return (
+                      amountBn.gte(minInfusionAmountBn) ||
+                      `Cannot be less than the realm's minimum infusion amount (${minInfusionAmountInt}).`
+                    );
+                  }}
+                />
               </InputGroup>
 
               {!hasApprovedEnoughAllowance && (

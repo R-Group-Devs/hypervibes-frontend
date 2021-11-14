@@ -141,7 +141,7 @@ export default () => {
                 required
                 validate={value =>
                   value <= (realm?.maxInfusibleTokens || 0) ||
-                  'Must be less than or equal to maximum infusible tokens defined in the Set up Infusion step.'
+                  'Cannot be greater than maximum infusible tokens defined in the Set up Infusion step.'
                 }
               />
             </InputGroup>
