@@ -25,10 +25,13 @@ export interface Collection {
 }
 
 export interface Nft {
+  collection: Collection;
+  tokenId: string;
   infusions: Infusion[];
 }
 
 export interface Infusion {
+  realm: Realm;
   balance: string;
   lastClaimAtTimestamp: string;
 }

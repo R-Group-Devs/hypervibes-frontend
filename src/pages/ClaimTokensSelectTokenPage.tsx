@@ -5,9 +5,10 @@ import { DevTool } from '@hookform/devtools';
 import { useHistory, useParams } from 'react-router-dom';
 import ClaimTokensContainer from '../components/ClaimTokensContainer';
 import FormHeading from '../components/FormHeading';
-import NumberInput from '../components/NumberInput';
+import Card from '../components/Card';
 import SubmitButton from '../components/SubmitButton';
 import useErc721OwnerOf from '../hooks/useErc721OwnerOf';
+import useMyInfusedNfts from '../hooks/useMyInfusedNfts';
 import heading from '../assets/images/headings/select-nft.svg';
 
 interface FormValues {
@@ -27,11 +28,20 @@ const FormErrors = styled.ul`
 
 export default () => {
   const methods = useForm<FormValues>();
-  const { collection } = useParams<Params>();
+  const { realmId, collection } = useParams<Params>();
   const history = useHistory();
   const tokenId = methods.watch('tokenId');
   const ownerOf = useErc721OwnerOf(collection, tokenId);
+  const {
+    data: { infusedNfts },
+  } = useMyInfusedNfts();
   const [formErrors, setFormErrors] = useState<string[]>([]);
+
+  const infusedNftsInCurrentRealm = infusedNfts?.filter(nft =>
+    nft.infusions.find(infusion => infusion.realm.id === realmId)
+  );
+
+  console.log(infusedNftsInCurrentRealm);
 
   const onSubmit = methods.handleSubmit(data => {
     if (!ownerOf) {
@@ -47,9 +57,19 @@ export default () => {
     <ClaimTokensContainer name="Claim Goods">
       <FormHeading src={heading} alt="Select NFT" />
 
+      {infusedNftsInCurrentRealm?.length === 0 && (
+        <>You own no infused NFTs in this realm.</>
+      )}
+
       <FormProvider {...methods}>
         <form onSubmit={onSubmit}>
-          <NumberInput name="tokenId" label="Token ID" required />
+          {infusedNftsInCurrentRealm?.map(nft => (
+            <Card
+              key={nft.tokenId}
+              name={nft.tokenId}
+              url={`collection/${nft.collection.address}/token/${nft.tokenId}`}
+            />
+          ))}
 
           {formErrors.length > 0 && (
             <FormErrors>
@@ -59,7 +79,9 @@ export default () => {
             </FormErrors>
           )}
 
-          <SubmitButton>Next</SubmitButton>
+          {infusedNftsInCurrentRealm?.length > 0 && (
+            <SubmitButton>Next</SubmitButton>
+          )}
         </form>
 
         <DevTool control={methods.control} />

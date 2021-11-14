@@ -15,7 +15,10 @@ export default () => {
     <ClaimTokensContainer name="Claim Goods">
       <FormHeading src={heading} alt="Select Realm" />
 
-      <RealmList realms={data} />
+      <RealmList
+        realms={data}
+        url={realmId => `realm/${realmId}/select-token`}
+      />
     </ClaimTokensContainer>
   );
 };

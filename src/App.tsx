@@ -23,7 +23,6 @@ import InfuseNftSelectTokenPage from './pages/InfuseNftSelectTokenPage';
 import InfuseNftEnterInfusionAmountPage from './pages/InfuseNftEnterInfusionAmountPage';
 import InfuseNftSuccessPage from './pages/InfuseNftSuccessPage';
 import ClaimTokensSelectRealmPage from './pages/ClaimTokensSelectRealmPage';
-import ClaimTokensSelectCollectionPage from './pages/ClaimTokensSelectCollectionPage';
 import ClaimTokensSelectTokenPage from './pages/ClaimTokensSelectTokenPage';
 import ClaimTokensEnterClaimAmountPage from './pages/ClaimTokensEnterClaimAmountPage';
 import ClaimTokensSuccessPage from './pages/ClaimTokensSuccessPage';
@@ -120,11 +119,7 @@ export default () => (
                   <ClaimTokensSelectRealmPage />
                 </Route>
 
-                <Route path="/claim/realm/:realmId/select-collection">
-                  <ClaimTokensSelectCollectionPage />
-                </Route>
-
-                <Route path="/claim/realm/:realmId/collection/:collection/select-token">
+                <Route path="/claim/realm/:realmId/select-token">
                   <ClaimTokensSelectTokenPage />
                 </Route>
 

@@ -4,6 +4,7 @@ import { Realm } from '../types';
 
 interface Props {
   realms: Realm[];
+  url?: (realmId: string) => string;
 }
 
 const Container = styled.div`
@@ -19,7 +20,7 @@ const EmptyState = styled.div`
   text-align: center;
 `;
 
-export default ({ realms }: Props) => (
+export default ({ realms, url }: Props) => (
   <Container>
     {realms.length > 0 ? (
       <>
@@ -27,7 +28,7 @@ export default ({ realms }: Props) => (
           <Card
             key={realm.id}
             name={realm.name}
-            url={`realm/${realm.id}/select-collection`}
+            url={url ? url(realm.id) : `realm/${realm.id}/select-collection`}
           />
         ))}
       </>
