@@ -16,7 +16,9 @@ export default () => {
               name
               description
               createdAt
-              token
+              token {
+                address
+              }
               admins {
                 createdAt
                 account {

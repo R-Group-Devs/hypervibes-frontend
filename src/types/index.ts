@@ -4,7 +4,9 @@ export interface Realm {
   id: string;
   name: string;
   description: string;
-  token: string;
+  token: {
+    address: string;
+  };
   minClaimAmount: string;
   minInfusionAmount: string;
   maxTokenBalance: BigNumber;

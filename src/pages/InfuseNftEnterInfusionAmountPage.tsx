@@ -15,7 +15,6 @@ import useErc20TokenDetails from '../hooks/useErc20TokenDetails';
 import useErc20Allowance from '../hooks/useErc20Allowance';
 import useErc20ApproveAllowance from '../hooks/useErc20ApproveAllowance';
 import useErc721OwnerOf from '../hooks/useErc721OwnerOf';
-import useCurrentMinedTokens from '../hooks/useCurrentMinedTokens';
 import useRealmDetails from '../hooks/useRealmDetails';
 import useInfuseNft from '../hooks/useInfuseNft';
 import heading from '../assets/images/headings/infuse-token.svg';
@@ -74,8 +73,8 @@ export default () => {
     infusers,
     collections,
   } = realmDetails;
-  const { symbol } = useErc20TokenDetails(token || '');
-  const { allowance } = useErc20Allowance(token || '');
+  const { symbol } = useErc20TokenDetails(token?.address || '');
+  const { allowance } = useErc20Allowance(token?.address || '');
   const { approveAllowance } = useErc20ApproveAllowance();
   const ownerOf = useErc721OwnerOf(collection, tokenId);
   const isNftOwnedByInfuser = ownerOf == account;
@@ -99,7 +98,9 @@ export default () => {
   useEffect(() => {
     (async () => {
       if (!decimals && token && getErc20Contract) {
-        const decimalExponent = await getErc20Contract(token)?.decimals();
+        const decimalExponent = await getErc20Contract(
+          token?.address
+        )?.decimals();
         setDecimals(BigNumber.from(10).pow(decimalExponent));
       }
     })();
@@ -149,7 +150,7 @@ export default () => {
       // TODO: subtract amount from current allowance
       // long-term, how should we handle approvals? infinity seems bad,
       // but maybe give the user an option to set between a min needed for infusion and infinity
-      await approveAllowance(token || '', amount);
+      await approveAllowance(token?.address || '', amount);
     } else {
       // TODO: how do we handle cases where use is not connected w/ wallet beforehand?
       if (account) {

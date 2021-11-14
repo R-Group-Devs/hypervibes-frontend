@@ -16,7 +16,9 @@ export default (id: string) => {
           id
           name
           description
-          token
+          token {
+            address
+          }
           minClaimAmount
           minInfusionAmount
           maxTokenBalance
