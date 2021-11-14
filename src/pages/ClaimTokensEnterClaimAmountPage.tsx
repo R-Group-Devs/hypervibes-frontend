@@ -5,6 +5,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import { useWallet } from 'use-wallet';
 import ClaimTokensContainer from '../components/ClaimTokensContainer';
 import FormHeading from '../components/FormHeading';
+import InputGroup from '../components/InputGroup';
 import NumberInput from '../components/NumberInput';
 import NftCard from '../components/NftCard';
 import SubmitButton from '../components/SubmitButton';
@@ -58,7 +59,7 @@ export default () => {
 
   return (
     <ClaimTokensContainer name="Claim Goods">
-      <FormHeading src={heading} alt="Select Collection" />
+      <FormHeading src={heading} alt="Claim Tokens" />
 
       <FormProvider {...methods}>
         <form onSubmit={onSubmit}>
@@ -68,7 +69,12 @@ export default () => {
             </CardContainer>
 
             <FormContent>
-              <NumberInput name="amount" label="Amount to Claim" required />
+              <InputGroup
+                label="Amount to claim"
+                description="The total number of XYZ tokens to claim."
+              >
+                <NumberInput name="amount" label="Amount " required />
+              </InputGroup>
             </FormContent>
           </Content>
 
