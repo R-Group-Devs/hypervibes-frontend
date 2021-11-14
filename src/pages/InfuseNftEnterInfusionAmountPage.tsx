@@ -58,11 +58,10 @@ export default () => {
   const { account } = useWallet();
   const history = useHistory();
   const { realmId, collection, tokenId } = useParams<Params>();
-  const {
-    data: { token, minInfusionAmount },
-  } = useRealmDetails(realmId);
+  const { data: realmDetails } = useRealmDetails(realmId);
   const { infuseNft } = useInfuseNft();
   const getErc20Contract = useLazyErc20Contract();
+  const { token, minInfusionAmount } = realmDetails;
   const { symbol } = useErc20TokenDetails(token || '');
   const { allowance } = useErc20Allowance(token || '');
   const { approveAllowance } = useErc20ApproveAllowance();
@@ -111,6 +110,15 @@ export default () => {
     }
   });
 
+  if (!realmDetails || !symbol) {
+    // TODO: add content loaders
+    return (
+      <InfuseNftContainer name="Infusion Chamber">
+        <FormHeading src={heading} alt="Infuse Token" />
+      </InfuseNftContainer>
+    );
+  }
+
   return (
     <InfuseNftContainer name="Infusion Chamber">
       <FormHeading src={heading} alt="Infuse Token" />
@@ -125,7 +133,7 @@ export default () => {
             <FormContent>
               <InputGroup
                 label="Amount to infuse"
-                description="The total number of XYZ tokens to infuse."
+                description={`The total number of ${symbol} tokens to infuse.`}
               >
                 <NumberInput
                   name="amount"
