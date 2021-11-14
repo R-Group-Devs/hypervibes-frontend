@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 import { useForm, FormProvider } from 'react-hook-form';
 import { DevTool } from '@hookform/devtools';
@@ -10,6 +11,8 @@ import NumberInput from '../components/NumberInput';
 import NftCard from '../components/NftCard';
 import SubmitButton from '../components/SubmitButton';
 import useClaimTokens from '../hooks/useClaimTokens';
+import useErc721IsApproved from '../hooks/useErc721IsApproved';
+import useRealmDetails from '../hooks/useRealmDetails';
 import heading from '../assets/images/headings/claim-tokens.svg';
 
 interface FormValues {
@@ -36,14 +39,42 @@ const CardContainer = styled.div`
   width: 50%;
 `;
 
+const FormErrors = styled.ul`
+  margin-top: 2em;
+  margin-bottom: 3em;
+`;
+
 export default () => {
   const methods = useForm<FormValues>();
   const { account } = useWallet();
   const history = useHistory();
   const { realmId, collection, tokenId } = useParams<Params>();
   const { claimTokens } = useClaimTokens();
+  const isApproved = useErc721IsApproved(collection, tokenId, account);
+  const {
+    data: { allowPublicClaiming, claimers },
+  } = useRealmDetails(realmId);
+  const [formErrors, setFormErrors] = useState<string[]>([]);
 
   const onSubmit = methods.handleSubmit(async data => {
+    let hasErrors = false;
+
+    if (
+      !isApproved ||
+      (!claimers?.includes(account || '') && !allowPublicClaiming)
+    ) {
+      setFormErrors([
+        ...formErrors,
+        'You lack claim permissions in this realm for this NFT. Try another.',
+      ]);
+
+      hasErrors = true;
+    }
+
+    if (hasErrors) {
+      return false;
+    }
+
     // TODO: how do we handle cases where use is not connected w/ wallet beforehand?
     if (account) {
       await claimTokens({
@@ -77,6 +108,14 @@ export default () => {
               </InputGroup>
             </FormContent>
           </Content>
+
+          {formErrors.length > 0 && (
+            <FormErrors>
+              {formErrors.map(formError => (
+                <li key={formError}>{formError}</li>
+              ))}
+            </FormErrors>
+          )}
 
           <SubmitButton size="lg">Claim Tokens</SubmitButton>
         </form>

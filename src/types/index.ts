@@ -7,8 +7,11 @@ export interface Realm {
   requireNftIsOwned: boolean;
   allowAllCollections: boolean;
   allowPublicInfusion: boolean;
+  allowPublicClaiming: boolean;
+  allowMultiInfuse: boolean;
   realmCollections: { id: string; collection: Collection }[];
   realmInfusers: { id: string; account: Account }[];
+  realmClaimers: { id: string; account: Account }[];
 }
 
 export interface Account {

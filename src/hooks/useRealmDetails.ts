@@ -20,6 +20,7 @@ export default (id: string) => {
           requireNftIsOwned
           allowAllCollections
           allowPublicInfusion
+          allowMultiInfuse
           realmInfusers {
             account {
               id
@@ -28,6 +29,12 @@ export default (id: string) => {
           }
           realmCollections {
             collection {
+              address
+            }
+          }
+          realmClaimers {
+            account {
+              id
               address
             }
           }
@@ -41,6 +48,7 @@ export default (id: string) => {
   const collections = realm?.realmCollections.map(
     collection => collection.collection.address
   );
+  const claimers = realm?.realmClaimers.map(claimer => claimer.account.address);
 
   return {
     data: {
@@ -52,8 +60,12 @@ export default (id: string) => {
       requireNftIsOwned: realm?.requireNftIsOwned,
       allowAllCollections: realm?.allowAllCollections,
       allowPublicInfusion: realm?.allowPublicInfusion,
+      // TODO: add to subgraph request
+      allowPublicClaiming: true,
+      allowMultiInfuse: realm?.allowMultiInfuse,
       infusers,
       collections,
+      claimers,
     },
   };
 };
