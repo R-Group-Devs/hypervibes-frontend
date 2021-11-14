@@ -33,6 +33,9 @@ import GlobalStyle from './components/GlobalStyle';
 import Header from './components/Header';
 import SocialLinks from './components/SocialLinks';
 import AppErrorMessage from './components/AppErrorMessage';
+import BrowseRealmsPage from './pages/BrowseRealmsPage';
+import BrowseNftsPage from './pages/BrowseNftsPage';
+import NftDetailPage from './pages/NftDetailPage';
 
 const AppContainer = styled.div`
   display: flex;
@@ -138,6 +141,18 @@ export default () => (
 
                 <Route path="/nfts">
                   <NftListPage />
+                </Route>
+
+                <Route exact path="/:network/realms">
+                  <BrowseRealmsPage />
+                </Route>
+
+                <Route exact path="/:network/realms/:realmId/nfts">
+                  <BrowseNftsPage />
+                </Route>
+
+                <Route exact path="/:network/tokens/:collection/:tokenId">
+                  <NftDetailPage />
                 </Route>
 
                 <Route path="*">
