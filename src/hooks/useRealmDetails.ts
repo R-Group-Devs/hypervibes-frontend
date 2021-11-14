@@ -17,12 +17,21 @@ export default (id: string) => {
           description
           token
           minInfusionAmount
+          requireNftIsOwned
+          allowPublicInfusion
+          realmInfusers {
+            account {
+              id
+              address
+            }
+          }
         }
       }
     `
   );
 
   const realm = res.data?.realms[0];
+  const infusers = realm?.realmInfusers.map(infuser => infuser.account.address);
 
   return {
     data: {
@@ -31,6 +40,9 @@ export default (id: string) => {
       description: realm?.description,
       token: realm?.token,
       minInfusionAmount: realm?.minInfusionAmount,
+      requireNftIsOwned: realm?.requireNftIsOwned,
+      allowPublicInfusion: realm?.allowPublicInfusion,
+      infusers,
     },
   };
 };

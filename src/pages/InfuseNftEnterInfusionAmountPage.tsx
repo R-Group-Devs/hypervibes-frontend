@@ -15,6 +15,7 @@ import { useLazyErc20Contract } from '../hooks/useErc20Contract';
 import useErc20TokenDetails from '../hooks/useErc20TokenDetails';
 import useErc20Allowance from '../hooks/useErc20Allowance';
 import useErc20ApproveAllowance from '../hooks/useErc20ApproveAllowance';
+import useErc721OwnerOf from '../hooks/useErc721OwnerOf';
 import useRealmDetails from '../hooks/useRealmDetails';
 import useInfuseNft from '../hooks/useInfuseNft';
 import heading from '../assets/images/headings/infuse-token.svg';
@@ -53,6 +54,10 @@ const TokenApprovalInfo = styled.div`
   width: 100%;
 `;
 
+const FormErrors = styled.ul`
+  margin-top: 2em;
+`;
+
 export default () => {
   const methods = useForm<FormValues>();
   const { account } = useWallet();
@@ -61,13 +66,23 @@ export default () => {
   const { data: realmDetails } = useRealmDetails(realmId);
   const { infuseNft } = useInfuseNft();
   const getErc20Contract = useLazyErc20Contract();
-  const { token, minInfusionAmount } = realmDetails;
+  const {
+    token,
+    minInfusionAmount,
+    requireNftIsOwned,
+    allowPublicInfusion,
+    infusers,
+  } = realmDetails;
   const { symbol } = useErc20TokenDetails(token || '');
   const { allowance } = useErc20Allowance(token || '');
   const { approveAllowance } = useErc20ApproveAllowance();
+  const ownerOf = useErc721OwnerOf(collection, tokenId);
+  const isNftOwnedByInfuser = ownerOf == account;
   const [decimals, setDecimals] = useState<BigNumber>();
+  const [formErrors, setFormErrors] = useState<string[]>([]);
 
   const amount = methods.watch('amount');
+
   const minInfusionAmountBn = decimals
     ? BigNumber.from(minInfusionAmount || 0)
     : BigNumber.from(0);
@@ -89,6 +104,33 @@ export default () => {
   }, [token, decimals, getErc20Contract]);
 
   const onSubmit = methods.handleSubmit(async data => {
+    let hasErrors = false;
+
+    if (requireNftIsOwned && !isNftOwnedByInfuser) {
+      setFormErrors([
+        ...formErrors,
+        'You must own this NFT to infuse it with tokens.',
+      ]);
+
+      hasErrors = true;
+    }
+
+    if (
+      !allowPublicInfusion &&
+      !infusers?.includes(account?.toLowerCase() || '')
+    ) {
+      setFormErrors([
+        ...formErrors,
+        'You lack infuse permissions within this realm. Try another.',
+      ]);
+
+      hasErrors = true;
+    }
+
+    if (hasErrors) {
+      return false;
+    }
+
     if (!hasApprovedEnoughAllowance) {
       // TODO: subtract amount from current allowance
       // long-term, how should we handle approvals? infinity seems bad,
@@ -171,6 +213,14 @@ export default () => {
               )}
             </FormContent>
           </Content>
+
+          {formErrors.length > 0 && (
+            <FormErrors>
+              {formErrors.map(formError => (
+                <li key={formError}>{formError}</li>
+              ))}
+            </FormErrors>
+          )}
 
           <ButtonGroup>
             <SubmitButton
