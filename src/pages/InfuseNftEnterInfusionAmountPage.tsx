@@ -234,16 +234,10 @@ export default () => {
           )}
 
           <ButtonGroup>
-            <SubmitButton
-              size="lg"
-              disabled={hasApprovedEnoughAllowance || !amount}
-            >
+            <SubmitButton disabled={hasApprovedEnoughAllowance || !amount}>
               Approve
             </SubmitButton>
-            <SubmitButton
-              size="lg"
-              disabled={!hasApprovedEnoughAllowance || !amount}
-            >
+            <SubmitButton disabled={!hasApprovedEnoughAllowance || !amount}>
               Infuse
             </SubmitButton>
           </ButtonGroup>
