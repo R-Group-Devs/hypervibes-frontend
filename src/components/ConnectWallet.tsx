@@ -6,11 +6,14 @@ import Button from './Button';
 import WalletModal from './WalletModal';
 import useAutoConnect from '../hooks/useAutoConnect';
 import { shortenAddress } from '../utils/address';
+import { getNetworkName } from '../utils/network';
 
 const Container = styled.div`
   position: absolute;
   top: 30px;
   right: 50px;
+  display: flex;
+  align-items: center;
 `;
 
 const ConnectWalletButton = styled(Button)<{ isConnected: boolean }>`
@@ -36,10 +39,16 @@ const ButtonBackground = styled.div`
   transition: background 0.2s;
 `;
 
+const NetworkName = styled.span`
+  margin-right: 1.5em;
+  font-size: 14px;
+`;
+
 export default () => {
   const { openPortal, closePortal, isOpen, Portal } = usePortal();
   const wallet = useWallet();
   const triedAutoConnect = useAutoConnect();
+  const networkName = wallet.chainId ? getNetworkName(wallet.chainId) : null;
 
   useEffect(() => {
     if (wallet.status === 'connected') {
@@ -49,6 +58,8 @@ export default () => {
 
   return (
     <Container>
+      {wallet.account && <NetworkName>{networkName}</NetworkName>}
+
       {triedAutoConnect && (
         <ConnectWalletButton
           onClick={openPortal}
