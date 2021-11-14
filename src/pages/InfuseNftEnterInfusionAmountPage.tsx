@@ -29,17 +29,17 @@ interface Params {
   tokenId: string;
 }
 
-const Form = styled.form`
+const Content = styled.form`
   display: flex;
+`;
+
+const FormContent = styled.div`
+  padding-left: 1.75em;
+  width: 50%;
 `;
 
 const CardContainer = styled.div`
   padding-right: 1.75em;
-  width: 50%;
-`;
-
-const Content = styled.div`
-  padding-left: 1.75em;
   width: 50%;
 `;
 
@@ -109,55 +109,56 @@ export default () => {
       <FormHeading src={heading} alt="Infuse Token" />
 
       <FormProvider {...methods}>
-        <Form onSubmit={onSubmit}>
-          <CardContainer>
-            <NftCard name={tokenId} />
-          </CardContainer>
-
+        <form onSubmit={onSubmit}>
           <Content>
-            <InputGroup
-              label="Amount to infuse"
-              description="The total number of XYZ tokens to infuse."
-            >
-              <NumberInput name="amount" label="Amount" required />
-            </InputGroup>
+            <CardContainer>
+              <NftCard name={tokenId} />
+            </CardContainer>
 
-            {!hasApprovedEnoughAllowance && (
-              <TokenApprovalInfo>
-                {allowance.isZero() ? (
-                  <p>
-                    You have not approved the <strong>HyperVIBES</strong>{' '}
-                    contract to move any of your <strong>{symbol}</strong>{' '}
-                    tokens.
-                  </p>
-                ) : (
-                  <p>
-                    You have only approved the <strong>HyperVIBES</strong>{' '}
-                    contract to move{' '}
-                    {allowance.div(BigNumber.from(10).pow(18)).toNumber()} of
-                    your <strong>{symbol}</strong> tokens.
-                  </p>
-                )}
-              </TokenApprovalInfo>
-            )}
+            <FormContent>
+              <InputGroup
+                label="Amount to infuse"
+                description="The total number of XYZ tokens to infuse."
+              >
+                <NumberInput name="amount" label="Amount" required />
+              </InputGroup>
+
+              {!hasApprovedEnoughAllowance && (
+                <TokenApprovalInfo>
+                  {allowance.isZero() ? (
+                    <p>
+                      You have not approved the <strong>HyperVIBES</strong>{' '}
+                      contract to move any of your <strong>{symbol}</strong>{' '}
+                      tokens.
+                    </p>
+                  ) : (
+                    <p>
+                      You have only approved the <strong>HyperVIBES</strong>{' '}
+                      contract to move{' '}
+                      {allowance.div(BigNumber.from(10).pow(18)).toNumber()} of
+                      your <strong>{symbol}</strong> tokens.
+                    </p>
+                  )}
+                </TokenApprovalInfo>
+              )}
+            </FormContent>
           </Content>
-        </Form>
 
-        <ButtonGroup>
-          <SubmitButton
-            size="lg"
-            disabled={hasApprovedEnoughAllowance || !amount}
-          >
-            Approve
-          </SubmitButton>
-          <SubmitButton
-            size="lg"
-            disabled={!hasApprovedEnoughAllowance || !amount}
-          >
-            Infuse
-          </SubmitButton>
-        </ButtonGroup>
-
+          <ButtonGroup>
+            <SubmitButton
+              size="lg"
+              disabled={hasApprovedEnoughAllowance || !amount}
+            >
+              Approve
+            </SubmitButton>
+            <SubmitButton
+              size="lg"
+              disabled={!hasApprovedEnoughAllowance || !amount}
+            >
+              Infuse
+            </SubmitButton>
+          </ButtonGroup>
+        </form>
         <DevTool control={methods.control} />
       </FormProvider>
     </InfuseNftContainer>

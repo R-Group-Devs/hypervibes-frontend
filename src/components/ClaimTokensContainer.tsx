@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import borderPatternVertical from '../assets/images/infuse-nft-border-pattern-vertical.png';
-import borderPatternHorizontal from '../assets/images/infuse-nft-border-pattern-horizontal.png';
+import borderPatternVertical from '../assets/images/claim-tokens-border-pattern-vertical.png';
+import borderPatternHorizontal from '../assets/images/claim-tokens-border-pattern-horizontal.png';
 import star from '../assets/images/star.svg';
 
 interface Props {
@@ -26,7 +26,7 @@ const BorderContainer = styled.div`
   position: relative;
   padding: 1px;
   box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.8);
-  background: linear-gradient(#00e0ff, #000);
+  background: linear-gradient(#ff6b6b, #000);
 `;
 
 const Container = styled.div`
@@ -54,7 +54,7 @@ const NameTab = styled.div`
   font-family: '3616 Grammastile', sans-serif;
   font-size: 14px;
   color: #000;
-  background: #00e0ff;
+  background: #ff6b6b;
   writing-mode: vertical-rl;
 `;
 
@@ -67,7 +67,7 @@ const ThreeLinePattern = styled.div`
 
 const LinePattern = styled.div`
   width: 100%;
-  border-top: 1px solid #06e8f8;
+  border-top: 1px solid #ff6b6b;
 `;
 
 const Star = styled.img`

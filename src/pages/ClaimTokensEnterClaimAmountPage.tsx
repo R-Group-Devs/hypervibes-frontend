@@ -1,10 +1,15 @@
+import styled from 'styled-components';
 import { useForm, FormProvider } from 'react-hook-form';
 import { DevTool } from '@hookform/devtools';
 import { useHistory, useParams } from 'react-router-dom';
 import { useWallet } from 'use-wallet';
+import ClaimTokensContainer from '../components/ClaimTokensContainer';
+import FormHeading from '../components/FormHeading';
 import NumberInput from '../components/NumberInput';
+import NftCard from '../components/NftCard';
 import SubmitButton from '../components/SubmitButton';
 import useClaimTokens from '../hooks/useClaimTokens';
+import heading from '../assets/images/headings/claim-tokens.svg';
 
 interface FormValues {
   amount: number;
@@ -15,6 +20,20 @@ interface Params {
   collection: string;
   tokenId: string;
 }
+
+const Content = styled.form`
+  display: flex;
+`;
+
+const FormContent = styled.div`
+  padding-left: 1.75em;
+  width: 50%;
+`;
+
+const CardContainer = styled.div`
+  padding-right: 1.75em;
+  width: 50%;
+`;
 
 export default () => {
   const methods = useForm<FormValues>();
@@ -38,18 +57,26 @@ export default () => {
   });
 
   return (
-    <>
-      <h2>Claim Tokens</h2>
+    <ClaimTokensContainer name="Claim Goods">
+      <FormHeading src={heading} alt="Select Collection" />
 
       <FormProvider {...methods}>
         <form onSubmit={onSubmit}>
-          <NumberInput name="amount" label="Amount to Claim" required />
+          <Content>
+            <CardContainer>
+              <NftCard name={tokenId} />
+            </CardContainer>
 
-          <SubmitButton>Claim Tokens</SubmitButton>
+            <FormContent>
+              <NumberInput name="amount" label="Amount to Claim" required />
+            </FormContent>
+          </Content>
+
+          <SubmitButton size="lg">Claim Tokens</SubmitButton>
         </form>
 
         <DevTool control={methods.control} />
       </FormProvider>
-    </>
+    </ClaimTokensContainer>
   );
 };
