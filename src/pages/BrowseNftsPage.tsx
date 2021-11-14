@@ -1,4 +1,5 @@
 import { useParams } from 'react-router';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { NETWORKS } from '../constants/contracts';
 import useListRealmNfts from '../hooks/useListRealmNfts';
@@ -42,8 +43,12 @@ export default () => {
       <div>
         {data.realm.infusions.map(infusion => (
           <div key={infusion.id}>
-            {infusion.nft.collection.name} ({infusion.nft.collection.symbol}),
-            tokenId={infusion.nft.tokenId}
+            <Link
+              to={`/${network}/tokens/${infusion.nft.collection.address}/${infusion.nft.tokenId}`}
+            >
+              {infusion.nft.collection.name} ({infusion.nft.collection.symbol}),
+              tokenId={infusion.nft.tokenId}
+            </Link>
           </div>
         ))}
       </div>

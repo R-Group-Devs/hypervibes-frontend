@@ -14,12 +14,8 @@ const RealmRow = styled.div``;
 
 export default () => {
   const { network } = useParams<Params>();
-  const { data, isLoading, isError } = useListRealms(NETWORKS[network]);
-
   const chainId = NETWORKS[network];
-  if (chainId == null) {
-    return <p>invalid network</p>;
-  }
+  const { data, isLoading, isError } = useListRealms(chainId);
 
   if (isError) {
     return <p>error fetching realms</p>;
