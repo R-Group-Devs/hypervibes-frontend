@@ -12,6 +12,7 @@ import NftCard from '../components/NftCard';
 import SubmitButton from '../components/SubmitButton';
 import useClaimTokens from '../hooks/useClaimTokens';
 import useErc721IsApproved from '../hooks/useErc721IsApproved';
+import useErc20TokenDetails from '../hooks/useErc20TokenDetails';
 import useErc20Decimals from '../hooks/useErc20Decimals';
 import useRealmDetails from '../hooks/useRealmDetails';
 import useNftDetails from '../hooks/useNftDetails';
@@ -59,6 +60,7 @@ export default () => {
   const {
     data: { claimableAmount, lastClaimAtTimestamp },
   } = useNftDetails(collection, tokenId);
+  const { symbol } = useErc20TokenDetails(collection);
   const decimals = useErc20Decimals(collection);
   const [formErrors, setFormErrors] = useState<string[]>([]);
   const claimableAmountNumber = claimableAmount.div(decimals).toString();
@@ -118,7 +120,7 @@ export default () => {
             <FormContent>
               <InputGroup
                 label="Amount to claim"
-                description="The total number of XYZ tokens to claim."
+                description={`The total number of ${symbol} tokens to claim.`}
               >
                 <NumberInput
                   name="amount"
