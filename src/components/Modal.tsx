@@ -10,7 +10,7 @@ export interface Props {
 }
 
 const Overlay = styled.div`
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -22,20 +22,34 @@ const Modal = styled.div`
   position: fixed;
   left: 50%;
   top: 50%;
-  padding: 1em 2em;
-  width: 480px;
+  width: 580px;
+  padding: 1px;
   transform: translate(-50%, -50%);
   z-index: 1000;
-  background: #1c1c1c;
+  background: linear-gradient(#bcff67 0%, #17ffe3 30%, transparent 70%);
+  box-shadow: 0 0 20px 10px rgba(23, 255, 227, 0.3);
+`;
+
+const ModalBackground = styled.div`
+  background: #000;
 `;
 
 export const ModalHeading = styled.h3`
   display: flex;
   align-items: center;
+  justify-content: center;
+  margin-top: 0;
   margin-bottom: 2em;
+  padding: 1.5em 2em;
+  font-family: '3616 Grammastile', sans-serif;
+  font-size: 14px;
+  width: 100%;
+  border-bottom: 1px solid #17ffe3;
 `;
 
-export const ModalContent = styled.div``;
+export const ModalContent = styled.div`
+  padding: 0 2em 1em;
+`;
 
 const CloseButton = styled(Button)`
   position: absolute;
@@ -43,7 +57,8 @@ const CloseButton = styled(Button)`
   right: 1em;
   padding: 0.5em;
   background: none;
-  font-size: 20px;
+  font-family: '3616 Grammastile', sans-serif;
+  font-size: 14px;
   font-weight: 600;
 
   &:hover:not([disabled]) {
@@ -74,11 +89,13 @@ export default ({ isOpen, children, close }: Props) => {
             }}
           >
             <Modal>
-              {children}
+              <ModalBackground>
+                {children}
 
-              <CloseButton size="sm" onClick={close}>
-                X
-              </CloseButton>
+                <CloseButton size="sm" onClick={close}>
+                  X
+                </CloseButton>
+              </ModalBackground>
             </Modal>
           </Overlay>
         </animated.div>

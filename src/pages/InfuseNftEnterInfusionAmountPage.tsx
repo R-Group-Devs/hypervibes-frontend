@@ -3,13 +3,16 @@ import styled from 'styled-components';
 import { useForm, FormProvider } from 'react-hook-form';
 import { useHistory, useParams } from 'react-router-dom';
 import { useWallet } from 'use-wallet';
+import usePortal from 'react-useportal';
 import { BigNumber } from '@ethersproject/bignumber';
 import InfuseNftContainer from '../components/InfuseNftContainer';
 import FormHeading from '../components/FormHeading';
 import InputGroup from '../components/InputGroup';
 import NumberInput from '../components/NumberInput';
 import NftCard from '../components/NftCard';
+import ButtonGroup from '../components/ButtonGroup';
 import SubmitButton from '../components/SubmitButton';
+import Modal, { ModalHeading, ModalContent } from '../components/Modal';
 import { useLazyErc20Contract } from '../hooks/useErc20Contract';
 import useErc20TokenDetails from '../hooks/useErc20TokenDetails';
 import useErc20Allowance from '../hooks/useErc20Allowance';
@@ -43,13 +46,32 @@ const CardContainer = styled.div`
   width: 50%;
 `;
 
-const ButtonGroup = styled.div`
-  margin-top: 4em;
-  display: flex;
+const StyledButtonGroup = styled(ButtonGroup)`
+  margin-bottom: 1em;
 `;
 
-const TokenApprovalInfo = styled.div`
-  width: 100%;
+const AmountToInfuseContainer = styled.div`
+  margin: 90px auto 70px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
+const AmountToInfuseLabel = styled.div`
+  font-size: 18px;
+  line-height: 24px;
+`;
+
+const AmountToInfuseAmount = styled.div`
+  margin-top: 10px;
+  font-size: 32px;
+  font-weight: 400;
+  color: #bcff67;
+`;
+
+const TokenSymbol = styled.span`
+  font-weight: 300;
 `;
 
 const FormErrors = styled.ul`
@@ -60,6 +82,7 @@ export default () => {
   const methods = useForm<FormValues>();
   const { account } = useWallet();
   const history = useHistory();
+  const { openPortal, closePortal, isOpen, Portal } = usePortal();
   const { realmId, collection, tokenId } = useParams<Params>();
   const { data: realmDetails } = useRealmDetails(realmId);
   const { infuseNft } = useInfuseNft();
@@ -196,6 +219,7 @@ export default () => {
                   name="amount"
                   label="Amount"
                   required
+                  onChange={() => methods.clearErrors('amount')}
                   validate={value => {
                     const amountBn = decimals
                       ? BigNumber.from(value || 0).mul(decimals)
@@ -207,25 +231,6 @@ export default () => {
                   }}
                 />
               </InputGroup>
-
-              {!hasApprovedEnoughAllowance && (
-                <TokenApprovalInfo>
-                  {allowance.isZero() ? (
-                    <p>
-                      You have not approved the <strong>HyperVIBES</strong>{' '}
-                      contract to move any of your <strong>{symbol}</strong>{' '}
-                      tokens.
-                    </p>
-                  ) : (
-                    <p>
-                      You have only approved the <strong>HyperVIBES</strong>{' '}
-                      contract to move{' '}
-                      {allowance.div(BigNumber.from(10).pow(18)).toNumber()} of
-                      your <strong>{symbol}</strong> tokens.
-                    </p>
-                  )}
-                </TokenApprovalInfo>
-              )}
             </FormContent>
           </Content>
 
@@ -237,16 +242,52 @@ export default () => {
             </FormErrors>
           )}
 
-          <ButtonGroup>
-            <SubmitButton disabled={hasApprovedEnoughAllowance || !amount}>
-              Approve
-            </SubmitButton>
-            <SubmitButton disabled={!hasApprovedEnoughAllowance || !amount}>
-              Infuse
-            </SubmitButton>
-          </ButtonGroup>
+          <SubmitButton
+            onClick={e => {
+              e.preventDefault();
+
+              if (amount) {
+                openPortal();
+              } else {
+                methods.setError('amount', {
+                  type: 'required',
+                });
+              }
+            }}
+          >
+            Next
+          </SubmitButton>
         </form>
       </FormProvider>
+
+      <Portal>
+        <Modal isOpen={isOpen} close={closePortal}>
+          <ModalHeading>Infuse Tokens</ModalHeading>
+          <ModalContent>
+            <AmountToInfuseContainer>
+              <AmountToInfuseLabel>Amount to Infuse</AmountToInfuseLabel>
+              <AmountToInfuseAmount>
+                {amount} <TokenSymbol>${symbol}</TokenSymbol>
+              </AmountToInfuseAmount>
+            </AmountToInfuseContainer>
+
+            <StyledButtonGroup>
+              <SubmitButton
+                disabled={hasApprovedEnoughAllowance || !amount}
+                arrow={false}
+              >
+                Approve
+              </SubmitButton>
+              <SubmitButton
+                disabled={!hasApprovedEnoughAllowance || !amount}
+                arrow={false}
+              >
+                Infuse
+              </SubmitButton>
+            </StyledButtonGroup>
+          </ModalContent>
+        </Modal>
+      </Portal>
     </InfuseNftContainer>
   );
 };

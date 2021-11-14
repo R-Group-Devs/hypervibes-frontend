@@ -1,9 +1,12 @@
+import { MouseEvent } from 'react';
 import styled from 'styled-components';
 import arrowRight from '../assets/images/icons/arrow-right.svg';
 
 interface Props {
   disabled?: boolean;
   children: React.ReactNode;
+  arrow?: boolean;
+  onClick?: (e: MouseEvent) => void;
 }
 
 const SubmitButton = styled.button`
@@ -42,12 +45,22 @@ const ArrowRightIcon = styled.img`
   margin-left: 0.5em;
 `;
 
-export default ({ disabled = false, children, ...rest }: Props) => (
-  <SubmitButton disabled={disabled} {...rest}>
+export default ({
+  disabled = false,
+  children,
+  arrow = true,
+  onClick,
+  ...rest
+}: Props) => (
+  <SubmitButton
+    disabled={disabled}
+    onClick={e => onClick && onClick(e)}
+    {...rest}
+  >
     <ButtonBackground>
       {children}
 
-      <ArrowRightIcon src={arrowRight} alt="" />
+      {arrow && <ArrowRightIcon src={arrowRight} alt="" />}
     </ButtonBackground>
   </SubmitButton>
 );
