@@ -8,6 +8,7 @@ import ClaimTokensContainer from '../components/ClaimTokensContainer';
 import FormHeading from '../components/FormHeading';
 import InputGroup from '../components/InputGroup';
 import NumberInput from '../components/NumberInput';
+import Button from '../components/Button';
 import NftCard from '../components/NftCard';
 import SubmitButton from '../components/SubmitButton';
 import useClaimTokens from '../hooks/useClaimTokens';
@@ -33,13 +34,38 @@ const Content = styled.form`
 `;
 
 const FormContent = styled.div`
+  position: relative;
   padding-left: 1.75em;
   width: 50%;
+  max-width: 270px;
 `;
 
 const CardContainer = styled.div`
   padding-right: 1.75em;
   width: 50%;
+`;
+
+const AmountInput = styled(NumberInput)`
+  padding-right: 3.5em;
+`;
+
+const MaxButton = styled(Button)`
+  position: absolute;
+  margin-top: 3em;
+  right: 2em;
+  padding: 0.25em 1.5em;
+  height: 30px;
+  background: #000;
+  font-size: 6px;
+  line-height: 14px;
+  border: 1px solid #fff;
+  border-radius: 6px;
+  transition: all 0.2s;
+
+  &:hover:not([disabled]) {
+    background: #fff;
+    color: #000;
+  }
 `;
 
 const FormErrors = styled.ul`
@@ -63,7 +89,9 @@ export default () => {
   const { symbol } = useErc20TokenDetails(collection);
   const decimals = useErc20Decimals(collection);
   const [formErrors, setFormErrors] = useState<string[]>([]);
-  const claimableAmountNumber = claimableAmount.div(decimals).toString();
+  const claimableAmountNumber = parseFloat(
+    claimableAmount.div(decimals).toString()
+  );
 
   const onSubmit = methods.handleSubmit(async data => {
     let hasErrors = false;
@@ -122,16 +150,25 @@ export default () => {
                 label="Amount to claim"
                 description={`The total number of ${symbol} tokens to claim.`}
               >
-                <NumberInput
+                <AmountInput
                   name="amount"
                   label={`Amount (Max: ${claimableAmountNumber})`}
                   required
                   min={0.00001}
                   validate={value =>
-                    value <= parseFloat(claimableAmountNumber) ||
+                    value <= claimableAmountNumber ||
                     'You cannot claim more than the maximum.'
                   }
                 />
+
+                <MaxButton
+                  onClick={e => {
+                    e.preventDefault();
+                    methods.setValue('amount', claimableAmountNumber);
+                  }}
+                >
+                  Max
+                </MaxButton>
               </InputGroup>
             </FormContent>
           </Content>
