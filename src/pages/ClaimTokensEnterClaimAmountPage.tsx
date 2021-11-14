@@ -181,7 +181,7 @@ export default () => {
             </FormErrors>
           )}
 
-          <SubmitButton size="lg">Claim Tokens</SubmitButton>
+          <SubmitButton>Claim Tokens</SubmitButton>
         </form>
 
         <DevTool control={methods.control} />

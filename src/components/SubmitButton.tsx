@@ -1,31 +1,22 @@
 import styled from 'styled-components';
-import submitButtonBackground from '../assets/images/submit-button-bg.png';
-import submitButtonBackgroundLarge from '../assets/images/submit-button-bg-lg.png';
 import arrowRight from '../assets/images/icons/arrow-right.svg';
 
 interface Props {
   disabled?: boolean;
-  // TODO: Remove this in favor of a pure CSS button that expands to width of content
-  size?: 'md' | 'lg';
   children: React.ReactNode;
 }
 
-const SubmitButton = styled.button<{ size: 'md' | 'lg' }>`
-  display: flex;
-  align-items: center;
+const SubmitButton = styled.button`
   margin-top: 2em;
-  padding-left: ${({ size }) => (size === 'md' ? '2.5em' : '2em')};
-  width: ${({ size }) => (size === 'md' ? '182px' : '327px')};
-  height: 48px;
+  padding: 1px;
+  height: 42px;
   font-family: '3616 Grammastile', sans-serif;
   font-size: 12px;
   line-height: 20px;
   color: #fff;
-  background: ${({ size }) =>
-    size === 'md'
-      ? `url(${submitButtonBackground}) 0 0 no-repeat`
-      : `url(${submitButtonBackgroundLarge}) 0 0 no-repeat`};
+  background: linear-gradient(#bcff67 0%, #17ffe3 30%, transparent 70%);
   border: none;
+  transition: all 0.2s;
 
   &:disabled {
     opacity: 0.5;
@@ -33,8 +24,17 @@ const SubmitButton = styled.button<{ size: 'md' | 'lg' }>`
   }
 
   &:hover:not([disabled]) {
+    box-shadow: 0 0 14px 0 #bcff67;
     cursor: pointer;
   }
+`;
+
+const ButtonBackground = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 0 34px;
+  height: 40px;
+  background: linear-gradient(#214c42 20%, #000 80%);
 `;
 
 const ArrowRightIcon = styled.img`
@@ -42,15 +42,12 @@ const ArrowRightIcon = styled.img`
   margin-left: 0.5em;
 `;
 
-export default ({
-  size = 'md',
-  disabled = false,
-  children,
-  ...rest
-}: Props) => (
-  <SubmitButton size={size} disabled={disabled} {...rest}>
-    {children}
+export default ({ disabled = false, children, ...rest }: Props) => (
+  <SubmitButton disabled={disabled} {...rest}>
+    <ButtonBackground>
+      {children}
 
-    <ArrowRightIcon src={arrowRight} alt="" />
+      <ArrowRightIcon src={arrowRight} alt="" />
+    </ButtonBackground>
   </SubmitButton>
 );

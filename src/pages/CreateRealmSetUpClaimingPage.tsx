@@ -148,7 +148,7 @@ export default () => {
 
             <ButtonGroup>
               <BackButton path="set-up-infusion" />
-              <SubmitButton size="lg">Create Realm</SubmitButton>
+              <SubmitButton>Create Realm</SubmitButton>
             </ButtonGroup>
           </form>
 
