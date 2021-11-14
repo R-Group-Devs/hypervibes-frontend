@@ -14,14 +14,25 @@ const Container = styled.div`
   row-gap: 2em;
 `;
 
+const EmptyState = styled.div`
+  width: 100%;
+  text-align: center;
+`;
+
 export default ({ realms }: Props) => (
   <Container>
-    {realms.map(realm => (
-      <Card
-        key={realm.id}
-        name={realm.name}
-        url={`realm/${realm.id}/select-collection`}
-      />
-    ))}
+    {realms.length > 0 ? (
+      <>
+        {realms.map(realm => (
+          <Card
+            key={realm.id}
+            name={realm.name}
+            url={`realm/${realm.id}/select-collection`}
+          />
+        ))}
+      </>
+    ) : (
+      <EmptyState>There are no realms.</EmptyState>
+    )}
   </Container>
 );
