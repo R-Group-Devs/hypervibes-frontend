@@ -193,7 +193,7 @@ export default () => {
             </FormErrors>
           )}
 
-          <SubmitButton>Claim Tokens</SubmitButton>
+          <SubmitButton>Claim</SubmitButton>
         </form>
       </FormProvider>
     </ClaimTokensContainer>
