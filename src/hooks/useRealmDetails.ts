@@ -17,6 +17,7 @@ export default (id: string) => {
           name
           description
           token
+          minClaimAmount
           minInfusionAmount
           maxTokenBalance
           requireNftIsOwned
@@ -59,6 +60,7 @@ export default (id: string) => {
       name: realm?.name,
       description: realm?.description,
       token: realm?.token,
+      minClaimAmount: BigNumber.from(realm?.minClaimAmount || 0),
       minInfusionAmount: realm?.minInfusionAmount,
       maxTokenBalance: BigNumber.from(realm?.maxTokenBalance || 0),
       requireNftIsOwned: realm?.requireNftIsOwned,

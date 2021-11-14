@@ -129,7 +129,10 @@ export default () => {
       hasErrors = true;
     }
 
-    if (!allowAllCollections && !collections?.includes(collection)) {
+    if (
+      !allowAllCollections &&
+      !collections?.includes(collection.toLowerCase())
+    ) {
       setFormErrors([
         ...formErrors,
         'NFTs in this collections cannot be infused within this realm. Try another.',

@@ -5,6 +5,7 @@ export interface Realm {
   name: string;
   description: string;
   token: string;
+  minClaimAmount: string;
   minInfusionAmount: string;
   maxTokenBalance: BigNumber;
   requireNftIsOwned: boolean;

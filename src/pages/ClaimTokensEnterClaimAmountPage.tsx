@@ -81,7 +81,7 @@ export default () => {
   const { claimTokens } = useClaimTokens();
   const isApproved = useErc721IsApproved(collection, tokenId, account);
   const {
-    data: { allowPublicClaiming, claimers },
+    data: { minClaimAmount, allowPublicClaiming, claimers },
   } = useRealmDetails(realmId);
   const {
     data: { lastClaimAtTimestamp },
@@ -92,6 +92,10 @@ export default () => {
     realmId,
     collection,
     tokenId
+  );
+
+  const minClaimAmountNumber = parseFloat(
+    minClaimAmount?.div(decimals).toString()
   );
   const currentMinedTokensNumber = parseFloat(
     currentMinedTokens?.div(decimals).toString()
@@ -104,7 +108,8 @@ export default () => {
 
     if (
       !isApproved ||
-      (!claimers?.includes(account || '') && !allowPublicClaiming)
+      (!claimers?.includes(account?.toLowerCase() || '') &&
+        !allowPublicClaiming)
     ) {
       setFormErrors([
         ...formErrors,
@@ -162,8 +167,9 @@ export default () => {
                   required
                   min={0.00001}
                   validate={value =>
-                    value <= currentMinedTokensNumber ||
-                    'You cannot claim more than the maximum.'
+                    (value >= minClaimAmountNumber &&
+                      value <= currentMinedTokensNumber) ||
+                    `Enter an amount between ${minClaimAmountNumber} (realm minimum) and ${currentMinedTokensNumber} (total available to claim).`
                   }
                 />
 
