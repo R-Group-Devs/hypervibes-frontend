@@ -8,6 +8,7 @@ interface Props {
   name: string;
   label: string;
   required?: boolean;
+  min?: number;
   validate?: (value: number) => boolean | string;
 }
 
@@ -37,6 +38,7 @@ export default ({
   name,
   label,
   required = false,
+  min = 0,
   validate,
   ...rest
 }: Props) => {
@@ -56,14 +58,14 @@ export default ({
           required,
           valueAsNumber: true,
           validate: {
-            minValue: value => !value || parseFloat(value) >= 0,
+            minValue: value => value === undefined || parseFloat(value) >= min,
             custom: value => !validate || validate(value),
           },
         })}
         {...rest}
       />
 
-      <FormFieldErrorMessage error={formState.errors[name]} />
+      <FormFieldErrorMessage error={formState.errors[name]} minValue={min} />
     </Container>
   );
 };

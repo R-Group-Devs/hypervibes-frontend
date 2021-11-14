@@ -124,8 +124,9 @@ export default () => {
                   name="amount"
                   label={`Amount (Max: ${claimableAmountNumber})`}
                   required
+                  min={0.00001}
                   validate={value =>
-                    value <= parseInt(claimableAmountNumber, 10) ||
+                    value <= parseFloat(claimableAmountNumber) ||
                     'You cannot claim more than the maximum.'
                   }
                 />

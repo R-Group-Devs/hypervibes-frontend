@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 interface Props {
   error?: FieldError;
+  minValue?: number;
   maxLength?: number;
 }
 
@@ -17,13 +18,14 @@ const Message = styled.span<{ isVisible: boolean }>`
   transition: opacity 0.2s;
 `;
 
-export default ({ error, maxLength }: Props) => (
+export default ({ error, minValue, maxLength }: Props) => (
   <Container>
     <Message isVisible={!!error}>
       {error?.type === 'required' && 'This field is required.'}
       {error?.type === 'maxLength' &&
         `This field must be shorter ${maxLength} characters.`}
-      {error?.type === 'minValue' && 'Enter a value higher than zero.'}
+      {error?.type === 'minValue' &&
+        `Enter a value ${minValue === 0 ? 'zero' : minValue} or higher.`}
       {error?.type === 'address' &&
         'Enter a valid Ethereum address or ENS name.'}
       {error?.type === 'custom' && error?.message}
