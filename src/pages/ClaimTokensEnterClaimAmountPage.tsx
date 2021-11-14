@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import { useForm, FormProvider } from 'react-hook-form';
-import { DevTool } from '@hookform/devtools';
 import { useHistory, useParams } from 'react-router-dom';
 import { useWallet } from 'use-wallet';
 import ClaimTokensContainer from '../components/ClaimTokensContainer';
@@ -17,6 +16,7 @@ import useErc20TokenDetails from '../hooks/useErc20TokenDetails';
 import useErc20Decimals from '../hooks/useErc20Decimals';
 import useRealmDetails from '../hooks/useRealmDetails';
 import useNftDetails from '../hooks/useNftDetails';
+import useCurrentMinedTokens from '../hooks/useCurrentMinedTokens';
 import heading from '../assets/images/headings/claim-tokens.svg';
 
 interface FormValues {
@@ -84,14 +84,20 @@ export default () => {
     data: { allowPublicClaiming, claimers },
   } = useRealmDetails(realmId);
   const {
-    data: { claimableAmount, lastClaimAtTimestamp },
+    data: { lastClaimAtTimestamp },
   } = useNftDetails(collection, tokenId);
   const { symbol } = useErc20TokenDetails(collection);
   const decimals = useErc20Decimals(collection);
-  const [formErrors, setFormErrors] = useState<string[]>([]);
-  const claimableAmountNumber = parseFloat(
-    claimableAmount.div(decimals).toString()
+  const currentMinedTokens = useCurrentMinedTokens(
+    realmId,
+    collection,
+    tokenId
   );
+  const currentMinedTokensNumber = parseFloat(
+    currentMinedTokens.div(decimals).toString()
+  );
+
+  const [formErrors, setFormErrors] = useState<string[]>([]);
 
   const onSubmit = methods.handleSubmit(async data => {
     let hasErrors = false;
@@ -152,11 +158,11 @@ export default () => {
               >
                 <AmountInput
                   name="amount"
-                  label={`Amount (Max: ${claimableAmountNumber})`}
+                  label={`Amount (Max: ${currentMinedTokensNumber})`}
                   required
                   min={0.00001}
                   validate={value =>
-                    value <= claimableAmountNumber ||
+                    value <= currentMinedTokensNumber ||
                     'You cannot claim more than the maximum.'
                   }
                 />
@@ -164,7 +170,7 @@ export default () => {
                 <MaxButton
                   onClick={e => {
                     e.preventDefault();
-                    methods.setValue('amount', claimableAmountNumber);
+                    methods.setValue('amount', currentMinedTokensNumber);
                   }}
                 >
                   Max
@@ -183,8 +189,6 @@ export default () => {
 
           <SubmitButton>Claim Tokens</SubmitButton>
         </form>
-
-        <DevTool control={methods.control} />
       </FormProvider>
     </ClaimTokensContainer>
   );

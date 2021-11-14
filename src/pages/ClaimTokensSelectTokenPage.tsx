@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import { useForm, FormProvider } from 'react-hook-form';
-import { DevTool } from '@hookform/devtools';
 import { useHistory, useParams } from 'react-router-dom';
 import ClaimTokensContainer from '../components/ClaimTokensContainer';
 import FormHeading from '../components/FormHeading';
@@ -83,8 +82,6 @@ export default () => {
             <SubmitButton>Next</SubmitButton>
           )}
         </form>
-
-        <DevTool control={methods.control} />
       </FormProvider>
     </ClaimTokensContainer>
   );

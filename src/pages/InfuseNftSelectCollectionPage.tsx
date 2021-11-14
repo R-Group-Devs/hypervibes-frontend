@@ -1,5 +1,4 @@
 import { useForm, FormProvider } from 'react-hook-form';
-import { DevTool } from '@hookform/devtools';
 import { useHistory, useParams } from 'react-router-dom';
 import InfuseNftContainer from '../components/InfuseNftContainer';
 import FormHeading from '../components/FormHeading';
@@ -46,8 +45,6 @@ export default () => {
 
             <SubmitButton>Next</SubmitButton>
           </form>
-
-          <DevTool control={methods.control} />
         </FormProvider>
       ) : (
         <CollectionList collections={data.collections} />

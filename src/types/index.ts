@@ -1,9 +1,12 @@
+import { BigNumber } from '@ethersproject/bignumber';
+
 export interface Realm {
   id: string;
   name: string;
   description: string;
   token: string;
   minInfusionAmount: string;
+  maxTokenBalance: BigNumber;
   requireNftIsOwned: boolean;
   allowAllCollections: boolean;
   allowPublicInfusion: boolean;

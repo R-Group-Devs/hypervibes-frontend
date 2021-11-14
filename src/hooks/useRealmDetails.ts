@@ -1,4 +1,5 @@
 import { gql } from 'graphql-request';
+import { BigNumber } from '@ethersproject/bignumber';
 import useHyperVibesSubgraph from './useHyperVibesSubgraph';
 import { Realm } from '../types';
 
@@ -17,9 +18,11 @@ export default (id: string) => {
           description
           token
           minInfusionAmount
+          maxTokenBalance
           requireNftIsOwned
           allowAllCollections
           allowPublicInfusion
+          allowPublicClaiming
           allowMultiInfuse
           realmInfusers {
             account {
@@ -57,11 +60,11 @@ export default (id: string) => {
       description: realm?.description,
       token: realm?.token,
       minInfusionAmount: realm?.minInfusionAmount,
+      maxTokenBalance: BigNumber.from(realm?.maxTokenBalance || 0),
       requireNftIsOwned: realm?.requireNftIsOwned,
       allowAllCollections: realm?.allowAllCollections,
       allowPublicInfusion: realm?.allowPublicInfusion,
-      // TODO: add to subgraph request
-      allowPublicClaiming: true,
+      allowPublicClaiming: realm?.allowPublicClaiming,
       allowMultiInfuse: realm?.allowMultiInfuse,
       infusers,
       collections,

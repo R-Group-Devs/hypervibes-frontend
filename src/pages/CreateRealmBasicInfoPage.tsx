@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { useForm, FormProvider } from 'react-hook-form';
-import { DevTool } from '@hookform/devtools';
 import { useHistory } from 'react-router-dom';
 import useCreateRealmWizard, {
   RealmWizardValues,
@@ -63,8 +62,6 @@ export default () => {
             </ButtonGroup>
           </form>
         </CreateRealmContainer>
-
-        <DevTool control={methods.control} />
       </FormProvider>
     </Container>
   );

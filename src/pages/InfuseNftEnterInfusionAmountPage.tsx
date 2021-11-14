@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useForm, FormProvider } from 'react-hook-form';
-import { DevTool } from '@hookform/devtools';
 import { useHistory, useParams } from 'react-router-dom';
 import { useWallet } from 'use-wallet';
 import { BigNumber } from '@ethersproject/bignumber';
@@ -16,6 +15,7 @@ import useErc20TokenDetails from '../hooks/useErc20TokenDetails';
 import useErc20Allowance from '../hooks/useErc20Allowance';
 import useErc20ApproveAllowance from '../hooks/useErc20ApproveAllowance';
 import useErc721OwnerOf from '../hooks/useErc721OwnerOf';
+import useCurrentMinedTokens from '../hooks/useCurrentMinedTokens';
 import useRealmDetails from '../hooks/useRealmDetails';
 import useInfuseNft from '../hooks/useInfuseNft';
 import heading from '../assets/images/headings/infuse-token.svg';
@@ -80,6 +80,7 @@ export default () => {
   const { approveAllowance } = useErc20ApproveAllowance();
   const ownerOf = useErc721OwnerOf(collection, tokenId);
   const isNftOwnedByInfuser = ownerOf == account;
+
   const [decimals, setDecimals] = useState<BigNumber>();
   const [formErrors, setFormErrors] = useState<string[]>([]);
 
@@ -242,7 +243,6 @@ export default () => {
             </SubmitButton>
           </ButtonGroup>
         </form>
-        <DevTool control={methods.control} />
       </FormProvider>
     </InfuseNftContainer>
   );
