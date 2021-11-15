@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import borderPatternVertical from '../assets/images/claim-tokens-border-pattern-vertical.png';
 import borderPatternHorizontal from '../assets/images/claim-tokens-border-pattern-horizontal.png';
 import headerFlourish from '../assets/images/claim-header-flourish.svg';
+import crosshair from '../assets/images/crosshair.svg';
 
 interface Props {
   name: string;
@@ -76,6 +77,12 @@ const HeaderFlourish = styled.img`
   left: calc(50% - 45px);
 `;
 
+const Crosshair = styled.img`
+  position: absolute;
+  top: 3em;
+  right: 1.5em;
+`;
+
 export default ({ name, children }: Props) => (
   <BackgroundContainerHorizontal>
     <BackgroundContainerVertical>
@@ -87,6 +94,8 @@ export default ({ name, children }: Props) => (
             <LinePattern />
             <LinePattern />
           </ThreeLinePattern>
+          <Crosshair src={crosshair} alt="" />
+
           <HeaderFlourish src={headerFlourish} alt="" />
           <Content>{children}</Content>
         </Container>
