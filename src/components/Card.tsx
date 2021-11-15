@@ -11,6 +11,7 @@ const Container = styled.div`
   margin-right: 2em;
   margin-bottom: 2em;
   width: 136px;
+  display: inline-block;
 
   &:hover img {
     outline: 4px solid #bcff67;

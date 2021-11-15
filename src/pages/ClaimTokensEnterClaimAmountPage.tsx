@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 import { useForm, FormProvider } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
@@ -248,24 +248,14 @@ export default () => {
           <ModalContent>
             <TransactionStatus>
               {isPending ? (
-                <>
-                  <AmountToClaimLabel>Claiming</AmountToClaimLabel>
-                  <AmountToClaimAmount>
-                    {amount} <TokenSymbol>${symbol}</TokenSymbol>
-                  </AmountToClaimAmount>
-
-                  <p>Confirming transaction...</p>
-                </>
+                <AmountToClaimLabel>Claiming...</AmountToClaimLabel>
               ) : (
-                <>
-                  <AmountToClaimLabel>Claimed</AmountToClaimLabel>
-                  <AmountToClaimAmount>
-                    {amount} <TokenSymbol>${symbol}</TokenSymbol>
-                  </AmountToClaimAmount>
-
-                  <p>Confirmed!</p>
-                </>
+                <AmountToClaimLabel>Claimed</AmountToClaimLabel>
               )}
+
+              <AmountToClaimAmount>
+                {amount} <TokenSymbol>${symbol}</TokenSymbol>
+              </AmountToClaimAmount>
             </TransactionStatus>
           </ModalContent>
         </Modal>
