@@ -6,13 +6,13 @@ import fallbackImage from '../assets/images/fallback.png';
 interface Props {
   url: string;
   tokenUri: string;
+  size?: 'sm' | 'lg';
 }
 
 const Container = styled.div`
   margin-left: 1em;
   margin-right: 1em;
   margin-bottom: 2em;
-  width: 136px;
   display: inline-block;
 
   &:hover img {
@@ -21,9 +21,9 @@ const Container = styled.div`
   }
 `;
 
-const Image = styled.img`
-  width: 136px;
-  height: 136px;
+const Image = styled.img<{ size: 'sm' | 'lg' }>`
+  width: ${({ size }) => (size === 'sm' ? '136px' : '180px')};
+  height: ${({ size }) => (size === 'sm' ? '136px' : '180px')};
   border-radius: 12px;
   outline: 4px solid transparent;
   box-shadow: none;
@@ -46,7 +46,7 @@ const Name = styled.div`
   font-weight: 600;
 `;
 
-export default ({ url, tokenUri }: Props) => {
+export default ({ url, tokenUri, size = 'sm' }: Props) => {
   const { metadata, isLoading } = useMetadata(tokenUri);
 
   return (
@@ -54,7 +54,7 @@ export default ({ url, tokenUri }: Props) => {
       <Container>
         {!isLoading && (
           <>
-            <Image src={metadata?.image || fallbackImage} alt="" />
+            <Image src={metadata?.image || fallbackImage} size={size} alt="" />
             <Name>{metadata?.name}</Name>
           </>
         )}

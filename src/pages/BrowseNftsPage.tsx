@@ -2,7 +2,7 @@ import { useParams } from 'react-router';
 import styled from 'styled-components';
 import { NETWORKS } from '../constants/contracts';
 import useListRealmNfts from '../hooks/useListRealmNfts';
-import useMetadata from '../hooks/useMetadata';
+import BannerPageHeading from '../components/BannerPageHeading';
 import NftGalleryCard from '../components/NftGalleryCard';
 
 interface Params {
@@ -12,8 +12,8 @@ interface Params {
 
 const Container = styled.div``;
 
-const PageHeading = styled.h1`
-  text-align: center;
+const NftList = styled.div`
+  margin-top: 210px;
 `;
 
 export default () => {
@@ -42,15 +42,21 @@ export default () => {
 
   return (
     <Container>
-      <PageHeading>{data.realm.name}</PageHeading>
+      <BannerPageHeading
+        name={data.realm.name}
+        tokenUri={data.realm.infusions[0]?.nft.tokenUri}
+      />
 
-      {data.realm.infusions.map(infusion => (
-        <NftGalleryCard
-          key={infusion.id}
-          url={`/${network}/tokens/${infusion.nft.collection.address}/${infusion.nft.tokenId}`}
-          tokenUri={infusion.nft.tokenUri}
-        />
-      ))}
+      <NftList>
+        {data.realm.infusions.map(infusion => (
+          <NftGalleryCard
+            key={infusion.id}
+            url={`/${network}/tokens/${infusion.nft.collection.address}/${infusion.nft.tokenId}`}
+            tokenUri={infusion.nft.tokenUri}
+            size="lg"
+          />
+        ))}
+      </NftList>
     </Container>
   );
 };
