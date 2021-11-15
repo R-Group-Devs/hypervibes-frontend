@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useForm, FormProvider } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
+import { useWallet } from 'use-wallet';
 import usePortal from 'react-useportal';
 import { utils } from 'ethers';
 import useCreateRealmWizard, {
@@ -18,6 +19,7 @@ import ButtonGroup from '../components/ButtonGroup';
 import BackButton from '../components/BackButton';
 import SubmitButton from '../components/SubmitButton';
 import Modal, { ModalHeading, ModalContent } from '../components/Modal';
+import WalletModal from '../components/WalletModal';
 import { CREATE_REALM_STEPS } from '../constants/formSteps';
 import heading from '../assets/images/headings/set-up-claiming.svg';
 import allowAnyClaimerImage from '../assets/images/allow-any-claimer.png';
@@ -88,11 +90,30 @@ export default () => {
     useCreateRealmWizard();
   const history = useHistory();
   const methods = useForm<RealmWizardValues>({ defaultValues: realm });
-  const { openPortal, closePortal, isOpen, Portal } = usePortal();
+  const wallet = useWallet();
+  const {
+    openPortal: openConfirmPortal,
+    closePortal: closeConfirmPortal,
+    isOpen: isConfirmPortalOpen,
+    Portal: ConfirmPortal,
+  } = usePortal();
+  const {
+    openPortal: openConnectWalletPortal,
+    closePortal: closeConnectWalletPortal,
+    isOpen: isConnectWalletPortalOpen,
+    Portal: ConnectWalletPortal,
+  } = usePortal();
   const allowPublicClaiming = methods.watch('allowPublicClaiming');
   const [isPending, setIsPending] = useState(false);
+  const [neededWalletConnection, setNeededWalletConnection] = useState(false);
 
   const onSubmit = methods.handleSubmit(async data => {
+    if (!wallet.account) {
+      setNeededWalletConnection(true);
+      openConnectWalletPortal();
+      return false;
+    }
+
     updateRealm(data);
 
     // TODO - move this logic to a `useEffect` block that fires on `realm` dependency change
@@ -102,17 +123,34 @@ export default () => {
     const tx = await createRealm({ ...realm, ...data });
 
     setIsPending(true);
-    openPortal({ currentTarget: { contains: () => false } });
+    openConfirmPortal({ currentTarget: { contains: () => false } });
 
     await tx.wait(1);
     setIsPending(false);
 
     setTimeout(() => {
-      closePortal();
+      closeConfirmPortal();
       history.push('/infuse');
       resetRealm();
     }, 3000);
   });
+
+  useEffect(() => {
+    if (wallet.status === 'connected') {
+      closeConnectWalletPortal();
+
+      if (neededWalletConnection) {
+        setNeededWalletConnection(false);
+        onSubmit();
+      }
+    }
+  }, [
+    wallet.status,
+    neededWalletConnection,
+    setNeededWalletConnection,
+    closeConnectWalletPortal,
+    onSubmit,
+  ]);
 
   return (
     <Container>
@@ -189,8 +227,8 @@ export default () => {
         </CreateRealmContainer>
       </FormProvider>
 
-      <Portal>
-        <Modal isOpen={isOpen} close={closePortal}>
+      <ConfirmPortal>
+        <Modal isOpen={isConfirmPortalOpen} close={closeConfirmPortal}>
           <ModalHeading>Create Realm</ModalHeading>
           <ModalContent>
             <CreateRealmModalContainer>
@@ -202,7 +240,14 @@ export default () => {
             </CreateRealmModalContainer>
           </ModalContent>
         </Modal>
-      </Portal>
+      </ConfirmPortal>
+
+      <ConnectWalletPortal>
+        <WalletModal
+          isOpen={isConnectWalletPortalOpen}
+          close={closeConnectWalletPortal}
+        />
+      </ConnectWalletPortal>
     </Container>
   );
 };
