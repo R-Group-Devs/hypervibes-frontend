@@ -7,8 +7,10 @@ import ClaimTokensContainer from '../components/ClaimTokensContainer';
 import FormHeading from '../components/FormHeading';
 import InputGroup from '../components/InputGroup';
 import NumberInput from '../components/NumberInput';
+import ButtonGroup from '../components/ButtonGroup';
 import Button from '../components/Button';
 import NftCard from '../components/NftCard';
+import BackButton from '../components/BackButton';
 import SubmitButton from '../components/SubmitButton';
 import useClaimTokens from '../hooks/useClaimTokens';
 import useErc721IsApproved from '../hooks/useErc721IsApproved';
@@ -193,7 +195,10 @@ export default () => {
             </FormErrors>
           )}
 
-          <SubmitButton>Claim</SubmitButton>
+          <ButtonGroup>
+            <BackButton path="../../../select-token" />
+            <SubmitButton>Claim</SubmitButton>
+          </ButtonGroup>
         </form>
       </FormProvider>
     </ClaimTokensContainer>

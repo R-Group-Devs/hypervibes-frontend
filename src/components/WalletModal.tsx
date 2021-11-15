@@ -18,8 +18,7 @@ const WalletProviderInfo = styled.div`
   padding: 0 2em;
   align-items: center;
   justify-content: space-between;
-  background: rgba(255, 255, 255, 0.07);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid #17ffe3;
 `;
 
 const WalletProviderOption = styled(WalletProviderInfo)`
@@ -47,7 +46,18 @@ const WalletProviderIcon = styled.img`
 `;
 
 const DisconnectWalletButton = styled(Button)`
-  margin-left: 1em;
+  display: inline-block;
+  margin: 0 2em 1em 0;
+  padding: 0;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.6);
+  transition: color 0.2s;
+
+  &:hover {
+    color: #fff;
+    text-decoration: underline;
+    cursor: pointer;
+  }
 `;
 
 const WalletLink = styled.a`
@@ -133,16 +143,7 @@ export default ({ isOpen, close }: Props) => {
         connectedWallet &&
         !isChangingWallets && (
           <>
-            <ModalHeading>
-              <span>Account</span>
-              <DisconnectWalletButton
-                size="sm"
-                inline
-                onClick={() => wallet.reset()}
-              >
-                Disconnect
-              </DisconnectWalletButton>
-            </ModalHeading>
+            <ModalHeading>Account</ModalHeading>
 
             <ModalContent>
               <ConnectedWalletInfo>
@@ -176,6 +177,14 @@ export default ({ isOpen, close }: Props) => {
                   >
                     View on explorer
                   </WalletLink>
+
+                  <DisconnectWalletButton
+                    size="sm"
+                    inline
+                    onClick={() => wallet.reset()}
+                  >
+                    Disconnect
+                  </DisconnectWalletButton>
                 </div>
               </ConnectedWalletInfo>
             </ModalContent>

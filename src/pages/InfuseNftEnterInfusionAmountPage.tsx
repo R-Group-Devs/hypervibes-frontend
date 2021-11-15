@@ -11,6 +11,7 @@ import InputGroup from '../components/InputGroup';
 import NumberInput from '../components/NumberInput';
 import NftCard from '../components/NftCard';
 import ButtonGroup from '../components/ButtonGroup';
+import BackButton from '../components/BackButton';
 import SubmitButton from '../components/SubmitButton';
 import Modal, { ModalHeading, ModalContent } from '../components/Modal';
 import { useLazyErc20Contract } from '../hooks/useErc20Contract';
@@ -208,74 +209,78 @@ export default () => {
             </FormErrors>
           )}
 
-          <SubmitButton
-            onClick={e => {
-              e.preventDefault();
-              let hasErrors = false;
+          <ButtonGroup>
+            <BackButton path={'../select-token'} />
+            <SubmitButton
+              onClick={e => {
+                e.preventDefault();
+                let hasErrors = false;
 
-              if (!allowMultiInfuse && lastClaimAtTimestamp) {
-                const errorMessage = 'Token cannot be infused more than once.';
+                if (!allowMultiInfuse && lastClaimAtTimestamp) {
+                  const errorMessage =
+                    'Token cannot be infused more than once.';
 
-                if (!formErrors.includes(errorMessage)) {
-                  setFormErrors([...formErrors, errorMessage]);
+                  if (!formErrors.includes(errorMessage)) {
+                    setFormErrors([...formErrors, errorMessage]);
+                  }
+
+                  hasErrors = true;
                 }
 
-                hasErrors = true;
-              }
+                if (requireNftIsOwned && !isNftOwnedByInfuser) {
+                  const errorMessage =
+                    'You must own this NFT to infuse it with tokens.';
 
-              if (requireNftIsOwned && !isNftOwnedByInfuser) {
-                const errorMessage =
-                  'You must own this NFT to infuse it with tokens.';
+                  if (!formErrors.includes(errorMessage)) {
+                    setFormErrors([...formErrors, errorMessage]);
+                  }
 
-                if (!formErrors.includes(errorMessage)) {
-                  setFormErrors([...formErrors, errorMessage]);
+                  hasErrors = true;
                 }
 
-                hasErrors = true;
-              }
+                if (
+                  !allowPublicInfusion &&
+                  !infusers?.includes(account?.toLowerCase() || '')
+                ) {
+                  const errorMessage =
+                    'You lack infuse permissions within this realm. Try another.';
 
-              if (
-                !allowPublicInfusion &&
-                !infusers?.includes(account?.toLowerCase() || '')
-              ) {
-                const errorMessage =
-                  'You lack infuse permissions within this realm. Try another.';
+                  if (!formErrors.includes(errorMessage)) {
+                    setFormErrors([...formErrors, errorMessage]);
+                  }
 
-                if (!formErrors.includes(errorMessage)) {
-                  setFormErrors([...formErrors, errorMessage]);
+                  hasErrors = true;
                 }
 
-                hasErrors = true;
-              }
+                if (
+                  !allowAllCollections &&
+                  !collections?.includes(collection.toLowerCase())
+                ) {
+                  const errorMessage =
+                    'NFTs in this collections cannot be infused within this realm. Try another.';
+                  if (!formErrors.includes(errorMessage)) {
+                    setFormErrors([...formErrors, errorMessage]);
+                  }
 
-              if (
-                !allowAllCollections &&
-                !collections?.includes(collection.toLowerCase())
-              ) {
-                const errorMessage =
-                  'NFTs in this collections cannot be infused within this realm. Try another.';
-                if (!formErrors.includes(errorMessage)) {
-                  setFormErrors([...formErrors, errorMessage]);
+                  hasErrors = true;
                 }
 
-                hasErrors = true;
-              }
+                if (hasErrors) {
+                  return false;
+                }
 
-              if (hasErrors) {
-                return false;
-              }
-
-              if (amount) {
-                openPortal();
-              } else {
-                methods.setError('amount', {
-                  type: 'required',
-                });
-              }
-            }}
-          >
-            Next
-          </SubmitButton>
+                if (amount) {
+                  openPortal();
+                } else {
+                  methods.setError('amount', {
+                    type: 'required',
+                  });
+                }
+              }}
+            >
+              Next
+            </SubmitButton>
+          </ButtonGroup>
         </form>
       </FormProvider>
 

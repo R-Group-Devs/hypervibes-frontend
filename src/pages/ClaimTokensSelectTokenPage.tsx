@@ -3,7 +3,6 @@ import { useHistory, useParams } from 'react-router-dom';
 import ClaimTokensContainer from '../components/ClaimTokensContainer';
 import FormHeading from '../components/FormHeading';
 import Card from '../components/Card';
-import SubmitButton from '../components/SubmitButton';
 import useMyInfusedNfts from '../hooks/useMyInfusedNfts';
 import heading from '../assets/images/headings/select-nft.svg';
 
@@ -50,11 +49,6 @@ export default () => {
               url={`collection/${nft.collection.address}/token/${nft.tokenId}`}
             />
           ))}
-
-          {infusedNftsInCurrentRealm &&
-            infusedNftsInCurrentRealm?.length > 0 && (
-              <SubmitButton>Next</SubmitButton>
-            )}
         </form>
       </FormProvider>
     </ClaimTokensContainer>

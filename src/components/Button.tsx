@@ -3,8 +3,9 @@ import styled from 'styled-components';
 export default styled.button<{ size?: 'sm' | 'md'; inline?: boolean }>`
   padding: ${({ size }) => (size === 'sm' ? '0.25em 1em' : '0.4em 2em')};
   display: ${({ inline }) => (inline ? 'inline-block' : 'block')};
-  background: rgba(255, 255, 255, 0.4);
+  background: #000;
   font-size: ${({ size }) => (size === 'sm' ? '14px' : '12px')};
+  line-height: ${({ size }) => (size === 'sm' ? '18px' : '18px')};
   font-family: ${({ size }) =>
     size === 'sm'
       ? "'Decima Mono', 'Courier New', monospace"
@@ -17,7 +18,7 @@ export default styled.button<{ size?: 'sm' | 'md'; inline?: boolean }>`
   }
 
   &:hover:not([disabled]) {
-    background: rgba(255, 255, 255, 0.5);
+    background: #000;
     cursor: pointer;
   }
 `;
