@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { NETWORKS } from '../constants/contracts';
 import useListRealmNfts from '../hooks/useListRealmNfts';
+import useMetadata from '../hooks/useMetadata';
 
 interface Params {
   network: string;
@@ -10,6 +11,15 @@ interface Params {
 }
 
 const Container = styled.div``;
+
+const NftName: React.FunctionComponent<{ tokenUri: string }> = props => {
+  // eslint-disable-next-line react/prop-types
+  const { metadata } = useMetadata(props.tokenUri);
+  if (!metadata) {
+    return <>...</>;
+  }
+  return <>{metadata.name}</>;
+};
 
 export default () => {
   const { network, realmId } = useParams<Params>();
@@ -47,7 +57,8 @@ export default () => {
               to={`/${network}/tokens/${infusion.nft.collection.address}/${infusion.nft.tokenId}`}
             >
               {infusion.nft.collection.name} ({infusion.nft.collection.symbol}),
-              tokenId={infusion.nft.tokenId}
+              tokenId={infusion.nft.tokenId},{' '}
+              <NftName tokenUri={infusion.nft.tokenUri} />
             </Link>
           </div>
         ))}

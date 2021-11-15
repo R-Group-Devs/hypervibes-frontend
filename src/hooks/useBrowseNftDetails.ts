@@ -25,8 +25,9 @@ interface QueryResult {
       events: Array<{
         id: string;
         eventType: 'INFUSE' | 'CLAIM';
-        msgSender: string;
-        target: string;
+        msgSender: { id: string; address: string };
+        target: { id: string; address: string };
+        amount: string;
         createdAtTimestamp: string;
         createdAtTransactionHash: string;
       }>;
@@ -35,7 +36,7 @@ interface QueryResult {
 }
 
 export default (collection: string, tokenId: string, chainId?: number) => {
-  const res = useHyperVibesSubgraph<QueryResult>(
+  const query = useHyperVibesSubgraph<QueryResult>(
     `nfts.${collection}.${tokenId}.browseNftDetails`,
     gql`
       query getNftDetails($collection: String!, $tokenId: String!) {
@@ -65,8 +66,13 @@ export default (collection: string, tokenId: string, chainId?: number) => {
             events {
               id
               eventType
-              msgSender
-              target
+              msgSender {
+                address
+              }
+              target {
+                address
+              }
+              amount
               createdAtTimestamp
               createdAtTransactionHash
             }
@@ -77,7 +83,7 @@ export default (collection: string, tokenId: string, chainId?: number) => {
     { chainId, variables: { collection, tokenId } }
   );
 
-  console.log(res);
+  const [nft] = query.data?.nfts ?? [];
 
-  return res;
+  return { ...query, nft };
 };

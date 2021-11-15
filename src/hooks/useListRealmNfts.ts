@@ -8,6 +8,7 @@ interface QueryResult {
       id: string;
       nft: {
         tokenId: string;
+        tokenUri: string;
         collection: {
           id: string;
           address: string;
@@ -22,9 +23,9 @@ interface QueryResult {
         eventType: 'INFUSE' | 'CLAIM';
         createdAtTimestamp: string;
         createdAtTransactionHash: string;
+        msgSender: { id: string; address: string };
+        target: { id: string; address: string };
         amount: string;
-        msgSender: string;
-        target: string;
       }>;
     }>;
   };
@@ -42,6 +43,7 @@ export default (realmId: string, chainId?: number) => {
             nft {
               id
               tokenId
+              tokenUri
               collection {
                 id
                 address
@@ -54,10 +56,17 @@ export default (realmId: string, chainId?: number) => {
             events {
               id
               eventType
-              msgSender
-              target
               createdAtTimestamp
               createdAtTransactionHash
+              msgSender {
+                id
+                address
+              }
+              target {
+                id
+                address
+              }
+              amount
             }
           }
         }
