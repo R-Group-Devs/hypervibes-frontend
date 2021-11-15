@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 
 export interface FormStep {
   label: string;
@@ -34,16 +33,11 @@ const Steps = styled.div`
   justify-content: space-between;
 `;
 
-const Step = styled(Link)<{ $isActive: boolean }>`
+const Step = styled.span<{ $isActive: boolean }>`
   font-size: 14px;
   text-transform: uppercase;
   font-weight: ${({ $isActive }) => ($isActive ? 600 : 400)};
   color: ${({ $isActive }) => ($isActive ? '#fff' : '#777')};
-
-  &:hover {
-    color: #fff;
-    text-decoration: none;
-  }
 `;
 
 export default ({ steps, activeStep }: Props) => (
@@ -51,11 +45,7 @@ export default ({ steps, activeStep }: Props) => (
     <ProgressBar progress={(activeStep / steps.length) * 100} />
     <Steps>
       {steps.map((step, index) => (
-        <Step
-          key={step.label}
-          $isActive={activeStep === index + 1}
-          to={step.path}
-        >
+        <Step key={step.label} $isActive={activeStep === index + 1}>
           {step.label}
         </Step>
       ))}
