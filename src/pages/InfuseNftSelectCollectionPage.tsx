@@ -4,6 +4,7 @@ import InfuseNftContainer from '../components/InfuseNftContainer';
 import FormHeading from '../components/FormHeading';
 import CollectionList from '../components/CollectionList';
 import useRealmCollections from '../hooks/useRealmCollections';
+import InputGroup from '../components/InputGroup';
 import AddressInput from '../components/AddressInput';
 import SubmitButton from '../components/SubmitButton';
 import ConnectWalletInline from '../components/ConnectWalletInline';
@@ -42,7 +43,8 @@ export default () => {
           <form onSubmit={onSubmit}>
             <AddressInput
               name="collectionAddress"
-              label="Collection Address"
+              label="NFT Collection Address"
+              description="This realm allows infusion into any ERC-721 NFT collection."
               required
             />
 
