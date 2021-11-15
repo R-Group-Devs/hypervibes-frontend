@@ -14,6 +14,18 @@ interface QueryResult {
       symbol: string | null;
       decimals: number | null;
     };
+    infusions: Array<{
+      id: string;
+      nft: {
+        id: string;
+        tokenId: string;
+        tokenUri: string;
+        collection: {
+          id: string;
+          address: string;
+        };
+      };
+    }>;
   }>;
 }
 
@@ -33,6 +45,18 @@ export default (chainId?: number) => {
             name
             symbol
             decimals
+          }
+          infusions(first: 1) {
+            id
+            nft {
+              id
+              tokenId
+              tokenUri
+              collection {
+                id
+                address
+              }
+            }
           }
         }
       }

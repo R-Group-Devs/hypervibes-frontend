@@ -46,6 +46,8 @@ export default () => {
               created: {realm.createdAtTimestamp}
               <br />
               token: {realm.token.name} ({realm.token.symbol})<br />
+              nft: {realm.infusions[0]?.nft.tokenId}
+              <hr />
             </div>
           </RealmRow>
         ))}
