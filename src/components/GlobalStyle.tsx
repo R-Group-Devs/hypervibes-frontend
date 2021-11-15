@@ -124,7 +124,9 @@ const GlobalStyle = createGlobalStyle`
 export default () => {
   const location = useLocation();
   const section = location.pathname.split('/')[1];
-  const isBrowseSection = location.pathname.split('/')[2];
+  const isBrowseRealmsPage =
+    location.pathname.split('/')[2] === 'realms' &&
+    !location.pathname.split('/')[3];
   const isHomePage = section === 'app' || section === '';
 
   const getBackground = () => {
@@ -142,7 +144,7 @@ export default () => {
       `;
     }
 
-    if (section === 'claim' || isBrowseSection) {
+    if (section === 'claim' || isBrowseRealmsPage) {
       return `
         background: url(${dustBg}) 0 0 no-repeat;
         background-size: cover;
