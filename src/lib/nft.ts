@@ -27,12 +27,21 @@ export const resolveMetadata = async (uri: string) => {
   const projected: Metadata = {
     name: fetched.name ?? '',
     description: fetched.description ?? '',
-    image: fetched.image ?? undefined,
+    image: ipfsToHttps(fetched.image ?? ''),
     animationUrl: fetched.animation_url ?? undefined,
     externalUrl: fetched.external_url ?? undefined,
   };
 
   return projected;
+};
+
+const ipfsToHttps = (ipfsUri: string): string => {
+  // p naive match , might be an issue
+  const match = ipfsUri.match(/ipfs\/(.*)$/);
+  if (!match) {
+    return ipfsUri;
+  }
+  return `https://ipfs.io/ipfs/${match[1]}`;
 };
 
 // parse base64 encoded URI schemes
