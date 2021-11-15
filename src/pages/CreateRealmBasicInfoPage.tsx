@@ -57,7 +57,7 @@ export default () => {
             />
 
             <ButtonGroup>
-              <BackButton path="/app" />
+              <BackButton path="/" />
               <SubmitButton>Next</SubmitButton>
             </ButtonGroup>
           </form>

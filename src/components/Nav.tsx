@@ -33,13 +33,13 @@ export default () => {
   const location = useLocation();
   const pageName = location.pathname.split('/')[1];
 
-  if (!pageName || pageName === 'app') {
+  if (!pageName) {
     return null;
   }
 
   return (
     <Container>
-      <Link to="/app">
+      <Link to="/">
         <Logo src={logo} alt="" />
       </Link>
 

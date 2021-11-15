@@ -127,7 +127,7 @@ export default () => {
   const isBrowseRealmsPage =
     location.pathname.split('/')[2] === 'realms' &&
     !location.pathname.split('/')[3];
-  const isHomePage = section === 'app' || section === '';
+  const isHomePage = section === '';
 
   const getBackground = () => {
     if (section === 'realm' || isHomePage) {

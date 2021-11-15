@@ -59,11 +59,9 @@ export default () => (
               <SocialLinks />
 
               <Switch>
-                <Route exact path="/">
-                  <PlaceholderPage />
-                </Route>
+                <Redirect exact from="/app" to="/" />
 
-                <Route path="/app">
+                <Route path="/">
                   <ChooseYourPathPage />
                 </Route>
 
