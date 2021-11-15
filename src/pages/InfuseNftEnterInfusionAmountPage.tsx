@@ -123,11 +123,12 @@ export default () => {
     ? minInfusionAmountBn.div(decimals).toString()
     : BigNumber.from(0);
 
-  const hasApprovedEnoughAllowance = decimals
-    ? allowance.gte(
-        BigNumber.from(utils.parseUnits(amount || '0', decimalExponent))
-      )
-    : false;
+  const hasApprovedEnoughAllowance =
+    decimals && amount.match(/^[+-]?(\d*\.)?\d+$/)
+      ? allowance.gte(
+          BigNumber.from(utils.parseUnits(amount || '0', decimalExponent))
+        )
+      : false;
 
   useEffect(() => {
     (async () => {

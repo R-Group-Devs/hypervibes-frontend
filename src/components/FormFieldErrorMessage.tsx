@@ -22,6 +22,7 @@ export default ({ error, minValue, maxLength }: Props) => (
   <Container>
     <Message isVisible={!!error}>
       {error?.type === 'required' && 'This field is required.'}
+      {error?.type === 'isNumber' && 'Enter a valid number.'}
       {error?.type === 'maxLength' &&
         `This field must be shorter ${maxLength} characters.`}
       {error?.type === 'minValue' &&

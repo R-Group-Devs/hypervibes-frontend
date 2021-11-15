@@ -60,6 +60,7 @@ export default ({
           required,
           onChange,
           validate: {
+            isNumber: value => !!value?.match(/^[+-]?(\d*\.)?\d+$/),
             minValue: value => value === undefined || parseFloat(value) >= min,
             custom: value => !validate || validate(value),
           },
