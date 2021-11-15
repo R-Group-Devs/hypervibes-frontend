@@ -61,7 +61,7 @@ export default () => (
               <Switch>
                 <Redirect exact from="/app" to="/" />
 
-                <Route path="/">
+                <Route exact path="/">
                   <ChooseYourPathPage />
                 </Route>
 
