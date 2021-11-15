@@ -22,6 +22,7 @@ const NftDetails = styled.div`
 const NftCardContainer = styled.div`
   width: 550px;
   height: 550px;
+  flex-shrink: 0;
 `;
 
 const Details = styled.div`
@@ -37,6 +38,7 @@ const Description = styled.div`
   margin-top: 0.5em;
   margin-bottom: 4em;
   font-size: 12px;
+  line-height: 20px;
   color: #bcff67;
 `;
 
