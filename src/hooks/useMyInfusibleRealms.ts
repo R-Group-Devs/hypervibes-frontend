@@ -26,6 +26,11 @@ export default () => {
               name
               description
               requireNftIsOwned
+              infusions {
+                nft {
+                  tokenUri
+                }
+              }
             }
           }
         }
@@ -34,6 +39,11 @@ export default () => {
           name
           description
           requireNftIsOwned
+          infusions {
+            nft {
+              tokenUri
+            }
+          }
         }
       }
     `,

@@ -28,7 +28,9 @@ export interface Account {
 
 export interface Collection {
   id: string;
+  name: string;
   address: string;
+  nfts: Nft[];
 }
 
 export interface Nft {

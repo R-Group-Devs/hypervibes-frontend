@@ -20,7 +20,11 @@ export default (id: string) => {
             id
             collection {
               id
+              name
               address
+              nfts {
+                tokenUri
+              }
             }
           }
         }

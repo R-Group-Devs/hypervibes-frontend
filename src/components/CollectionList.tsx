@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Card from './Card';
+import CollectionCard from './CollectionCard';
 import { shortenAddress } from '../utils/address';
 import { Collection } from '../types';
 
@@ -16,9 +16,10 @@ const Container = styled.div`
 export default ({ collections }: Props) => (
   <Container>
     {collections.map(collection => (
-      <Card
+      <CollectionCard
         key={collection.id}
-        name={shortenAddress(collection.address)}
+        name={collection.name || shortenAddress(collection.address)}
+        tokenUri={collection.nfts[0]?.tokenUri}
         url={`collection/${collection.id}/select-token`}
       />
     ))}

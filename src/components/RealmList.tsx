@@ -26,7 +26,7 @@ export default ({ realms, url }: Props) => (
           <RealmCard
             key={realm.id}
             name={realm.name}
-            tokenUri={realm.infusions[0]?.nft.tokenUri}
+            tokenUri={realm.infusions[0]?.nft?.tokenUri}
             url={url ? url(realm.id) : `realm/${realm.id}/select-collection`}
           />
         ))}

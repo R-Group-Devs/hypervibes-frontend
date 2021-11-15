@@ -22,6 +22,7 @@ import useErc721OwnerOf from '../hooks/useErc721OwnerOf';
 import useRealmDetails from '../hooks/useRealmDetails';
 import useNftDetails from '../hooks/useNftDetails';
 import useInfuseNft from '../hooks/useInfuseNft';
+import useMetadata from '../hooks/useMetadata';
 import heading from '../assets/images/headings/infuse-token.svg';
 
 interface FormValues {
@@ -99,13 +100,14 @@ export default () => {
     collections,
   } = realmDetails;
   const {
-    data: { lastClaimAtTimestamp },
+    data: { lastClaimAtTimestamp, tokenUri },
   } = useNftDetails(realmId, collection, tokenId);
   const { symbol } = useErc20TokenDetails(token?.address || '');
   const { allowance } = useErc20Allowance(token?.address || '');
   const { approveAllowance } = useErc20ApproveAllowance();
   const ownerOf = useErc721OwnerOf(collection, tokenId);
   const isNftOwnedByInfuser = ownerOf == account;
+  const { metadata, isLoading: isLoadingMetadata } = useMetadata(tokenUri);
 
   const [decimals, setDecimals] = useState<BigNumber>();
   const [formErrors, setFormErrors] = useState<string[]>([]);
@@ -193,7 +195,12 @@ export default () => {
         <form onSubmit={onSubmit}>
           <Content>
             <CardContainer>
-              <NftCard name={tokenId} />
+              {!isLoadingMetadata && tokenUri && (
+                <NftCard
+                  name={metadata?.name || tokenId}
+                  image={metadata?.image}
+                />
+              )}
             </CardContainer>
 
             <FormContent>
