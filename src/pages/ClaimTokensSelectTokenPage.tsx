@@ -2,7 +2,7 @@ import { useForm, FormProvider } from 'react-hook-form';
 import { useHistory, useParams } from 'react-router-dom';
 import ClaimTokensContainer from '../components/ClaimTokensContainer';
 import FormHeading from '../components/FormHeading';
-import Card from '../components/Card';
+import NftGalleryCard from '../components/NftGalleryCard';
 import useMyInfusedNfts from '../hooks/useMyInfusedNfts';
 import heading from '../assets/images/headings/select-nft.svg';
 
@@ -43,9 +43,9 @@ export default () => {
       <FormProvider {...methods}>
         <form onSubmit={onSubmit}>
           {infusedNftsInCurrentRealm?.map(nft => (
-            <Card
+            <NftGalleryCard
               key={nft.tokenId}
-              name={nft.tokenId}
+              tokenUri={nft.tokenUri}
               url={`collection/${nft.collection.address}/token/${nft.tokenId}`}
             />
           ))}

@@ -24,6 +24,7 @@ export default () => {
               address
             }
             tokenId
+            tokenUri
             infusions {
               realm {
                 id
