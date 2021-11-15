@@ -164,7 +164,7 @@ export default () => {
       {collectionInfusions && collectionInfusions.nfts.length > 0 && (
         <>
           <OtherNftsHeading>
-            Other Infused NFTs in this collection
+            Other infused NFTs in this collection
           </OtherNftsHeading>
 
           {collectionInfusions.nfts.map(nft => (
