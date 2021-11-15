@@ -161,9 +161,7 @@ export default () => {
       return false;
     }
 
-    // TODO: how do we handle cases where use is not connected w/ wallet beforehand?
     if (account) {
-      console.log('claim');
       const tx = await claimTokens({
         realmId,
         collection,
