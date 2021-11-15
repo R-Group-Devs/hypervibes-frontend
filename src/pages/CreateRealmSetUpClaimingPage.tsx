@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useForm, FormProvider } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import usePortal from 'react-useportal';
+import { BigNumber } from '@ethersproject/bignumber';
 import useCreateRealmWizard, {
   RealmWizardValues,
 } from '../hooks/useCreateRealmWizard';
@@ -172,7 +173,9 @@ export default () => {
                 label="Minimum"
                 required
                 validate={value =>
-                  value <= (realm?.maxInfusibleTokens || 0) ||
+                  BigNumber.from(value).lte(
+                    BigNumber.from(realm?.maxInfusibleTokens || 0)
+                  ) ||
                   'Cannot be greater than maximum infusible tokens defined in the Set up Infusion step.'
                 }
               />

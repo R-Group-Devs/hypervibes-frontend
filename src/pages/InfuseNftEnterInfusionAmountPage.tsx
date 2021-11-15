@@ -151,9 +151,9 @@ export default () => {
       // TODO: how do we handle cases where use is not connected w/ wallet beforehand?
       if (account) {
         const tx = await infuseNft({
-          realmId: parseInt(realmId, 10),
+          realmId,
           collection,
-          tokenId: parseInt(tokenId, 10),
+          tokenId,
           infuser: account,
           amount: data.amount,
         });

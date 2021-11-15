@@ -3,9 +3,9 @@ import { BigNumber } from '@ethersproject/bignumber';
 import useHyperVibesContract from './useHyperVibesContract';
 
 export interface Infusion {
-  realmId: number;
+  realmId: string;
   collection: string;
-  tokenId: number;
+  tokenId: string;
   infuser: string;
   amount: number;
 }

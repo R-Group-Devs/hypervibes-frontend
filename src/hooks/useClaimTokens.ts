@@ -3,9 +3,9 @@ import { BigNumber } from '@ethersproject/bignumber';
 import useHyperVibesContract from './useHyperVibesContract';
 
 export interface Claim {
-  realmId: number;
+  realmId: string;
   collection: string;
-  tokenId: number;
+  tokenId: string;
   amount: number;
 }
 

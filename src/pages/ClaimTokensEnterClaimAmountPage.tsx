@@ -167,9 +167,9 @@ export default () => {
     if (account) {
       console.log('claim');
       const tx = await claimTokens({
-        realmId: parseInt(realmId, 10),
+        realmId,
         collection,
-        tokenId: parseInt(tokenId, 10),
+        tokenId,
         amount: data.amount,
       });
 
@@ -216,7 +216,7 @@ export default () => {
                       value <= currentMinedTokensNumber) ||
                     minClaimAmount >= currentMinedTokens
                       ? `Cannot claim less than realm minimum (${minClaimAmountNumber}).`
-                      : `Enter an amount between ${minClaimAmountNumber} (realm minimum) and ${currentMinedTokensNumber} (total available to claim).`
+                      : `Enter an ammunr between ${minClaimAmountNumber} (realm minimum) and ${currentMinedTokensNumber} (total available to claim).`
                   }
                 />
 
