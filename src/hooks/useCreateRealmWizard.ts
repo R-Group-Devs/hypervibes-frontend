@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { createGlobalState } from 'react-hooks-global-state';
-import { BigNumber } from '@ethersproject/bignumber';
+import { utils } from 'ethers';
 import useHyperVibesContract from './useHyperVibesContract';
 import useErc20Contract from './useErc20Contract';
 
@@ -58,7 +58,6 @@ export default () => {
   const createRealm = useCallback(
     async (realm: RealmWizardValues) => {
       const decimalExponent = await erc20Contract?.decimals();
-      const decimals = BigNumber.from(10).pow(decimalExponent);
 
       return hyperVibesContract?.createRealm({
         name: realm.name,
@@ -78,16 +77,22 @@ export default () => {
             : realm.allowedCollections.map(x => x.value).filter(Boolean),
         config: {
           token: realm.tokenAddress,
-          dailyRate: BigNumber.from(realm.claimableTokenRate).mul(decimals),
+          dailyRate: utils.parseUnits(
+            realm.claimableTokenRate || '0',
+            decimalExponent
+          ),
           constraints: {
-            minInfusionAmount: BigNumber.from(
-              realm.minTokenInfusionAmount || 0
-            ).mul(decimals),
-            maxTokenBalance: BigNumber.from(realm.maxInfusibleTokens || 0).mul(
-              decimals
+            minInfusionAmount: utils.parseUnits(
+              realm.minTokenInfusionAmount || '0',
+              decimalExponent
             ),
-            minClaimAmount: BigNumber.from(realm.minClaimAmount || 0).mul(
-              decimals
+            maxTokenBalance: utils.parseUnits(
+              realm.maxInfusibleTokens || '0',
+              decimalExponent
+            ),
+            minClaimAmount: utils.parseUnits(
+              realm.minClaimAmount || '0',
+              decimalExponent
             ),
             requireNftIsOwned: realm.requireOwnership === 'yes',
             allowMultiInfuse: realm.allowMultiInfusion === 'yes',
