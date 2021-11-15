@@ -39,7 +39,7 @@ export default () => {
 
   return {
     data: {
-      infusedNfts: res.data?.account.ownedNFTs,
+      infusedNfts: res.data?.account?.ownedNFTs,
     },
   };
 };

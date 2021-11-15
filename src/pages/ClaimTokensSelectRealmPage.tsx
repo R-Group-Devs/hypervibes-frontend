@@ -1,3 +1,4 @@
+import { useWallet } from 'use-wallet';
 import ClaimTokensContainer from '../components/ClaimTokensContainer';
 import FormHeading from '../components/FormHeading';
 import RealmList from '../components/RealmList';
@@ -7,6 +8,7 @@ import heading from '../assets/images/headings/select-realm.svg';
 
 export default () => {
   const { data, isLoading, isIdle } = useRealms();
+  const wallet = useWallet();
 
   return (
     <ClaimTokensContainer name="Claim Goods">
@@ -14,7 +16,7 @@ export default () => {
 
       <ConnectWalletInline message="Connect your wallet to see a list of realms you can claim from." />
 
-      {!isLoading && !isIdle && (
+      {!isLoading && !isIdle && wallet.account && (
         <RealmList
           realms={data || []}
           url={realmId => `realm/${realmId}/select-token`}

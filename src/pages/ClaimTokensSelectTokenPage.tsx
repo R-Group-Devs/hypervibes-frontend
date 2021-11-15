@@ -1,5 +1,6 @@
 import { useForm, FormProvider } from 'react-hook-form';
 import { useHistory, useParams } from 'react-router-dom';
+import { useWallet } from 'use-wallet';
 import ClaimTokensContainer from '../components/ClaimTokensContainer';
 import FormHeading from '../components/FormHeading';
 import NftGalleryCard from '../components/NftGalleryCard';
@@ -22,6 +23,7 @@ export default () => {
   const methods = useForm<FormValues>();
   const { realmId } = useParams<Params>();
   const history = useHistory();
+  const wallet = useWallet();
   const {
     data: { infusedNfts },
   } = useMyInfusedNfts();
@@ -40,19 +42,22 @@ export default () => {
 
       <ConnectWalletInline message="Connect your wallet to see a list of NFTs you can claim tokens from." />
 
-      {infusedNftsInCurrentRealm?.length === 0 && (
-        <EmptyState>You own no infused NFTs in this realm.</EmptyState>
-      )}
+      {wallet.account &&
+        (!infusedNftsInCurrentRealm ||
+          infusedNftsInCurrentRealm?.length === 0) && (
+          <EmptyState>You own no infused NFTs in this realm.</EmptyState>
+        )}
 
       <FormProvider {...methods}>
         <form onSubmit={onSubmit}>
-          {infusedNftsInCurrentRealm?.map(nft => (
-            <NftGalleryCard
-              key={nft.tokenId}
-              tokenUri={nft.tokenUri}
-              url={`collection/${nft.collection.address}/token/${nft.tokenId}`}
-            />
-          ))}
+          {wallet.account &&
+            infusedNftsInCurrentRealm?.map(nft => (
+              <NftGalleryCard
+                key={nft.tokenId}
+                tokenUri={nft.tokenUri}
+                url={`collection/${nft.collection.address}/token/${nft.tokenId}`}
+              />
+            ))}
         </form>
       </FormProvider>
     </ClaimTokensContainer>
