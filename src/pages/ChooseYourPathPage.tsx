@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import CenteredContent from '../components/CenteredContent';
 import heading from '../assets/images/headings/choose-your-path.svg';
 import cardBack from '../assets/images/card-back.png';
+import exploreRealmsHr from '../assets/images/explore-realms-hr.svg';
 //import createRealmImage from '../assets/images/create-realm.png';
 //import infuseNftImage from '../assets/images/infuse-nft.png';
 //import claimTokensImage from '../assets/images/claim-tokens.png';
@@ -77,6 +78,16 @@ const CardFlourish = styled.img<{ position: 'top' | 'bottom' }>`
   height: 9%;
 `;
 
+const ExploreRealmsHr = styled.img`
+  margin-top: 45px;
+`;
+
+const ExploreRealmsLink = styled(Link)`
+  margin-top: 15px;
+  font-size: 14px;
+  color: #bcff67;
+`;
+
 export default () => {
   return (
     <CenteredContent>
@@ -119,6 +130,11 @@ export default () => {
           </PathLabel>
         </StyledLink>
       </Container>
+
+      <ExploreRealmsHr src={exploreRealmsHr} alt="" />
+      <ExploreRealmsLink to="/1/realms">
+        Explore Realms Instead
+      </ExploreRealmsLink>
     </CenteredContent>
   );
 };
