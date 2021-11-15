@@ -6,7 +6,7 @@ export interface Claim {
   realmId: string;
   collection: string;
   tokenId: string;
-  amount: number;
+  amount: string;
 }
 
 export default () => {

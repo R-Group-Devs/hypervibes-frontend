@@ -37,10 +37,10 @@ export interface RealmWizardValues {
   tokenAddress: string;
   allowedInfusers: { value: string }[];
   allowedClaimers: { value: string }[];
-  claimableTokenRate: number | null;
-  minTokenInfusionAmount: number | null;
-  maxInfusibleTokens: number | null;
-  minClaimAmount: number | null;
+  claimableTokenRate: string | null;
+  minTokenInfusionAmount: string | null;
+  maxInfusibleTokens: string | null;
+  minClaimAmount: string | null;
   requireOwnership: 'yes' | 'no';
   allowMultiInfusion: 'yes' | 'no';
   allowAllCollections: 'yes' | 'no';

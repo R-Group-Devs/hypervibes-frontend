@@ -10,7 +10,7 @@ export default () => {
   const { chainId } = useWallet();
 
   const approveAllowance = useCallback(
-    async (tokenAddress: string, amount: number) => {
+    async (tokenAddress: string, amount: string) => {
       if (chainId && isAddress(tokenAddress) && getErc20Contract) {
         const decimalExponent = await getErc20Contract(
           tokenAddress

@@ -27,7 +27,7 @@ import useMetadata from '../hooks/useMetadata';
 import heading from '../assets/images/headings/infuse-token.svg';
 
 interface FormValues {
-  amount: number;
+  amount: string;
 }
 
 interface Params {

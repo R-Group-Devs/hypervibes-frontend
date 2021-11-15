@@ -7,7 +7,7 @@ export interface Infusion {
   collection: string;
   tokenId: string;
   infuser: string;
-  amount: number;
+  amount: string;
 }
 
 export default () => {

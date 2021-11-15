@@ -4,6 +4,7 @@ import { useForm, FormProvider } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 import { useWallet } from 'use-wallet';
 import usePortal from 'react-useportal';
+import { BigNumber } from '@ethersproject/bignumber';
 import ClaimTokensContainer from '../components/ClaimTokensContainer';
 import FormHeading from '../components/FormHeading';
 import InputGroup from '../components/InputGroup';
@@ -26,7 +27,7 @@ import useCurrentMinedTokens from '../hooks/useCurrentMinedTokens';
 import heading from '../assets/images/headings/claim-tokens.svg';
 
 interface FormValues {
-  amount: number;
+  amount: string;
 }
 
 interface Params {
@@ -124,12 +125,8 @@ export default () => {
     tokenId
   );
 
-  const minClaimAmountNumber = parseFloat(
-    minClaimAmount?.div(decimals).toString()
-  );
-  const currentMinedTokensNumber = parseFloat(
-    currentMinedTokens?.div(decimals).toString()
-  );
+  const minClaimAmountNumber = minClaimAmount?.div(decimals).toString();
+  const currentMinedTokensNumber = currentMinedTokens?.div(decimals).toString();
 
   const [isPending, setIsPending] = useState(false);
   const [formErrors, setFormErrors] = useState<string[]>([]);
@@ -211,13 +208,29 @@ export default () => {
                   label={`Amount (Max: ${currentMinedTokensNumber})`}
                   required
                   min={0.00001}
-                  validate={value =>
-                    (value >= minClaimAmountNumber &&
-                      value <= currentMinedTokensNumber) ||
-                    minClaimAmount >= currentMinedTokens
-                      ? `Cannot claim less than realm minimum (${minClaimAmountNumber}).`
-                      : `Enter an ammunr between ${minClaimAmountNumber} (realm minimum) and ${currentMinedTokensNumber} (total available to claim).`
-                  }
+                  validate={value => {
+                    const higherThanMin = BigNumber.from(value).gte(
+                      BigNumber.from(minClaimAmountNumber)
+                    );
+                    const lessThanMined = BigNumber.from(value).lte(
+                      BigNumber.from(currentMinedTokensNumber)
+                    );
+                    const minIsGreaterThanMined = BigNumber.from(
+                      minClaimAmountNumber
+                    ).gte(BigNumber.from(currentMinedTokens));
+
+                    const getErrorMessage = () => {
+                      if (minIsGreaterThanMined) {
+                        return `Cannot claim less than realm minimum (${minClaimAmountNumber}).`;
+                      } else {
+                        return `Enter a number between ${minClaimAmountNumber} (realm minimum) and ${currentMinedTokensNumber} (total available to claim).`;
+                      }
+                    };
+
+                    return (
+                      (higherThanMin && lessThanMined) || getErrorMessage()
+                    );
+                  }}
                 />
 
                 <MaxButton

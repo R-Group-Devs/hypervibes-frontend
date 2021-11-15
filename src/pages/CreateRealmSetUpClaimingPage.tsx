@@ -99,6 +99,7 @@ export default () => {
     // check if all `realm` data is valid
     // if invalid, highlight wizard steps which contain invalid inputs
     // if valid, persist `realm` to contract
+    console.log({ ...realm, ...data });
     const tx = await createRealm({ ...realm, ...data });
 
     setIsPending(true);
