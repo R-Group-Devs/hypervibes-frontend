@@ -3,6 +3,8 @@ import { useHistory, useParams } from 'react-router-dom';
 import ClaimTokensContainer from '../components/ClaimTokensContainer';
 import FormHeading from '../components/FormHeading';
 import NftGalleryCard from '../components/NftGalleryCard';
+import ConnectWalletInline from '../components/ConnectWalletInline';
+import EmptyState from '../components/EmptyState';
 import useMyInfusedNfts from '../hooks/useMyInfusedNfts';
 import heading from '../assets/images/headings/select-nft.svg';
 
@@ -36,8 +38,10 @@ export default () => {
     <ClaimTokensContainer name="Claim Goods">
       <FormHeading src={heading} alt="Select NFT" />
 
+      <ConnectWalletInline message="Connect your wallet to see a list of NFTs you can claim tokens from." />
+
       {infusedNftsInCurrentRealm?.length === 0 && (
-        <>You own no infused NFTs in this realm.</>
+        <EmptyState>You own no infused NFTs in this realm.</EmptyState>
       )}
 
       <FormProvider {...methods}>

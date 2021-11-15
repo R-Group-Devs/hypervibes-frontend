@@ -14,6 +14,7 @@ import Button from '../components/Button';
 import NftCard from '../components/NftCard';
 import BackButton from '../components/BackButton';
 import SubmitButton from '../components/SubmitButton';
+import ConnectWalletInline from '../components/ConnectWalletInline';
 import FormErrors from '../components/FormErrors';
 import Modal, { ModalHeading, ModalContent } from '../components/Modal';
 import useClaimTokens from '../hooks/useClaimTokens';
@@ -186,73 +187,77 @@ export default () => {
     <ClaimTokensContainer name="Claim Goods">
       <FormHeading src={heading} alt="Claim Tokens" />
 
-      <FormProvider {...methods}>
-        <form onSubmit={onSubmit}>
-          <Content>
-            <CardContainer>
-              {!isLoadingMetadata && tokenUri && (
-                <NftCard
-                  name={metadata?.name || tokenId}
-                  image={metadata?.image}
-                />
-              )}
-            </CardContainer>
+      <ConnectWalletInline message="Connect your wallet to see a list of NFTs you can claim tokens from." />
 
-            <FormContent>
-              <InputGroup
-                label="Amount to claim"
-                description={`The total number of ${symbol} tokens to claim.`}
-              >
-                <AmountInput
-                  name="amount"
-                  label={`Amount (Max: ${currentMinedTokensNumber})`}
-                  required
-                  min={0.00001}
-                  validate={value => {
-                    const higherThanMin = BigNumber.from(value).gte(
-                      BigNumber.from(minClaimAmountNumber)
-                    );
-                    const lessThanMined = BigNumber.from(value).lte(
-                      BigNumber.from(currentMinedTokensNumber)
-                    );
-                    const minIsGreaterThanMined = BigNumber.from(
-                      minClaimAmountNumber
-                    ).gte(BigNumber.from(currentMinedTokens));
+      {account && (
+        <FormProvider {...methods}>
+          <form onSubmit={onSubmit}>
+            <Content>
+              <CardContainer>
+                {!isLoadingMetadata && tokenUri && (
+                  <NftCard
+                    name={metadata?.name || tokenId}
+                    image={metadata?.image}
+                  />
+                )}
+              </CardContainer>
 
-                    const getErrorMessage = () => {
-                      if (minIsGreaterThanMined) {
-                        return `Cannot claim less than realm minimum (${minClaimAmountNumber}).`;
-                      } else {
-                        return `Enter a number between ${minClaimAmountNumber} (realm minimum) and ${currentMinedTokensNumber} (total available to claim).`;
-                      }
-                    };
-
-                    return (
-                      (higherThanMin && lessThanMined) || getErrorMessage()
-                    );
-                  }}
-                />
-
-                <MaxButton
-                  onClick={e => {
-                    e.preventDefault();
-                    methods.setValue('amount', currentMinedTokensNumber);
-                  }}
+              <FormContent>
+                <InputGroup
+                  label="Amount to claim"
+                  description={`The total number of ${symbol} tokens to claim.`}
                 >
-                  Max
-                </MaxButton>
-              </InputGroup>
-            </FormContent>
-          </Content>
+                  <AmountInput
+                    name="amount"
+                    label={`Amount (Max: ${currentMinedTokensNumber})`}
+                    required
+                    min={0.00001}
+                    validate={value => {
+                      const higherThanMin = BigNumber.from(value).gte(
+                        BigNumber.from(minClaimAmountNumber)
+                      );
+                      const lessThanMined = BigNumber.from(value).lte(
+                        BigNumber.from(currentMinedTokensNumber)
+                      );
+                      const minIsGreaterThanMined = BigNumber.from(
+                        minClaimAmountNumber
+                      ).gte(BigNumber.from(currentMinedTokens));
 
-          <FormErrors errors={formErrors} />
+                      const getErrorMessage = () => {
+                        if (minIsGreaterThanMined) {
+                          return `Cannot claim less than realm minimum (${minClaimAmountNumber}).`;
+                        } else {
+                          return `Enter a number between ${minClaimAmountNumber} (realm minimum) and ${currentMinedTokensNumber} (total available to claim).`;
+                        }
+                      };
 
-          <ButtonGroup>
-            <BackButton path="../../../select-token" />
-            <SubmitButton>Claim</SubmitButton>
-          </ButtonGroup>
-        </form>
-      </FormProvider>
+                      return (
+                        (higherThanMin && lessThanMined) || getErrorMessage()
+                      );
+                    }}
+                  />
+
+                  <MaxButton
+                    onClick={e => {
+                      e.preventDefault();
+                      methods.setValue('amount', currentMinedTokensNumber);
+                    }}
+                  >
+                    Max
+                  </MaxButton>
+                </InputGroup>
+              </FormContent>
+            </Content>
+
+            <FormErrors errors={formErrors} />
+
+            <ButtonGroup>
+              <BackButton path="../../../select-token" />
+              <SubmitButton>Claim</SubmitButton>
+            </ButtonGroup>
+          </form>
+        </FormProvider>
+      )}
 
       <Portal>
         <Modal isOpen={isOpen} close={closePortal}>

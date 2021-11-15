@@ -12,7 +12,6 @@ import SubmitButton from '../components/SubmitButton';
 import ConnectWalletInline from '../components/ConnectWalletInline';
 import FormErrors from '../components/FormErrors';
 import { useLazyErc721OwnerOf } from '../hooks/useErc721OwnerOf';
-import useAutoConnect from '../hooks/useAutoConnect';
 import heading from '../assets/images/headings/select-nft.svg';
 
 interface FormValues {
@@ -30,7 +29,6 @@ export default () => {
   const { collection } = useParams<Params>();
   const getErc721OwnerOf = useLazyErc721OwnerOf(collection);
   const wallet = useWallet();
-  const triedAutoConnect = useAutoConnect();
   const [formErrors, setFormErrors] = useState<string[]>([]);
 
   const onSubmit = methods.handleSubmit(async data => {
@@ -59,7 +57,7 @@ export default () => {
 
       <ConnectWalletInline message="Connect your wallet to select an NFT to infuse." />
 
-      {wallet.account && triedAutoConnect && (
+      {wallet.account && (
         <FormProvider {...methods}>
           <form onSubmit={onSubmit}>
             <InputGroup

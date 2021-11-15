@@ -30,6 +30,7 @@ export default () => {
   );
 
   return {
+    ...res,
     data: res.data?.realms,
   };
 };
