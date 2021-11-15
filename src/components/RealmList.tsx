@@ -1,7 +1,9 @@
 import { ReactNode } from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import RealmCard from './RealmCard';
 import EmptyState from './EmptyState';
+import SubmitButton from '../components/SubmitButton';
 import { Realm } from '../types';
 
 interface Props {
@@ -16,6 +18,10 @@ const Container = styled.div`
   width: 100%;
   flex-wrap: wrap;
   justify-content: center;
+`;
+
+const Message = styled.div`
+  margin-bottom: 1em;
 `;
 
 export default ({
@@ -38,7 +44,13 @@ export default ({
         ))}
       </>
     ) : (
-      <EmptyState>{empty}</EmptyState>
+      <EmptyState>
+        <Message>{empty}</Message>
+
+        <Link to="/realm/create">
+          <SubmitButton>Create a Realm</SubmitButton>
+        </Link>
+      </EmptyState>
     )}
   </Container>
 );
