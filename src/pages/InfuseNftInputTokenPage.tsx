@@ -29,7 +29,7 @@ const FormErrors = styled.ul`
 export default () => {
   const methods = useForm<FormValues>();
   const history = useHistory();
-  const { realmId, collection } = useParams<Params>();
+  const { collection } = useParams<Params>();
   const getErc721OwnerOf = useLazyErc721OwnerOf(collection);
   const [formErrors, setFormErrors] = useState<string[]>([]);
 
@@ -41,7 +41,11 @@ export default () => {
         throw new Error();
       }
     } catch (e) {
-      setFormErrors([...formErrors, 'Enter a valid token ID.']);
+      const errorMessage = 'Enter a valid token ID.';
+
+      if (!formErrors.includes(errorMessage)) {
+        setFormErrors([...formErrors, errorMessage]);
+      }
 
       return false;
     }
