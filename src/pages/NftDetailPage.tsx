@@ -84,8 +84,7 @@ export default () => {
     tokenId,
     chainId
   );
-  const { data: collectionInfusions, isLoading: isLoadingCollectionInfusions } =
-    useCollectionInfusions(collection);
+  const { data: collectionInfusions } = useCollectionInfusions(collection);
 
   const { metadata, isLoading: isMetadataLoading } = useMetadata(nft?.tokenUri);
 
@@ -111,6 +110,10 @@ export default () => {
     )
     .flat()
     .filter(Boolean).length;
+
+  const otherCollectionInfusions = collectionInfusions?.nfts.filter(
+    nft => nft.tokenId !== tokenId
+  );
 
   return (
     <Container>
@@ -161,13 +164,13 @@ export default () => {
         </Details>
       </NftDetails>
 
-      {collectionInfusions && collectionInfusions.nfts.length > 0 && (
+      {otherCollectionInfusions && otherCollectionInfusions.length > 0 && (
         <>
           <OtherNftsHeading>
             Other infused NFTs in this collection
           </OtherNftsHeading>
 
-          {collectionInfusions.nfts.map(nft => (
+          {otherCollectionInfusions.map(nft => (
             <NftGalleryCard
               key={nft.tokenUri}
               url={`/${network}/tokens/${nft.collection.address}/${nft.tokenId}`}
