@@ -13,6 +13,7 @@ import Button from '../components/Button';
 import NftCard from '../components/NftCard';
 import BackButton from '../components/BackButton';
 import SubmitButton from '../components/SubmitButton';
+import FormErrors from '../components/FormErrors';
 import Modal, { ModalHeading, ModalContent } from '../components/Modal';
 import useClaimTokens from '../hooks/useClaimTokens';
 import useErc721IsApproved from '../hooks/useErc721IsApproved';
@@ -71,11 +72,6 @@ const MaxButton = styled(Button)`
     background: #fff;
     color: #000;
   }
-`;
-
-const FormErrors = styled.ul`
-  margin-top: 2em;
-  margin-bottom: 3em;
 `;
 
 const TransactionStatus = styled.div`
@@ -218,7 +214,9 @@ export default () => {
                   validate={value =>
                     (value >= minClaimAmountNumber &&
                       value <= currentMinedTokensNumber) ||
-                    `Enter an amount between ${minClaimAmountNumber} (realm minimum) and ${currentMinedTokensNumber} (total available to claim).`
+                    minClaimAmount >= currentMinedTokens
+                      ? `Cannot claim less than realm minimum (${minClaimAmountNumber}).`
+                      : `Enter an amount between ${minClaimAmountNumber} (realm minimum) and ${currentMinedTokensNumber} (total available to claim).`
                   }
                 />
 
@@ -234,13 +232,7 @@ export default () => {
             </FormContent>
           </Content>
 
-          {formErrors.length > 0 && (
-            <FormErrors>
-              {formErrors.map(formError => (
-                <li key={formError}>{formError}</li>
-              ))}
-            </FormErrors>
-          )}
+          <FormErrors errors={formErrors} />
 
           <ButtonGroup>
             <BackButton path="../../../select-token" />

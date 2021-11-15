@@ -13,6 +13,7 @@ import NftCard from '../components/NftCard';
 import ButtonGroup from '../components/ButtonGroup';
 import BackButton from '../components/BackButton';
 import SubmitButton from '../components/SubmitButton';
+import FormErrors from '../components/FormErrors';
 import Modal, { ModalHeading, ModalContent } from '../components/Modal';
 import { useLazyErc20Contract } from '../hooks/useErc20Contract';
 import useErc20TokenDetails from '../hooks/useErc20TokenDetails';
@@ -75,10 +76,6 @@ const AmountToInfuseAmount = styled.div`
 
 const TokenSymbol = styled.span`
   font-weight: 300;
-`;
-
-const FormErrors = styled.ul`
-  margin-top: 2em;
 `;
 
 export default () => {
@@ -227,13 +224,7 @@ export default () => {
             </FormContent>
           </Content>
 
-          {formErrors.length > 0 && (
-            <FormErrors>
-              {formErrors.map(formError => (
-                <li key={formError}>{formError}</li>
-              ))}
-            </FormErrors>
-          )}
+          <FormErrors errors={formErrors} />
 
           <ButtonGroup>
             <BackButton path={'../select-token'} />

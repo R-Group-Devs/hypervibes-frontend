@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import styled from 'styled-components';
 import { useForm, FormProvider } from 'react-hook-form';
 import { useHistory, useParams } from 'react-router-dom';
 import InfuseNftContainer from '../components/InfuseNftContainer';
@@ -9,6 +8,7 @@ import NumberInput from '../components/NumberInput';
 import ButtonGroup from '../components/ButtonGroup';
 import BackButton from '../components/BackButton';
 import SubmitButton from '../components/SubmitButton';
+import FormErrors from '../components/FormErrors';
 import { useLazyErc721OwnerOf } from '../hooks/useErc721OwnerOf';
 import heading from '../assets/images/headings/select-nft.svg';
 
@@ -20,11 +20,6 @@ interface Params {
   realmId: string;
   collection: string;
 }
-
-const FormErrors = styled.ul`
-  margin-top: 2em;
-  margin-bottom: 3em;
-`;
 
 export default () => {
   const methods = useForm<FormValues>();
@@ -66,13 +61,7 @@ export default () => {
             <NumberInput name="tokenId" label="Token ID" required />
           </InputGroup>
 
-          {formErrors.length > 0 && (
-            <FormErrors>
-              {formErrors.map(formError => (
-                <li key={formError}>{formError}</li>
-              ))}
-            </FormErrors>
-          )}
+          <FormErrors errors={formErrors} />
 
           <ButtonGroup>
             <BackButton path="../../select-collection" />

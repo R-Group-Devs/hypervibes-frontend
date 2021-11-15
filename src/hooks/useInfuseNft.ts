@@ -21,7 +21,7 @@ export default () => {
       return hyperVibesContract?.infuse({
         realmId: infusion.realmId,
         collection: infusion.collection,
-        tokenId: infusion.tokenId,
+        tokenId: BigNumber.from(infusion.tokenId),
         infuser: infusion.infuser,
         amount: BigNumber.from(infusion.amount).mul(decimals),
         comment: '',

@@ -20,7 +20,7 @@ export default () => {
       return hyperVibesContract?.claim({
         realmId: claim.realmId,
         collection: claim.collection,
-        tokenId: claim.tokenId,
+        tokenId: BigNumber.from(claim.tokenId),
         amount: BigNumber.from(claim.amount).mul(decimals),
       });
     },

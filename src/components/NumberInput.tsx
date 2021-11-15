@@ -58,7 +58,6 @@ export default ({
         hasError={formState.errors[name]}
         {...register(name, {
           required,
-          valueAsNumber: true,
           onChange,
           validate: {
             minValue: value => value === undefined || parseFloat(value) >= min,
