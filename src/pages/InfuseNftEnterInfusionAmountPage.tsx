@@ -14,6 +14,7 @@ import NftCard from '../components/NftCard';
 import ButtonGroup from '../components/ButtonGroup';
 import BackButton from '../components/BackButton';
 import SubmitButton from '../components/SubmitButton';
+import ConnectWalletInline from '../components/ConnectWalletInline';
 import FormErrors from '../components/FormErrors';
 import Modal, { ModalHeading, ModalContent } from '../components/Modal';
 import { useLazyErc20Contract } from '../hooks/useErc20Contract';
@@ -187,6 +188,8 @@ export default () => {
     return (
       <InfuseNftContainer name="Infusion Chamber">
         <FormHeading src={heading} alt="Infuse Token" />
+
+        <ConnectWalletInline message="Connect your wallet to infuse tokens into this NFT." />
       </InfuseNftContainer>
     );
   }

@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import RealmCard from './RealmCard';
+import EmptyState from './EmptyState';
 import { Realm } from '../types';
 
 interface Props {
@@ -13,14 +14,9 @@ const Container = styled.div`
   flex-wrap: wrap;
 `;
 
-const EmptyState = styled.div`
-  width: 100%;
-  text-align: center;
-`;
-
 export default ({ realms, url }: Props) => (
   <Container>
-    {realms.length > 0 ? (
+    {realms && realms.length > 0 ? (
       <>
         {realms.map(realm => (
           <RealmCard

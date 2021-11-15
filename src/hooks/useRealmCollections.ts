@@ -34,12 +34,12 @@ export default (id: string) => {
 
   return {
     data: {
-      id: res.data?.realms[0].id,
-      name: res.data?.realms[0].name,
-      description: res.data?.realms[0].description,
-      allowAllCollections: res.data?.realms[0].allowAllCollections,
+      id: res.data?.realms[0]?.id,
+      name: res.data?.realms[0]?.name,
+      description: res.data?.realms[0]?.description,
+      allowAllCollections: res.data?.realms[0]?.allowAllCollections,
       collections:
-        res.data?.realms[0].realmCollections.map(
+        res.data?.realms[0]?.realmCollections.map(
           realmCollection => realmCollection.collection
         ) || [],
     },

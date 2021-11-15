@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { useHistory, useParams } from 'react-router-dom';
+import { useWallet } from 'use-wallet';
 import InfuseNftContainer from '../components/InfuseNftContainer';
 import FormHeading from '../components/FormHeading';
 import InputGroup from '../components/InputGroup';
@@ -8,8 +9,10 @@ import NumberInput from '../components/NumberInput';
 import ButtonGroup from '../components/ButtonGroup';
 import BackButton from '../components/BackButton';
 import SubmitButton from '../components/SubmitButton';
+import ConnectWalletInline from '../components/ConnectWalletInline';
 import FormErrors from '../components/FormErrors';
 import { useLazyErc721OwnerOf } from '../hooks/useErc721OwnerOf';
+import useAutoConnect from '../hooks/useAutoConnect';
 import heading from '../assets/images/headings/select-nft.svg';
 
 interface FormValues {
@@ -26,6 +29,8 @@ export default () => {
   const history = useHistory();
   const { collection } = useParams<Params>();
   const getErc721OwnerOf = useLazyErc721OwnerOf(collection);
+  const wallet = useWallet();
+  const triedAutoConnect = useAutoConnect();
   const [formErrors, setFormErrors] = useState<string[]>([]);
 
   const onSubmit = methods.handleSubmit(async data => {
@@ -52,23 +57,27 @@ export default () => {
     <InfuseNftContainer name="Infusion Chamber">
       <FormHeading src={heading} alt="Select NFT" />
 
-      <FormProvider {...methods}>
-        <form onSubmit={onSubmit}>
-          <InputGroup
-            label="NFT Token ID"
-            description="The token ID of the NFT in the collection."
-          >
-            <NumberInput name="tokenId" label="Token ID" required />
-          </InputGroup>
+      <ConnectWalletInline message="Connect your wallet to select an NFT to infuse." />
 
-          <FormErrors errors={formErrors} />
+      {wallet.account && triedAutoConnect && (
+        <FormProvider {...methods}>
+          <form onSubmit={onSubmit}>
+            <InputGroup
+              label="NFT Token ID"
+              description="The token ID of the NFT in the collection."
+            >
+              <NumberInput name="tokenId" label="Token ID" required />
+            </InputGroup>
 
-          <ButtonGroup>
-            <BackButton path="../../select-collection" />
-            <SubmitButton>Next</SubmitButton>
-          </ButtonGroup>
-        </form>
-      </FormProvider>
+            <FormErrors errors={formErrors} />
+
+            <ButtonGroup>
+              <BackButton path="../../select-collection" />
+              <SubmitButton>Next</SubmitButton>
+            </ButtonGroup>
+          </form>
+        </FormProvider>
+      )}
     </InfuseNftContainer>
   );
 };

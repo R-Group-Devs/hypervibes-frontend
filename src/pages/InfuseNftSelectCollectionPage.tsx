@@ -6,6 +6,7 @@ import CollectionList from '../components/CollectionList';
 import useRealmCollections from '../hooks/useRealmCollections';
 import AddressInput from '../components/AddressInput';
 import SubmitButton from '../components/SubmitButton';
+import ConnectWalletInline from '../components/ConnectWalletInline';
 import heading from '../assets/images/headings/select-collection.svg';
 
 interface FormValues {
@@ -33,6 +34,8 @@ export default () => {
   return (
     <InfuseNftContainer name="Infusion Chamber">
       <FormHeading src={heading} alt="Select Collection" />
+
+      <ConnectWalletInline message="Connect your wallet to see a list of collections you can infuse in." />
 
       {data.allowAllCollections ? (
         <FormProvider {...methods}>

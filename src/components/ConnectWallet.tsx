@@ -44,7 +44,7 @@ const NetworkName = styled.span`
   font-size: 14px;
 `;
 
-export default () => {
+export default ({ ...rest }) => {
   const { openPortal, closePortal, isOpen, Portal } = usePortal();
   const wallet = useWallet();
   const triedAutoConnect = useAutoConnect();
@@ -57,7 +57,7 @@ export default () => {
   }, [wallet.status, closePortal]);
 
   return (
-    <Container>
+    <Container {...rest}>
       {wallet.account && <NetworkName>{networkName}</NetworkName>}
 
       {triedAutoConnect && (
