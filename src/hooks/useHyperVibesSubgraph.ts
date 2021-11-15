@@ -4,8 +4,10 @@ import { useWallet } from 'use-wallet';
 import { NETWORKS } from '../constants/contracts';
 
 const HYPERVIBES_SUBGRAPH_ENDPOINTS: Record<string, string> = {
-  [NETWORKS.eth]:
-    'https://api.thegraph.com/subgraphs/name/r-group-devs/hypervibes',
+  [NETWORKS.mainnet]:
+    'https://api.thegraph.com/subgraphs/name/r-group-devs/hypervibes-mainnet',
+  [NETWORKS.matic]:
+    'https://api.thegraph.com/subgraphs/name/r-group-devs/hypervibes-matic',
   [NETWORKS.ropsten]:
     'https://api.thegraph.com/subgraphs/name/r-group-devs/hypervibes-ropsten',
   [NETWORKS.rinkeby]:
