@@ -48,7 +48,7 @@ export default ({ ...rest }) => {
   const { openPortal, closePortal, isOpen, Portal } = usePortal();
   const wallet = useWallet();
   const triedAutoConnect = useAutoConnect();
-  const networkName = wallet.chainId ? getNetworkName(wallet.chainId) : null;
+  //const networkName = wallet.chainId ? getNetworkName(wallet.chainId) : null;
 
   useEffect(() => {
     if (wallet.status === 'connected') {
@@ -58,7 +58,7 @@ export default ({ ...rest }) => {
 
   return (
     <Container {...rest}>
-      {wallet.account && <NetworkName>{networkName}</NetworkName>}
+      {wallet.account && <NetworkName />}
 
       {triedAutoConnect && (
         <ConnectWalletButton
