@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useForm, FormProvider } from 'react-hook-form';
-import { useHistory, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useWallet } from 'use-wallet';
 import usePortal from 'react-useportal';
 import { BigNumber } from '@ethersproject/bignumber';
@@ -83,7 +83,6 @@ const FormErrors = styled.ul`
 export default () => {
   const methods = useForm<FormValues>();
   const { account } = useWallet();
-  const history = useHistory();
   const { openPortal, closePortal, isOpen, Portal } = usePortal();
   const { realmId, collection, tokenId } = useParams<Params>();
   const { data: realmDetails } = useRealmDetails(realmId);
@@ -112,6 +111,9 @@ export default () => {
   const [formErrors, setFormErrors] = useState<string[]>([]);
 
   const amount = methods.watch('amount');
+  const [isPendingApproval, setIsPendingApproval] = useState(false);
+  const [isPendingInfusion, setIsPendingInfusion] = useState(false);
+  const [hasBeenInfused, setHasBeenInfused] = useState(false);
 
   const minInfusionAmountBn = decimals
     ? BigNumber.from(minInfusionAmount || 0)
@@ -140,11 +142,16 @@ export default () => {
       // TODO: subtract amount from current allowance
       // long-term, how should we handle approvals? infinity seems bad,
       // but maybe give the user an option to set between a min needed for infusion and infinity
-      await approveAllowance(token?.address || '', amount);
+      const tx = await approveAllowance(token?.address || '', amount);
+
+      setIsPendingApproval(true);
+
+      await tx.wait(1);
+      setIsPendingApproval(false);
     } else {
       // TODO: how do we handle cases where use is not connected w/ wallet beforehand?
       if (account) {
-        await infuseNft({
+        const tx = await infuseNft({
           realmId: parseInt(realmId, 10),
           collection,
           tokenId: parseInt(tokenId, 10),
@@ -152,7 +159,19 @@ export default () => {
           amount: data.amount,
         });
 
-        history.push(`/infuse/success`);
+        setIsPendingInfusion(true);
+
+        await tx.wait(1);
+        setIsPendingInfusion(false);
+        setHasBeenInfused(true);
+
+        setTimeout(() => {
+          closePortal();
+        }, 3000);
+
+        setTimeout(() => {
+          setHasBeenInfused(false);
+        }, 5000);
       }
     }
   });
@@ -289,28 +308,42 @@ export default () => {
           <ModalHeading>Infuse Tokens</ModalHeading>
           <ModalContent>
             <AmountToInfuseContainer>
-              <AmountToInfuseLabel>Amount to Infuse</AmountToInfuseLabel>
+              <AmountToInfuseLabel>
+                {isPendingApproval
+                  ? 'Approving...'
+                  : isPendingInfusion
+                  ? 'Infusing...'
+                  : hasBeenInfused
+                  ? 'Infused'
+                  : 'Infuse'}
+              </AmountToInfuseLabel>
               <AmountToInfuseAmount>
                 {amount} <TokenSymbol>${symbol}</TokenSymbol>
               </AmountToInfuseAmount>
             </AmountToInfuseContainer>
 
-            <StyledButtonGroup>
-              <SubmitButton
-                disabled={hasApprovedEnoughAllowance || !amount}
-                arrow={false}
-                onClick={() => onSubmit()}
-              >
-                Approve
-              </SubmitButton>
-              <SubmitButton
-                disabled={!hasApprovedEnoughAllowance || !amount}
-                arrow={false}
-                onClick={() => onSubmit()}
-              >
-                Infuse
-              </SubmitButton>
-            </StyledButtonGroup>
+            {!hasBeenInfused && (
+              <StyledButtonGroup>
+                <SubmitButton
+                  disabled={
+                    hasApprovedEnoughAllowance || !amount || isPendingApproval
+                  }
+                  arrow={false}
+                  onClick={() => onSubmit()}
+                >
+                  Approve
+                </SubmitButton>
+                <SubmitButton
+                  disabled={
+                    !hasApprovedEnoughAllowance || !amount || isPendingInfusion
+                  }
+                  arrow={false}
+                  onClick={() => onSubmit()}
+                >
+                  Infuse
+                </SubmitButton>
+              </StyledButtonGroup>
+            )}
           </ModalContent>
         </Modal>
       </Portal>

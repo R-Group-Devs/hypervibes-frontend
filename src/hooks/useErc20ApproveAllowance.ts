@@ -17,7 +17,7 @@ export default () => {
         )?.decimals();
         const decimals = BigNumber.from(10).pow(decimalExponent);
 
-        await getErc20Contract(tokenAddress)?.approve(
+        return await getErc20Contract(tokenAddress)?.approve(
           HYPERVIBES_CONTRACT_ADDRESSES[chainId],
           BigNumber.from(amount).mul(decimals)
         );
