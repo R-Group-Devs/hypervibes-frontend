@@ -4,7 +4,7 @@ import twitterIcon from '../assets/images/icons/twitter.svg';
 import githubIcon from '../assets/images/icons/github.svg';
 
 const Container = styled.div`
-  position: absolute;
+  position: fixed;
   top: 570px;
   left: 32px;
   display: flex;
