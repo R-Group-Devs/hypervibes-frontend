@@ -235,7 +235,7 @@ export default () => {
 
                 if (!allowMultiInfuse && lastClaimAtTimestamp) {
                   const errorMessage =
-                    'Token cannot be infused more than once.';
+                    'Tokens in this realm cannot be infused more than once.';
 
                   if (!formErrors.includes(errorMessage)) {
                     setFormErrors([...formErrors, errorMessage]);

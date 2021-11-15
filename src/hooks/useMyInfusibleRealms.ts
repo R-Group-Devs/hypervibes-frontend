@@ -50,12 +50,15 @@ export default () => {
     { enabled: !!account }
   );
 
+  const data = [
+    ...(res.data?.account?.realmInfusers.map(
+      infusibleRealm => infusibleRealm.realm
+    ) || []),
+    ...(res.data?.realms || []),
+  ];
+
   return {
-    data: [
-      ...(res.data?.account?.realmInfusers.map(
-        infusibleRealm => infusibleRealm.realm
-      ) || []),
-      ...(res.data?.realms || []),
-    ],
+    ...res,
+    data: res.data ? data : null,
   };
 };

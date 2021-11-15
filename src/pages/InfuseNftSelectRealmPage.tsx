@@ -7,15 +7,11 @@ import heading from '../assets/images/headings/select-realm.svg';
 export default () => {
   const { data } = useMyInfusibleRealms();
 
-  if (!data) {
-    return null;
-  }
-
   return (
     <InfuseNftContainer name="Infusion Chamber">
       <FormHeading src={heading} alt="Select Realm" />
 
-      <RealmList realms={data} />
+      {data && <RealmList realms={data} />}
     </InfuseNftContainer>
   );
 };
