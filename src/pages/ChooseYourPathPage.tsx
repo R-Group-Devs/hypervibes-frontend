@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { useWallet } from 'use-wallet';
 import CenteredContent from '../components/CenteredContent';
 import heading from '../assets/images/headings/choose-your-path.svg';
 import cardBack from '../assets/images/card-back.png';
@@ -89,6 +90,8 @@ const ExploreRealmsLink = styled(Link)`
 `;
 
 export default () => {
+  const wallet = useWallet();
+
   return (
     <CenteredContent>
       <PageHeading src={heading} alt="Choose Your Path" />
@@ -132,7 +135,7 @@ export default () => {
       </Container>
 
       <ExploreRealmsHr src={exploreRealmsHr} alt="" />
-      <ExploreRealmsLink to="/1/realms">
+      <ExploreRealmsLink to={`/${wallet.networkName ?? 'ethereum'}/realms`}>
         Explore Realms Instead
       </ExploreRealmsLink>
     </CenteredContent>

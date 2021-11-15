@@ -1,9 +1,9 @@
 import { useParams } from 'react-router';
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { NETWORKS } from '../constants/contracts';
 import useListRealmNfts from '../hooks/useListRealmNfts';
 import useMetadata from '../hooks/useMetadata';
+import NftGalleryCard from '../components/NftGalleryCard';
 
 interface Params {
   network: string;
@@ -12,14 +12,9 @@ interface Params {
 
 const Container = styled.div``;
 
-const NftName: React.FunctionComponent<{ tokenUri: string }> = props => {
-  // eslint-disable-next-line react/prop-types
-  const { metadata } = useMetadata(props.tokenUri);
-  if (!metadata) {
-    return <>...</>;
-  }
-  return <>{metadata.name}</>;
-};
+const PageHeading = styled.h1`
+  text-align: center;
+`;
 
 export default () => {
   const { network, realmId } = useParams<Params>();
@@ -47,22 +42,15 @@ export default () => {
 
   return (
     <Container>
-      <h1>
-        browse nfts - {network}, realmId={realmId}
-      </h1>
-      <div>
-        {data.realm.infusions.map(infusion => (
-          <div key={infusion.id}>
-            <Link
-              to={`/${network}/tokens/${infusion.nft.collection.address}/${infusion.nft.tokenId}`}
-            >
-              {infusion.nft.collection.name} ({infusion.nft.collection.symbol}),
-              tokenId={infusion.nft.tokenId},{' '}
-              <NftName tokenUri={infusion.nft.tokenUri} />
-            </Link>
-          </div>
-        ))}
-      </div>
+      <PageHeading>{data.realm.name}</PageHeading>
+
+      {data.realm.infusions.map(infusion => (
+        <NftGalleryCard
+          key={infusion.id}
+          url={`/${network}/tokens/${infusion.nft.collection.address}/${infusion.nft.tokenId}`}
+          tokenUri={infusion.nft.tokenUri}
+        />
+      ))}
     </Container>
   );
 };

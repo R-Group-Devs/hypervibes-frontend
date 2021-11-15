@@ -41,6 +41,7 @@ export interface Nft {
 }
 
 export interface Infusion {
+  id: string;
   realm: Realm;
   balance: string;
   nft: Nft;

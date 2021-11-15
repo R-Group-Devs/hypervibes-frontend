@@ -1,32 +1,9 @@
 import { gql } from 'graphql-request';
 import useHyperVibesSubgraph from './useHyperVibesSubgraph';
+import { Realm } from '../types';
 
 interface QueryResult {
-  realms: Array<{
-    id: string;
-    name: string;
-    description: string;
-    createdAtTimestamp: string;
-    token: {
-      id: string;
-      address: string;
-      name: string | null;
-      symbol: string | null;
-      decimals: number | null;
-    };
-    infusions: Array<{
-      id: string;
-      nft: {
-        id: string;
-        tokenId: string;
-        tokenUri: string;
-        collection: {
-          id: string;
-          address: string;
-        };
-      };
-    }>;
-  }>;
+  realms: Realm[];
 }
 
 export default (chainId?: number) => {

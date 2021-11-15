@@ -1,16 +1,21 @@
 import { useParams } from 'react-router';
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { NETWORKS } from '../constants/contracts';
 import useListRealms from '../hooks/useListRealms';
+import RealmList from '../components/RealmList';
+import { NETWORKS } from '../constants/contracts';
+import heading from '../assets/images/headings/explore-realms.svg';
 
 interface Params {
   network: string;
 }
 
-const Container = styled.div``;
+const Container = styled.div`
+  text-align: center;
+`;
 
-const RealmRow = styled.div``;
+const PageHeading = styled.img`
+  margin-bottom: 75px;
+`;
 
 export default () => {
   const { network } = useParams<Params>();
@@ -31,27 +36,11 @@ export default () => {
 
   return (
     <Container>
-      <h1>browse realms - {network}</h1>
-      <div>
-        {data.realms.map(realm => (
-          <RealmRow key={realm.id}>
-            <div>
-              {realm.id}:
-              <Link to={`/${network}/realms/${realm.id}/nfts`}>
-                {realm.name}
-              </Link>
-            </div>
-            <div>
-              description: {realm.description} <br />
-              created: {realm.createdAtTimestamp}
-              <br />
-              token: {realm.token.name} ({realm.token.symbol})<br />
-              nft: {realm.infusions[0]?.nft.tokenId}
-              <hr />
-            </div>
-          </RealmRow>
-        ))}
-      </div>
+      <PageHeading src={heading} alt="Explore Realms" />
+      <RealmList
+        realms={data.realms}
+        url={realmId => `realms/${realmId}/nfts`}
+      />
     </Container>
   );
 };

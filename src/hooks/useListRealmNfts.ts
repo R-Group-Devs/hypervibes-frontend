@@ -1,34 +1,9 @@
 import { gql } from 'graphql-request';
 import useHyperVibesSubgraph from './useHyperVibesSubgraph';
+import { Realm } from '../types';
 
 interface QueryResult {
-  realm: {
-    id: string;
-    infusions: Array<{
-      id: string;
-      nft: {
-        tokenId: string;
-        tokenUri: string;
-        collection: {
-          id: string;
-          address: string;
-          name: string | null;
-          symbol: string | null;
-        };
-      };
-      balance: string;
-      lastClaimTimestamp: string;
-      events: Array<{
-        id: string;
-        eventType: 'INFUSE' | 'CLAIM';
-        createdAtTimestamp: string;
-        createdAtTransactionHash: string;
-        msgSender: { id: string; address: string };
-        target: { id: string; address: string };
-        amount: string;
-      }>;
-    }>;
-  };
+  realm: Realm;
 }
 
 export default (realmId: string, chainId?: number) => {
@@ -38,6 +13,7 @@ export default (realmId: string, chainId?: number) => {
       query getRealmNfts($realmId: String!) {
         realm(id: $realmId) {
           id
+          name
           infusions {
             id
             nft {

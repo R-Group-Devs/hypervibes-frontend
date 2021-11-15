@@ -124,6 +124,7 @@ const GlobalStyle = createGlobalStyle`
 export default () => {
   const location = useLocation();
   const section = location.pathname.split('/')[1];
+  const isBrowseSection = location.pathname.split('/')[2];
   const isHomePage = section === 'app' || section === '';
 
   const getBackground = () => {
@@ -141,7 +142,7 @@ export default () => {
       `;
     }
 
-    if (section === 'claim') {
+    if (section === 'claim' || isBrowseSection) {
       return `
         background: url(${dustBg}) 0 0 no-repeat;
         background-size: cover;
