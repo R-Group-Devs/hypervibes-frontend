@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import borderPatternVertical from '../assets/images/claim-tokens-border-pattern-vertical.png';
 import borderPatternHorizontal from '../assets/images/claim-tokens-border-pattern-horizontal.png';
-import star from '../assets/images/star.svg';
+import headerFlourish from '../assets/images/claim-header-flourish.svg';
 
 interface Props {
   name: string;
@@ -70,10 +70,10 @@ const LinePattern = styled.div`
   border-top: 1px solid #ff6b6b;
 `;
 
-const Star = styled.img`
+const HeaderFlourish = styled.img`
   position: absolute;
-  bottom: 1.5em;
-  left: 1.5em;
+  top: -40px;
+  left: calc(50% - 45px);
 `;
 
 export default ({ name, children }: Props) => (
@@ -87,8 +87,7 @@ export default ({ name, children }: Props) => (
             <LinePattern />
             <LinePattern />
           </ThreeLinePattern>
-          <Star src={star} alt="" />
-
+          <HeaderFlourish src={headerFlourish} alt="" />
           <Content>{children}</Content>
         </Container>
       </BorderContainer>
