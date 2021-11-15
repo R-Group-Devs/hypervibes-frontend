@@ -31,8 +31,10 @@ export const resolveMetadata = async (uri: string) => {
   const projected: Metadata = {
     name: fetched.name ?? '',
     description: fetched.description ?? '',
-    image: ensureHttpsUri(fetched.image ?? ''),
-    animationUrl: fetched.animation_url ?? undefined,
+    image: fetched.image ? ensureHttpsUri(fetched.image) : undefined,
+    animationUrl: fetched.animation_url
+      ? ensureHttpsUri(fetched.animation_url)
+      : undefined,
     externalUrl: fetched.external_url ?? undefined,
   };
 
