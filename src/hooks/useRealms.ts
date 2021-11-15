@@ -18,6 +18,11 @@ export default () => {
           id
           name
           description
+          infusions {
+            nft {
+              tokenUri
+            }
+          }
         }
       }
     `,

@@ -4,6 +4,7 @@ import useMetadata from '../hooks/useMetadata';
 import fallbackImage from '../assets/images/fallback.png';
 
 interface Props {
+  name: string;
   url: string;
   tokenUri: string;
 }
@@ -46,7 +47,7 @@ const Name = styled.div`
   font-weight: 600;
 `;
 
-export default ({ url, tokenUri }: Props) => {
+export default ({ name, url, tokenUri }: Props) => {
   const { metadata, isLoading } = useMetadata(tokenUri);
 
   return (
@@ -55,7 +56,7 @@ export default ({ url, tokenUri }: Props) => {
         {!isLoading && (
           <>
             <Image src={metadata?.image || fallbackImage} alt="" />
-            <Name>{metadata?.name}</Name>
+            <Name>{name}</Name>
           </>
         )}
       </Container>

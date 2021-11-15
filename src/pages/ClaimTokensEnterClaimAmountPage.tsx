@@ -119,7 +119,7 @@ export default () => {
   const {
     data: { lastClaimAtTimestamp, tokenUri },
   } = useNftDetails(realmId, collection, tokenId);
-  const { metadata } = useMetadata(tokenUri);
+  const { metadata, isLoading: isLoadingMetadata } = useMetadata(tokenUri);
   const { symbol } = useErc20TokenDetails(collection);
   const decimals = useErc20Decimals(collection);
   const currentMinedTokens = useCurrentMinedTokens(
@@ -197,7 +197,7 @@ export default () => {
         <form onSubmit={onSubmit}>
           <Content>
             <CardContainer>
-              {metadata && (
+              {!isLoadingMetadata && tokenUri && (
                 <NftCard
                   name={metadata?.name || tokenId}
                   image={metadata?.image}

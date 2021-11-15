@@ -15,6 +15,7 @@ export interface Realm {
   allowPublicInfusion: boolean;
   allowPublicClaiming: boolean;
   allowMultiInfuse: boolean;
+  infusions: Infusion[];
   realmCollections: { id: string; collection: Collection }[];
   realmInfusers: { id: string; account: Account }[];
   realmClaimers: { id: string; account: Account }[];
@@ -40,5 +41,6 @@ export interface Nft {
 export interface Infusion {
   realm: Realm;
   balance: string;
+  nft: Nft;
   lastClaimAtTimestamp: string;
 }

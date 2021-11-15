@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Card from './Card';
+import RealmCard from './RealmCard';
 import { Realm } from '../types';
 
 interface Props {
@@ -23,9 +23,10 @@ export default ({ realms, url }: Props) => (
     {realms.length > 0 ? (
       <>
         {realms.map(realm => (
-          <Card
+          <RealmCard
             key={realm.id}
             name={realm.name}
+            tokenUri={realm.infusions[0]?.nft.tokenUri}
             url={url ? url(realm.id) : `realm/${realm.id}/select-collection`}
           />
         ))}
