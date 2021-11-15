@@ -12,6 +12,8 @@ const HYPERVIBES_SUBGRAPH_ENDPOINTS: Record<string, string> = {
     'https://api.thegraph.com/subgraphs/name/r-group-devs/hypervibes-ropsten',
   [NETWORKS.rinkeby]:
     'https://api.thegraph.com/subgraphs/name/r-group-devs/hypervibes-rinkeby',
+  [NETWORKS.goerli]:
+    'https://api.thegraph.com/subgraphs/name/r-group-devs/hypervibes-goerli',
   [NETWORKS.mumbai]:
     'https://api.thegraph.com/subgraphs/name/r-group-devs/hypervibes-mumbai',
 };
