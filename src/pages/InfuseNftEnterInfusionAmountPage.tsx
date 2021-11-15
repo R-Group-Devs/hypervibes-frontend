@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import styled from 'styled-components';
 import { useForm, FormProvider } from 'react-hook-form';
 import { Link, useParams } from 'react-router-dom';
@@ -129,12 +129,15 @@ export default () => {
     ? minInfusionAmountBn.div(decimals).toString()
     : BigNumber.from(0);
 
-  const hasApprovedEnoughAllowance =
-    decimals && amount?.match(/^[+-]?(\d*\.)?\d+$/)
-      ? allowance.gte(
-          BigNumber.from(utils.parseUnits(amount || '0', decimalExponent))
-        )
-      : false;
+  const hasApprovedEnoughAllowance = useMemo(
+    () =>
+      decimals && amount?.match(/^[+-]?(\d*\.)?\d+$/)
+        ? allowance.gte(
+            BigNumber.from(utils.parseUnits(amount || '0', decimalExponent))
+          )
+        : false,
+    [amount, allowance, decimals, decimalExponent]
+  );
 
   useEffect(() => {
     (async () => {
@@ -174,8 +177,8 @@ export default () => {
         setIsPendingInfusion(true);
 
         await tx.wait(1);
-        setIsPendingInfusion(false);
         setHasBeenInfused(true);
+        setIsPendingInfusion(false);
       }
     }
   });
@@ -303,6 +306,7 @@ export default () => {
                 const amountIsValid = amountBn.gte(minInfusionAmountBn);
 
                 if (amountIsValid) {
+                  setHasBeenInfused(false);
                   openPortal({ currentTarget: { contains: () => false } });
                 } else {
                   methods.setError('amount', {
@@ -353,7 +357,7 @@ export default () => {
                     hasApprovedEnoughAllowance ||
                     !amount ||
                     isPendingApproval ||
-                    hasBeenInfused
+                    isPendingInfusion
                   }
                   arrow={false}
                   onClick={() => onSubmit()}
@@ -364,8 +368,8 @@ export default () => {
                   disabled={
                     !hasApprovedEnoughAllowance ||
                     !amount ||
-                    isPendingInfusion ||
-                    hasBeenInfused
+                    isPendingApproval ||
+                    isPendingInfusion
                   }
                   arrow={false}
                   onClick={() => onSubmit()}
