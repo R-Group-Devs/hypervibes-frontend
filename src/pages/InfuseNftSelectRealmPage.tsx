@@ -14,7 +14,12 @@ export default () => {
 
       <ConnectWalletInline message="Connect your wallet to see a list of realms you can infuse in." />
 
-      {!isLoading && !isIdle && <RealmList realms={data || []} />}
+      {!isLoading && !isIdle && (
+        <RealmList
+          realms={data || []}
+          empty="You do not have permission to infuse in any realms."
+        />
+      )}
     </InfuseNftContainer>
   );
 };

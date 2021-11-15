@@ -7,6 +7,7 @@ interface Props {
   realms: Realm[];
   url?: (realmId: string) => string;
   size?: 'sm' | 'lg';
+  empty?: string;
 }
 
 const Container = styled.div`
@@ -16,7 +17,12 @@ const Container = styled.div`
   justify-content: center;
 `;
 
-export default ({ realms, url, size = 'sm' }: Props) => (
+export default ({
+  realms,
+  url,
+  size = 'sm',
+  empty = 'There are no realms.',
+}: Props) => (
   <Container>
     {realms && realms.length > 0 ? (
       <>
@@ -31,7 +37,7 @@ export default ({ realms, url, size = 'sm' }: Props) => (
         ))}
       </>
     ) : (
-      <EmptyState>There are no realms.</EmptyState>
+      <EmptyState>{empty}</EmptyState>
     )}
   </Container>
 );
