@@ -1,4 +1,4 @@
-import { fetchIpfsJson } from './ipfs';
+import { ensureHttpsUri, extractIpfsHash, fetchIpfsJson } from './ipfs';
 
 export interface Metadata {
   name: string;
@@ -15,33 +15,28 @@ export const resolveMetadata = async (uri: string) => {
     return parseBase64MetadataUri(uri);
   }
 
-  // ipfs-style
-  const match = uri.match(/ipfs\/(.*)$/);
-  if (!match) {
-    throw new Error('cannot resolve metadata');
-  }
+  // ipfs-style metadata
+  const hash = extractIpfsHash(uri);
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const fetched = await fetchIpfsJson<any>(match[1]);
+  let fetched: any;
+
+  // use throttled ipfs fetch if ipfs, else str8 fetch it
+  if (hash) {
+    fetched = await fetchIpfsJson(hash);
+  } else {
+    const resp = await fetch(uri);
+    fetched = await resp.json();
+  }
 
   const projected: Metadata = {
     name: fetched.name ?? '',
     description: fetched.description ?? '',
-    image: ipfsToHttps(fetched.image ?? ''),
+    image: ensureHttpsUri(fetched.image ?? ''),
     animationUrl: fetched.animation_url ?? undefined,
     externalUrl: fetched.external_url ?? undefined,
   };
 
   return projected;
-};
-
-const ipfsToHttps = (ipfsUri: string): string => {
-  // p naive match , might be an issue
-  const match = ipfsUri.match(/ipfs\/(.*)$/);
-  if (!match) {
-    return ipfsUri;
-  }
-  return `https://ipfs.io/ipfs/${match[1]}`;
 };
 
 // parse base64 encoded URI schemes
