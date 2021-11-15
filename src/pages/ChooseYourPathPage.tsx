@@ -2,12 +2,13 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import CenteredContent from '../components/CenteredContent';
 import heading from '../assets/images/headings/choose-your-path.svg';
-import createRealmImage from '../assets/images/create-realm.png';
-import infuseNftImage from '../assets/images/infuse-nft.png';
-import claimTokensImage from '../assets/images/claim-tokens.png';
-import star from '../assets/images/star.svg';
-import plus from '../assets/images/plus.svg';
-import flag from '../assets/images/flag.svg';
+import cardBack from '../assets/images/card-back.png';
+//import createRealmImage from '../assets/images/create-realm.png';
+//import infuseNftImage from '../assets/images/infuse-nft.png';
+//import claimTokensImage from '../assets/images/claim-tokens.png';
+//import star from '../assets/images/star.svg';
+//import plus from '../assets/images/plus.svg';
+//import flag from '../assets/images/flag.svg';
 
 const Container = styled.div`
   display: flex;
@@ -23,8 +24,8 @@ const PathCard = styled.div`
   align-items: center;
   justify-content: center;
   margin: 0 2em;
-  padding: 1em 2em;
-  width: 32vh;
+  padding: 14px;
+  width: 32.5vh;
   height: 50vh;
   min-width: 200px;
   min-height: 305px;
@@ -42,14 +43,20 @@ const PathCard = styled.div`
   }
 `;
 
+const CardBackImage = styled.img`
+  width: 100%;
+`;
+
 const PathImage = styled.img<{ width?: string }>`
   width: ${({ width }) => (width ? width : '100%')};
 `;
 
 const PathLabel = styled.h3`
-  margin-top: 1.5em;
-  font-size: 24px;
+  margin-top: 2.5em;
+  font-family: '3616 Grammastile', sans-serif;
+  font-size: 10px;
   font-weight: 400;
+  line-height: 16px;
   color: #fff;
   text-align: center;
   text-transform: uppercase;
@@ -78,9 +85,7 @@ export default () => {
       <Container>
         <StyledLink to="/realm/create">
           <PathCard>
-            <PathImage src={createRealmImage} alt="Create Realm" />
-            <CardFlourish src={star} position="top" alt="" />
-            <CardFlourish src={star} position="bottom" alt="" />
+            <CardBackImage src={cardBack} alt="Create Realm" />
           </PathCard>
 
           <PathLabel>
@@ -92,9 +97,7 @@ export default () => {
 
         <StyledLink to="/infuse">
           <PathCard>
-            <PathImage src={infuseNftImage} width="85%" alt="Infuse NFT" />
-            <CardFlourish src={plus} position="top" alt="" />
-            <CardFlourish src={plus} position="bottom" alt="" />
+            <CardBackImage src={cardBack} width="85%" alt="Infuse NFT" />
           </PathCard>
 
           <PathLabel>
@@ -106,9 +109,7 @@ export default () => {
 
         <StyledLink to="/claim">
           <PathCard>
-            <PathImage src={claimTokensImage} alt="Claim Tokens" />
-            <CardFlourish src={flag} position="top" alt="" />
-            <CardFlourish src={flag} position="bottom" alt="" />
+            <CardBackImage src={cardBack} alt="Claim Tokens" />
           </PathCard>
 
           <PathLabel>
