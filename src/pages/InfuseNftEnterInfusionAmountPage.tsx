@@ -4,6 +4,7 @@ import { useForm, FormProvider } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 import { useWallet } from 'use-wallet';
 import usePortal from 'react-useportal';
+import { utils } from 'ethers';
 import { BigNumber } from '@ethersproject/bignumber';
 import InfuseNftContainer from '../components/InfuseNftContainer';
 import FormHeading from '../components/FormHeading';
@@ -107,6 +108,7 @@ export default () => {
   const { metadata, isLoading: isLoadingMetadata } = useMetadata(tokenUri);
 
   const [decimals, setDecimals] = useState<BigNumber>();
+  const [decimalExponent, setDecimalExponent] = useState<number>();
   const [formErrors, setFormErrors] = useState<string[]>([]);
 
   const amount = methods.watch('amount');
@@ -122,7 +124,9 @@ export default () => {
     : BigNumber.from(0);
 
   const hasApprovedEnoughAllowance = decimals
-    ? allowance.gte(BigNumber.from(amount || 0).mul(decimals))
+    ? allowance.gte(
+        BigNumber.from(utils.parseUnits(amount || '0', decimalExponent))
+      )
     : false;
 
   useEffect(() => {
@@ -131,6 +135,8 @@ export default () => {
         const decimalExponent = await getErc20Contract(
           token?.address
         )?.decimals();
+
+        setDecimalExponent(decimalExponent);
         setDecimals(BigNumber.from(10).pow(decimalExponent));
       }
     })();
@@ -141,7 +147,7 @@ export default () => {
       // TODO: subtract amount from current allowance
       // long-term, how should we handle approvals? infinity seems bad,
       // but maybe give the user an option to set between a min needed for infusion and infinity
-      const tx = await approveAllowance(token?.address || '', amount);
+      const tx = await approveAllowance(token?.address || '', data.amount);
 
       setIsPendingApproval(true);
 
@@ -211,9 +217,12 @@ export default () => {
                   required
                   onChange={() => methods.clearErrors('amount')}
                   validate={value => {
-                    const amountBn = decimals
-                      ? BigNumber.from(value || 0).mul(decimals)
+                    const amountBn = decimalExponent
+                      ? BigNumber.from(
+                          utils.parseUnits(value || '0', decimalExponent)
+                        )
                       : BigNumber.from(0);
+
                     return (
                       amountBn.gte(minInfusionAmountBn) ||
                       `Cannot be less than the realm's minimum infusion amount (${minInfusionAmountInt}).`
@@ -231,6 +240,7 @@ export default () => {
             <SubmitButton
               onClick={e => {
                 e.preventDefault();
+                methods.trigger();
                 let hasErrors = false;
 
                 if (!allowMultiInfuse && lastClaimAtTimestamp) {
@@ -286,7 +296,12 @@ export default () => {
                   return false;
                 }
 
-                if (amount) {
+                const amountBn = BigNumber.from(
+                  utils.parseUnits(amount, decimalExponent)
+                );
+                const amountIsValid = amountBn.gte(minInfusionAmountBn);
+
+                if (amountIsValid) {
                   openPortal({ currentTarget: { contains: () => false } });
                 } else {
                   methods.setError('amount', {

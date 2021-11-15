@@ -9,8 +9,8 @@ interface Props {
   label: string;
   required?: boolean;
   min?: number;
-  onChange?: (value: number) => void;
-  validate?: (value: number) => boolean | string;
+  onChange?: (value: string) => void;
+  validate?: (value: string) => boolean | string;
 }
 
 const Container = styled.div`
