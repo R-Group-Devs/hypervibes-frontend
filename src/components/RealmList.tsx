@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 import styled from 'styled-components';
 import RealmCard from './RealmCard';
 import EmptyState from './EmptyState';
@@ -7,7 +8,7 @@ interface Props {
   realms: Realm[];
   url?: (realmId: string) => string;
   size?: 'sm' | 'lg';
-  empty?: string;
+  empty?: ReactNode;
 }
 
 const Container = styled.div`
