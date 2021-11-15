@@ -28,7 +28,7 @@ export const ensureHttpsUri = (uri: string): string => {
 
 // fetchable https uri from an ipfs hash
 export const ipfsHashAsHttp = (hash: string): string =>
-  `https://ipfs.io/ipfs/${hash}`;
+  `https://ipfs.hypervibes.xyz/ipfs/${hash}`;
 
 // attempt to extract ipfs hash from a uri
 export const extractIpfsHash = (ipfsUri: string): string | undefined => {
