@@ -6,19 +6,22 @@ interface QueryResult {
   nfts: Nft[];
 }
 
-export default (realmId: string, collection: string, tokenId: string) => {
+export default (collection: string) => {
   const res = useHyperVibesSubgraph<QueryResult>(
-    `collection.${collection}.${tokenId}`,
+    `collection.${collection}`,
     gql`
       query {
         nfts(
           where: {
             collection: "${collection}"
-            tokenId: "${tokenId}"
           }
         ) {
+          tokenId
           tokenUri
-          infusions (where: { realm: "${realmId}" }) {
+          collection {
+            address
+          }
+          infusions {
             balance
             lastClaimAtTimestamp
           }
@@ -27,13 +30,5 @@ export default (realmId: string, collection: string, tokenId: string) => {
     `
   );
 
-  const lastClaimAtTimestamp =
-    res.data?.nfts[0]?.infusions[0]?.lastClaimAtTimestamp;
-
-  return {
-    data: {
-      tokenUri: res.data?.nfts[0]?.tokenUri,
-      lastClaimAtTimestamp,
-    },
-  };
+  return res;
 };
