@@ -40,6 +40,7 @@ export default () => {
       <RealmList
         realms={data.realms}
         url={realmId => `realms/${realmId}/nfts`}
+        size="lg"
       />
     </Container>
   );

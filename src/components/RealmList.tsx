@@ -6,6 +6,7 @@ import { Realm } from '../types';
 interface Props {
   realms: Realm[];
   url?: (realmId: string) => string;
+  size?: 'sm' | 'lg';
 }
 
 const Container = styled.div`
@@ -15,7 +16,7 @@ const Container = styled.div`
   justify-content: center;
 `;
 
-export default ({ realms, url }: Props) => (
+export default ({ realms, url, size = 'sm' }: Props) => (
   <Container>
     {realms && realms.length > 0 ? (
       <>
@@ -25,6 +26,7 @@ export default ({ realms, url }: Props) => (
             name={realm.name}
             tokenUri={realm.infusions[0]?.nft?.tokenUri}
             url={url ? url(realm.id) : `realm/${realm.id}/select-collection`}
+            size={size}
           />
         ))}
       </>

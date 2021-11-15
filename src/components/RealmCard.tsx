@@ -8,9 +8,11 @@ interface Props {
   name: string;
   url: string;
   tokenUri: string;
+  size: 'sm' | 'lg';
 }
 
-const Container = styled.div`
+const Container = styled.div<{ size: 'sm' | 'lg' }>`
+  width: ${({ size }) => (size === 'sm' ? '134px' : '214px')};
   margin-left: 1em;
   margin-right: 1em;
   margin-bottom: 5.25em;
@@ -22,9 +24,9 @@ const Container = styled.div`
   }
 `;
 
-const Image = styled.div<{ src: string }>`
-  width: 214px;
-  height: 302px;
+const Image = styled.div<{ src: string; size: 'sm' | 'lg' }>`
+  width: ${({ size }) => (size === 'sm' ? '134px' : '214px')};
+  height: ${({ size }) => (size === 'sm' ? '175px' : '302px')};
   background: url(${({ src }) => src}) center center no-repeat,
     url(${fallbackImage}) center center no-repeat;
   background-size: cover;
@@ -45,15 +47,17 @@ const StyledLink = styled(Link)`
   }
 `;
 
-const Name = styled.div`
+const Name = styled.div<{ size: 'sm' | 'lg' }>`
   margin-top: 12px;
-  width: 100%;
-  padding-left: 6px;
-  font-size: 16px;
+  font-size: ${({ size }) => (size === 'sm' ? '12px' : '16px')};
+  font-weight: ${({ size }) => (size === 'sm' ? 600 : 400)};
   text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 `;
 
-export default ({ name, url, tokenUri }: Props) => {
+export default ({ name, url, tokenUri, size }: Props) => {
   const { metadata, isLoading } = useMetadata(tokenUri);
   const image = useMemo(() => {
     if (metadata?.image) {
@@ -69,9 +73,9 @@ export default ({ name, url, tokenUri }: Props) => {
 
   return (
     <StyledLink to={url}>
-      <Container>
-        <Image src={image} />
-        <Name>{name}</Name>
+      <Container size={size}>
+        <Image src={image} size={size} />
+        <Name size={size}>{name}</Name>
       </Container>
     </StyledLink>
   );
