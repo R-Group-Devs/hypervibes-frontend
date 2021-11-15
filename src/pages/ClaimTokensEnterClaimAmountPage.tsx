@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import styled from 'styled-components';
 import { useForm, FormProvider } from 'react-hook-form';
-import { useHistory, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useWallet } from 'use-wallet';
+import usePortal from 'react-useportal';
 import ClaimTokensContainer from '../components/ClaimTokensContainer';
 import FormHeading from '../components/FormHeading';
 import InputGroup from '../components/InputGroup';
@@ -12,6 +13,7 @@ import Button from '../components/Button';
 import NftCard from '../components/NftCard';
 import BackButton from '../components/BackButton';
 import SubmitButton from '../components/SubmitButton';
+import Modal, { ModalHeading, ModalContent } from '../components/Modal';
 import useClaimTokens from '../hooks/useClaimTokens';
 import useErc721IsApproved from '../hooks/useErc721IsApproved';
 import useErc20TokenDetails from '../hooks/useErc20TokenDetails';
@@ -75,12 +77,40 @@ const FormErrors = styled.ul`
   margin-bottom: 3em;
 `;
 
+const TransactionStatus = styled.div`
+  margin: 60px auto 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  line-height: 24px;
+`;
+
+const AmountToClaimLabel = styled.div`
+  font-size: 18px;
+  line-height: 24px;
+`;
+
+const AmountToClaimAmount = styled.div`
+  margin-top: 24px;
+  margin-bottom: 20px;
+  font-size: 32px;
+  font-weight: 400;
+  color: #bcff67;
+`;
+
+const TokenSymbol = styled.span`
+  font-weight: 300;
+`;
+
 export default () => {
   const methods = useForm<FormValues>();
   const { account } = useWallet();
-  const history = useHistory();
+  const { openPortal, closePortal, isOpen, Portal } = usePortal();
   const { realmId, collection, tokenId } = useParams<Params>();
   const { claimTokens } = useClaimTokens();
+  const amount = methods.watch('amount');
   const isApproved = useErc721IsApproved(collection, tokenId, account);
   const {
     data: { minClaimAmount, allowPublicClaiming, claimers },
@@ -103,6 +133,7 @@ export default () => {
     currentMinedTokens?.div(decimals).toString()
   );
 
+  const [isPending, setIsPending] = useState(false);
   const [formErrors, setFormErrors] = useState<string[]>([]);
 
   const onSubmit = methods.handleSubmit(async data => {
@@ -136,14 +167,23 @@ export default () => {
 
     // TODO: how do we handle cases where use is not connected w/ wallet beforehand?
     if (account) {
-      await claimTokens({
+      console.log('claim');
+      const tx = await claimTokens({
         realmId: parseInt(realmId, 10),
         collection,
         tokenId: parseInt(tokenId, 10),
         amount: data.amount,
       });
 
-      history.push(`/claim/success`);
+      setIsPending(true);
+      openPortal({ currentTarget: { contains: () => false } });
+
+      await tx.wait(1);
+      setIsPending(false);
+
+      setTimeout(() => {
+        closePortal();
+      }, 3000);
     }
   });
 
@@ -201,6 +241,35 @@ export default () => {
           </ButtonGroup>
         </form>
       </FormProvider>
+
+      <Portal>
+        <Modal isOpen={isOpen} close={closePortal}>
+          <ModalHeading>Claim Tokens</ModalHeading>
+          <ModalContent>
+            <TransactionStatus>
+              {isPending ? (
+                <>
+                  <AmountToClaimLabel>Claiming</AmountToClaimLabel>
+                  <AmountToClaimAmount>
+                    {amount} <TokenSymbol>${symbol}</TokenSymbol>
+                  </AmountToClaimAmount>
+
+                  <p>Confirming transaction...</p>
+                </>
+              ) : (
+                <>
+                  <AmountToClaimLabel>Claimed</AmountToClaimLabel>
+                  <AmountToClaimAmount>
+                    {amount} <TokenSymbol>${symbol}</TokenSymbol>
+                  </AmountToClaimAmount>
+
+                  <p>Confirmed!</p>
+                </>
+              )}
+            </TransactionStatus>
+          </ModalContent>
+        </Modal>
+      </Portal>
     </ClaimTokensContainer>
   );
 };
