@@ -1,3 +1,4 @@
+import { useLocation } from 'react-router-dom';
 import { createGlobalStyle } from 'styled-components';
 import DecimaMonoProLt from '../assets/fonts/DecimaMonoProLt.woff2';
 import DecimaMonoProLtItalic from '../assets/fonts/DecimaMonoProLt-Italic.woff2';
@@ -6,9 +7,11 @@ import DecimaMonoProBold from '../assets/fonts/DecimaMonoPro-Bold.woff2';
 import DecimaMonoProItalic from '../assets/fonts/DecimaMonoPro-Italic.woff2';
 import DecimaMonoProBoldItalic from '../assets/fonts/DecimaMonoPro-BoldItalic.woff2';
 import ThreeSixOneSixGrammastileRegular from '../assets/fonts/3616Grammastile-Regular.woff2';
-import bg from '../assets/images/bg.png';
+import swirlBg from '../assets/images/swirl-bg.png';
+import labBg from '../assets/images/lab-bg.png';
+import dustBg from '../assets/images/dust-bg.png';
 
-export default createGlobalStyle`
+const GlobalStyle = createGlobalStyle`
   @font-face {
     font-family: 'Decima Mono';
     src: url(${DecimaMonoProLt}) format('woff2');
@@ -85,14 +88,6 @@ export default createGlobalStyle`
     background-attachment: fixed;
   }
 
-  body {
-    margin: 0;
-    background: url(${bg}) 0 0 no-repeat;
-    background-size: cover;
-    background-attachment: fixed;
-    color: #fff;
-  }
-
   body, button, input {
     font-family: "Decima Mono", "Courier New", monospace;
   }
@@ -125,3 +120,50 @@ export default createGlobalStyle`
     }
   }
 `;
+
+export default () => {
+  const location = useLocation();
+  const section = location.pathname.split('/')[1];
+  const isHomePage = section === 'app' || section === '';
+
+  const getBackground = () => {
+    if (section === 'realm' || isHomePage) {
+      return `
+        background: url(${swirlBg}) 0 0 no-repeat;
+        background-size: cover;
+      `;
+    }
+
+    if (section === 'infuse') {
+      return `
+        background: url(${labBg}) 70% -30% no-repeat;
+        background-size: 60%;
+      `;
+    }
+
+    if (section === 'claim') {
+      return `
+        background: url(${dustBg}) 0 0 no-repeat;
+        background-size: cover;
+      `;
+    }
+  };
+
+  const background = getBackground();
+
+  const BodyStyle = createGlobalStyle`
+    body {
+      margin: 0;
+      ${background}
+      background-attachment: fixed;
+      color: #fff;
+    }
+  `;
+
+  return (
+    <>
+      <GlobalStyle />
+      <BodyStyle />
+    </>
+  );
+};
