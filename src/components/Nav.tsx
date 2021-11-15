@@ -43,7 +43,13 @@ export default () => {
         <Logo src={logo} alt="" />
       </Link>
 
-      <NavigationLink to={`/${wallet.networkName ?? 'mainnet'}/realms`}>
+      <NavigationLink
+        to={`/${
+          wallet.networkName === 'main'
+            ? 'mainnet'
+            : wallet.networkName ?? 'mainnet'
+        }/realms`}
+      >
         Explore
       </NavigationLink>
 

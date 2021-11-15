@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useForm, FormProvider } from 'react-hook-form';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useWallet } from 'use-wallet';
 import usePortal from 'react-useportal';
 import { utils } from 'ethers';
@@ -80,9 +80,14 @@ const TokenSymbol = styled.span`
   font-weight: 300;
 `;
 
+const ViewNftDetailsLink = styled(Link)`
+  margin-top: 2em;
+  display: inline-block;
+`;
+
 export default () => {
   const methods = useForm<FormValues>();
-  const { account } = useWallet();
+  const { account, networkName } = useWallet();
   const { openPortal, closePortal, isOpen, Portal } = usePortal();
   const { realmId, collection, tokenId } = useParams<Params>();
   const { data: realmDetails } = useRealmDetails(realmId);
@@ -125,7 +130,7 @@ export default () => {
     : BigNumber.from(0);
 
   const hasApprovedEnoughAllowance =
-    decimals && amount.match(/^[+-]?(\d*\.)?\d+$/)
+    decimals && amount?.match(/^[+-]?(\d*\.)?\d+$/)
       ? allowance.gte(
           BigNumber.from(utils.parseUnits(amount || '0', decimalExponent))
         )
@@ -171,14 +176,6 @@ export default () => {
         await tx.wait(1);
         setIsPendingInfusion(false);
         setHasBeenInfused(true);
-
-        setTimeout(() => {
-          closePortal();
-        }, 3000);
-
-        setTimeout(() => {
-          setHasBeenInfused(false);
-        }, 5000);
       }
     }
   });
@@ -337,13 +334,26 @@ export default () => {
               <AmountToInfuseAmount>
                 {amount} <TokenSymbol>${symbol}</TokenSymbol>
               </AmountToInfuseAmount>
+
+              {hasBeenInfused && (
+                <ViewNftDetailsLink
+                  to={`/${
+                    networkName === 'main' ? 'mainnet' : networkName
+                  }/tokens/${collection}/${tokenId}`}
+                >
+                  View NFT details
+                </ViewNftDetailsLink>
+              )}
             </AmountToInfuseContainer>
 
             {!hasBeenInfused && (
               <StyledButtonGroup>
                 <SubmitButton
                   disabled={
-                    hasApprovedEnoughAllowance || !amount || isPendingApproval
+                    hasApprovedEnoughAllowance ||
+                    !amount ||
+                    isPendingApproval ||
+                    hasBeenInfused
                   }
                   arrow={false}
                   onClick={() => onSubmit()}
@@ -352,7 +362,10 @@ export default () => {
                 </SubmitButton>
                 <SubmitButton
                   disabled={
-                    !hasApprovedEnoughAllowance || !amount || isPendingInfusion
+                    !hasApprovedEnoughAllowance ||
+                    !amount ||
+                    isPendingInfusion ||
+                    hasBeenInfused
                   }
                   arrow={false}
                   onClick={() => onSubmit()}

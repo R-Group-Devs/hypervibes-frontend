@@ -135,7 +135,13 @@ export default () => {
       </Container>
 
       <ExploreRealmsHr src={exploreRealmsHr} alt="" />
-      <ExploreRealmsLink to={`/${wallet.networkName ?? 'mainnet'}/realms`}>
+      <ExploreRealmsLink
+        to={`/${
+          wallet.networkName === 'main'
+            ? 'mainnet'
+            : wallet.networkName ?? 'mainnet'
+        }/realms`}
+      >
         Explore Realms Instead
       </ExploreRealmsLink>
     </CenteredContent>
