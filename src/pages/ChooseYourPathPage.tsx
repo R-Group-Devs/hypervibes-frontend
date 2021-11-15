@@ -27,8 +27,8 @@ const PathCard = styled.div`
   justify-content: center;
   margin: 0 2em;
   padding: 14px;
-  width: 32.5vh;
-  height: 50vh;
+  width: 29.25vh;
+  height: 45vh;
   min-width: 200px;
   min-height: 305px;
   max-width: 332px;
@@ -135,7 +135,7 @@ export default () => {
       </Container>
 
       <ExploreRealmsHr src={exploreRealmsHr} alt="" />
-      <ExploreRealmsLink to={`/${wallet.networkName ?? 'ethereum'}/realms`}>
+      <ExploreRealmsLink to={`/${wallet.networkName ?? 'mainnet'}/realms`}>
         Explore Realms Instead
       </ExploreRealmsLink>
     </CenteredContent>
