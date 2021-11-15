@@ -289,7 +289,7 @@ export default () => {
                 }
 
                 if (amount) {
-                  openPortal();
+                  openPortal({ currentTarget: { contains: () => false } });
                 } else {
                   methods.setError('amount', {
                     type: 'required',

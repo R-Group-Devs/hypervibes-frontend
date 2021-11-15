@@ -1,6 +1,8 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 import { useForm, FormProvider } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
+import usePortal from 'react-useportal';
 import useCreateRealmWizard, {
   RealmWizardValues,
 } from '../hooks/useCreateRealmWizard';
@@ -14,6 +16,7 @@ import NumberInput from '../components/NumberInput';
 import ButtonGroup from '../components/ButtonGroup';
 import BackButton from '../components/BackButton';
 import SubmitButton from '../components/SubmitButton';
+import Modal, { ModalHeading, ModalContent } from '../components/Modal';
 import { CREATE_REALM_STEPS } from '../constants/formSteps';
 import heading from '../assets/images/headings/set-up-claiming.svg';
 import allowAnyClaimerImage from '../assets/images/allow-any-claimer.png';
@@ -59,12 +62,34 @@ const AllowSpecificClaimers = styled(ClaimerOptionImage)<{
   }
 `;
 
+const CreateRealmModalContainer = styled.div`
+  margin: 90px auto 70px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
+const CreateRealmLabel = styled.div`
+  font-size: 18px;
+  line-height: 24px;
+`;
+
+const CreateRealmName = styled.div`
+  margin-top: 10px;
+  font-size: 32px;
+  font-weight: 400;
+  color: #bcff67;
+`;
+
 export default () => {
   const { realm, updateRealm, createRealm, resetRealm } =
     useCreateRealmWizard();
-  const methods = useForm<RealmWizardValues>({ defaultValues: realm });
-  const allowPublicClaiming = methods.watch('allowPublicClaiming');
   const history = useHistory();
+  const methods = useForm<RealmWizardValues>({ defaultValues: realm });
+  const { openPortal, closePortal, isOpen, Portal } = usePortal();
+  const allowPublicClaiming = methods.watch('allowPublicClaiming');
+  const [isPending, setIsPending] = useState(false);
 
   const onSubmit = methods.handleSubmit(async data => {
     updateRealm(data);
@@ -73,11 +98,19 @@ export default () => {
     // check if all `realm` data is valid
     // if invalid, highlight wizard steps which contain invalid inputs
     // if valid, persist `realm` to contract
-    await createRealm({ ...realm, ...data });
+    const tx = await createRealm({ ...realm, ...data });
 
-    // TODO - listen for confirmed transaction in new blocks before showing success message
-    history.push('success');
-    resetRealm();
+    setIsPending(true);
+    openPortal({ currentTarget: { contains: () => false } });
+
+    await tx.wait(1);
+    setIsPending(false);
+
+    setTimeout(() => {
+      closePortal();
+      history.push('/infuse');
+      resetRealm();
+    }, 3000);
   });
 
   return (
@@ -152,6 +185,21 @@ export default () => {
           </form>
         </CreateRealmContainer>
       </FormProvider>
+
+      <Portal>
+        <Modal isOpen={isOpen} close={closePortal}>
+          <ModalHeading>Create Realm</ModalHeading>
+          <ModalContent>
+            <CreateRealmModalContainer>
+              <CreateRealmLabel>
+                {isPending ? 'Creating realm...' : 'Created realm'}
+              </CreateRealmLabel>
+
+              <CreateRealmName>{realm.name}</CreateRealmName>
+            </CreateRealmModalContainer>
+          </ModalContent>
+        </Modal>
+      </Portal>
     </Container>
   );
 };

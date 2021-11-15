@@ -16,7 +16,6 @@ const Container = styled.div`
   margin-top: -3.5em;
   width: 80vw;
   max-width: 784px;
-  z-index: 1;
 `;
 
 const ProgressBar = styled.div<{ progress: number }>`
