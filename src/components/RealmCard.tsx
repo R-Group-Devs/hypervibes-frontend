@@ -13,8 +13,7 @@ interface Props {
 const Container = styled.div`
   margin-left: 1em;
   margin-right: 1em;
-  margin-bottom: 2em;
-  width: 136px;
+  margin-bottom: 5.25em;
   display: inline-block;
 
   &:hover > *:first-child {
@@ -23,22 +22,18 @@ const Container = styled.div`
   }
 `;
 
-const Image = styled.img`
-  width: 136px;
-  height: 136px;
+const Image = styled.div<{ src: string }>`
+  width: 214px;
+  height: 302px;
+  background: url(${({ src }) => src}) center center no-repeat,
+    url(${fallbackImage}) center center no-repeat;
+  background-size: cover;
   border-radius: 12px;
+  border-top-left-radius: 250px;
+  border-top-right-radius: 250px;
   outline: 4px solid transparent;
   box-shadow: none;
   transition: all 0.2s;
-`;
-
-const ImagePlaceholder = styled.div`
-  width: 136px;
-  height: 136px;
-  border-radius: 12px;
-  outline: 4px solid transparent;
-  box-shadow: none;
-  background: rgba(255, 255, 255, 0.09);
 `;
 
 const StyledLink = styled(Link)`
@@ -53,8 +48,9 @@ const StyledLink = styled(Link)`
 const Name = styled.div`
   margin-top: 12px;
   width: 100%;
-  font-size: 12px;
-  font-weight: 600;
+  padding-left: 6px;
+  font-size: 16px;
+  text-align: left;
 `;
 
 export default ({ name, url, tokenUri }: Props) => {
@@ -68,13 +64,13 @@ export default ({ name, url, tokenUri }: Props) => {
       return fallbackImage;
     }
 
-    return undefined;
+    return '';
   }, [metadata, isLoading]);
 
   return (
     <StyledLink to={url}>
       <Container>
-        {image ? <Image src={image} alt="" /> : <ImagePlaceholder />}
+        <Image src={image} />
         <Name>{name}</Name>
       </Container>
     </StyledLink>
