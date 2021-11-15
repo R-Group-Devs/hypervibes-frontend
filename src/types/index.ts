@@ -33,6 +33,7 @@ export interface Collection {
 export interface Nft {
   collection: Collection;
   tokenId: string;
+  tokenUri: string;
   infusions: Infusion[];
 }
 

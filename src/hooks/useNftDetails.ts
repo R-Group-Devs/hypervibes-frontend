@@ -18,6 +18,7 @@ export default (realmId: string, collection: string, tokenId: string) => {
             tokenId: "${tokenId}"
           }
         ) {
+          tokenUri
           infusions (where: { realm: "${realmId}" }) {
             balance
             lastClaimAtTimestamp
@@ -32,6 +33,7 @@ export default (realmId: string, collection: string, tokenId: string) => {
 
   return {
     data: {
+      tokenUri: res.data?.nfts[0]?.tokenUri,
       lastClaimAtTimestamp,
     },
   };

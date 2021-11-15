@@ -20,6 +20,7 @@ import useErc20TokenDetails from '../hooks/useErc20TokenDetails';
 import useErc20Decimals from '../hooks/useErc20Decimals';
 import useRealmDetails from '../hooks/useRealmDetails';
 import useNftDetails from '../hooks/useNftDetails';
+import useMetadata from '../hooks/useMetadata';
 import useCurrentMinedTokens from '../hooks/useCurrentMinedTokens';
 import heading from '../assets/images/headings/claim-tokens.svg';
 
@@ -116,8 +117,9 @@ export default () => {
     data: { minClaimAmount, allowPublicClaiming, claimers },
   } = useRealmDetails(realmId);
   const {
-    data: { lastClaimAtTimestamp },
+    data: { lastClaimAtTimestamp, tokenUri },
   } = useNftDetails(realmId, collection, tokenId);
+  const { metadata } = useMetadata(tokenUri);
   const { symbol } = useErc20TokenDetails(collection);
   const decimals = useErc20Decimals(collection);
   const currentMinedTokens = useCurrentMinedTokens(
@@ -195,7 +197,12 @@ export default () => {
         <form onSubmit={onSubmit}>
           <Content>
             <CardContainer>
-              <NftCard name={tokenId} />
+              {metadata && (
+                <NftCard
+                  name={metadata?.name || tokenId}
+                  image={metadata?.image}
+                />
+              )}
             </CardContainer>
 
             <FormContent>

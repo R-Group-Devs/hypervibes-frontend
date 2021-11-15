@@ -3,7 +3,7 @@ import { Metadata, resolveMetadata } from '../lib/nft';
 
 export default (tokenUri: string | undefined | null) => {
   const query = useQuery<Metadata | undefined, Error>(
-    `metdata:${tokenUri}`,
+    `metadata:${tokenUri}`,
     () => (tokenUri ? resolveMetadata(tokenUri) : Promise.resolve(undefined))
   );
 

@@ -3,6 +3,7 @@ import fallbackImage from '../assets/images/fallback.png';
 
 interface Props {
   name: string;
+  image?: string;
 }
 
 const Container = styled.div`
@@ -24,9 +25,9 @@ const Name = styled.div`
   text-align: center;
 `;
 
-export default ({ name }: Props) => (
+export default ({ name, image = fallbackImage }: Props) => (
   <Container>
-    <Image src={fallbackImage} alt="" />
+    <Image src={image} alt="" />
     <Name>{name}</Name>
   </Container>
 );
