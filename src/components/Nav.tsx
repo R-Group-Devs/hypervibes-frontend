@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { Link, useLocation } from 'react-router-dom';
 import { useWallet } from 'use-wallet';
 import logo from '../assets/images/logo.svg';
+import { NETWORKS } from '../constants/contracts';
 
 const Container = styled.div`
   position: absolute;
@@ -28,6 +29,35 @@ const Logo = styled.img`
   left: 40px;
 `;
 
+// return a network name if we're already within the explore part of the app
+const currentExploreNetwork = (pathname: string): string | undefined => {
+  const match = pathname.match(/\/(\w+)\//);
+  if (!match) {
+    return undefined;
+  }
+
+  // if it matches a network, we're good
+  const [, part] = match;
+  if (NETWORKS[part]) {
+    return part;
+  }
+
+  return undefined;
+};
+
+// handle differences from network names from web3 wallet
+const exploreNetworkFromWalletNetwork = (
+  network: string | null
+): string | undefined => {
+  if (!network) {
+    return undefined;
+  } else if (network === 'main') {
+    return 'mainnet';
+  }
+
+  return network;
+};
+
 export default () => {
   const wallet = useWallet();
   const location = useLocation();
@@ -37,19 +67,19 @@ export default () => {
     return null;
   }
 
+  const exploreNetwork = currentExploreNetwork(location.pathname);
+  const exploreDestination =
+    exploreNetwork ??
+    exploreNetworkFromWalletNetwork(wallet.networkName) ??
+    'mainnet';
+
   return (
     <Container>
       <Link to="/">
         <Logo src={logo} alt="" />
       </Link>
 
-      <NavigationLink
-        to={`/${
-          wallet.networkName === 'main'
-            ? 'mainnet'
-            : wallet.networkName ?? 'mainnet'
-        }/realms`}
-      >
+      <NavigationLink to={`/${exploreDestination}/realms`}>
         Explore
       </NavigationLink>
 
