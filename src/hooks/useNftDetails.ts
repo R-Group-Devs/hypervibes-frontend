@@ -6,7 +6,7 @@ interface QueryResult {
   nfts: Nft[];
 }
 
-export default (collection: string, tokenId: string) => {
+export default (realmId: string, collection: string, tokenId: string) => {
   // TODO: filter NFTs by realm ID
   const res = useHyperVibesSubgraph<QueryResult>(
     `collection.${collection}.${tokenId}`,
@@ -18,7 +18,7 @@ export default (collection: string, tokenId: string) => {
             tokenId: "${tokenId}"
           }
         ) {
-          infusions {
+          infusions (where: { realm: "${realmId}" }) {
             balance
             lastClaimAtTimestamp
           }

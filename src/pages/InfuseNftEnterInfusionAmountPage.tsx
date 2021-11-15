@@ -19,6 +19,7 @@ import useErc20Allowance from '../hooks/useErc20Allowance';
 import useErc20ApproveAllowance from '../hooks/useErc20ApproveAllowance';
 import useErc721OwnerOf from '../hooks/useErc721OwnerOf';
 import useRealmDetails from '../hooks/useRealmDetails';
+import useNftDetails from '../hooks/useNftDetails';
 import useInfuseNft from '../hooks/useInfuseNft';
 import heading from '../assets/images/headings/infuse-token.svg';
 
@@ -93,9 +94,13 @@ export default () => {
     requireNftIsOwned,
     allowAllCollections,
     allowPublicInfusion,
+    allowMultiInfuse,
     infusers,
     collections,
   } = realmDetails;
+  const {
+    data: { lastClaimAtTimestamp },
+  } = useNftDetails(realmId, collection, tokenId);
   const { symbol } = useErc20TokenDetails(token?.address || '');
   const { allowance } = useErc20Allowance(token?.address || '');
   const { approveAllowance } = useErc20ApproveAllowance();
@@ -130,45 +135,6 @@ export default () => {
   }, [token, decimals, getErc20Contract]);
 
   const onSubmit = methods.handleSubmit(async data => {
-    let hasErrors = false;
-
-    if (requireNftIsOwned && !isNftOwnedByInfuser) {
-      setFormErrors([
-        ...formErrors,
-        'You must own this NFT to infuse it with tokens.',
-      ]);
-
-      hasErrors = true;
-    }
-
-    if (
-      !allowPublicInfusion &&
-      !infusers?.includes(account?.toLowerCase() || '')
-    ) {
-      setFormErrors([
-        ...formErrors,
-        'You lack infuse permissions within this realm. Try another.',
-      ]);
-
-      hasErrors = true;
-    }
-
-    if (
-      !allowAllCollections &&
-      !collections?.includes(collection.toLowerCase())
-    ) {
-      setFormErrors([
-        ...formErrors,
-        'NFTs in this collections cannot be infused within this realm. Try another.',
-      ]);
-
-      hasErrors = true;
-    }
-
-    if (hasErrors) {
-      return false;
-    }
-
     if (!hasApprovedEnoughAllowance) {
       // TODO: subtract amount from current allowance
       // long-term, how should we handle approvals? infinity seems bad,
@@ -245,6 +211,59 @@ export default () => {
           <SubmitButton
             onClick={e => {
               e.preventDefault();
+              let hasErrors = false;
+
+              if (!allowMultiInfuse && lastClaimAtTimestamp) {
+                const errorMessage = 'Token cannot be infused more than once.';
+
+                if (!formErrors.includes(errorMessage)) {
+                  setFormErrors([...formErrors, errorMessage]);
+                }
+
+                hasErrors = true;
+              }
+
+              if (requireNftIsOwned && !isNftOwnedByInfuser) {
+                const errorMessage =
+                  'You must own this NFT to infuse it with tokens.';
+
+                if (!formErrors.includes(errorMessage)) {
+                  setFormErrors([...formErrors, errorMessage]);
+                }
+
+                hasErrors = true;
+              }
+
+              if (
+                !allowPublicInfusion &&
+                !infusers?.includes(account?.toLowerCase() || '')
+              ) {
+                const errorMessage =
+                  'You lack infuse permissions within this realm. Try another.';
+
+                if (!formErrors.includes(errorMessage)) {
+                  setFormErrors([...formErrors, errorMessage]);
+                }
+
+                hasErrors = true;
+              }
+
+              if (
+                !allowAllCollections &&
+                !collections?.includes(collection.toLowerCase())
+              ) {
+                const errorMessage =
+                  'NFTs in this collections cannot be infused within this realm. Try another.';
+                if (!formErrors.includes(errorMessage)) {
+                  setFormErrors([...formErrors, errorMessage]);
+                }
+
+                hasErrors = true;
+              }
+
+              if (hasErrors) {
+                return false;
+              }
 
               if (amount) {
                 openPortal();
@@ -275,12 +294,14 @@ export default () => {
               <SubmitButton
                 disabled={hasApprovedEnoughAllowance || !amount}
                 arrow={false}
+                onClick={() => onSubmit()}
               >
                 Approve
               </SubmitButton>
               <SubmitButton
                 disabled={!hasApprovedEnoughAllowance || !amount}
                 arrow={false}
+                onClick={() => onSubmit()}
               >
                 Infuse
               </SubmitButton>

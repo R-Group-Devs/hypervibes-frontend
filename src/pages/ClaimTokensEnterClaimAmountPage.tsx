@@ -85,7 +85,7 @@ export default () => {
   } = useRealmDetails(realmId);
   const {
     data: { lastClaimAtTimestamp },
-  } = useNftDetails(collection, tokenId);
+  } = useNftDetails(realmId, collection, tokenId);
   const { symbol } = useErc20TokenDetails(collection);
   const decimals = useErc20Decimals(collection);
   const currentMinedTokens = useCurrentMinedTokens(

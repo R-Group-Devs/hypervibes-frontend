@@ -23,7 +23,12 @@ const SubmitButton = styled.button`
 
   &:disabled {
     opacity: 0.5;
+    background: none;
     cursor: not-allowed;
+
+    > div {
+      background: none;
+    }
   }
 
   &:hover:not([disabled]) {
@@ -38,6 +43,7 @@ const ButtonBackground = styled.div`
   padding: 0 34px;
   height: 40px;
   background: linear-gradient(#214c42 20%, #000 80%);
+  transition: all 0.2s;
 `;
 
 const ArrowRightIcon = styled.img`
