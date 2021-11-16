@@ -52,7 +52,7 @@ export default () => {
             <MultiAddressInput
               name="admins"
               label="Admin(s)"
-              description="A list of addresses and ENS names allowed to modify this realm."
+              description="A list of addresses allowed to modify this realm."
               addMoreText="Add more admins"
             />
 
