@@ -96,6 +96,7 @@ export default () => {
   const {
     token,
     minInfusionAmount,
+    maxTokenBalance,
     requireNftIsOwned,
     allowAllCollections,
     allowPublicInfusion,
@@ -125,9 +126,20 @@ export default () => {
   const minInfusionAmountBn = decimals
     ? BigNumber.from(minInfusionAmount || 0)
     : BigNumber.from(0);
-  const minInfusionAmountInt = decimals
-    ? minInfusionAmountBn.div(decimals).toString()
+
+  const minInfusionAmountRemainder = minInfusionAmountBn.mod(1e13);
+  const minInfusionAmountNumber = utils.formatEther(
+    minInfusionAmountBn.sub(minInfusionAmountRemainder)
+  );
+
+  const maxTokenBalanceBn = decimals
+    ? BigNumber.from(maxTokenBalance || 0)
     : BigNumber.from(0);
+
+  const maxTokenBalanceRemainder = maxTokenBalanceBn.mod(1e13);
+  const maxTokenBalanceNumber = utils.formatEther(
+    maxTokenBalanceBn.sub(maxTokenBalanceRemainder)
+  );
 
   const hasApprovedEnoughAllowance = useMemo(
     () =>
@@ -227,10 +239,15 @@ export default () => {
                         )
                       : BigNumber.from(0);
 
-                    return (
-                      amountBn.gte(minInfusionAmountBn) ||
-                      `Cannot be less than the realm's minimum infusion amount (${minInfusionAmountInt}).`
-                    );
+                    if (amountBn.lt(minInfusionAmountBn)) {
+                      return `Cannot infuse less than the realm's minimum infusion amount (${minInfusionAmountNumber}).`;
+                    }
+
+                    if (amountBn.gt(maxTokenBalanceBn)) {
+                      return `Cannot infuse more than than the realm's maximum infusible tokens (${maxTokenBalanceNumber}).`;
+                    }
+
+                    return true;
                   }}
                 />
               </InputGroup>
@@ -303,7 +320,9 @@ export default () => {
                 const amountBn = BigNumber.from(
                   utils.parseUnits(amount, decimalExponent)
                 );
-                const amountIsValid = amountBn.gte(minInfusionAmountBn);
+                const amountIsValid =
+                  amountBn.gte(minInfusionAmountBn) &&
+                  amountBn.lte(maxTokenBalanceBn);
 
                 if (amountIsValid) {
                   setHasBeenInfused(false);
