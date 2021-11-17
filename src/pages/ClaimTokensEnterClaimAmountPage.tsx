@@ -125,11 +125,14 @@ export default () => {
     tokenId
   );
 
-  const remainder = currentMinedTokens.mod(1e13);
-  const minClaimAmountNumber = utils.formatEther(minClaimAmount.sub(remainder));
+  const minClaimAmountRemainder = minClaimAmount.mod(1e13);
+  const minClaimAmountNumber = utils.formatEther(
+    minClaimAmount.sub(minClaimAmountRemainder)
+  );
 
+  const currentMinedTokensRemainder = currentMinedTokens.mod(1e13);
   const currentMinedTokensNumber = utils.formatEther(
-    currentMinedTokens.sub(remainder)
+    currentMinedTokens.sub(currentMinedTokensRemainder)
   );
 
   const [isPending, setIsPending] = useState(false);

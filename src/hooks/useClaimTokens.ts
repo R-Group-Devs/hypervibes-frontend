@@ -15,7 +15,6 @@ export default () => {
 
   const claimTokens = useCallback(
     async (claim: Claim) => {
-      console.log(utils.parseUnits(claim.amount));
       return hyperVibesContract?.claim({
         realmId: claim.realmId,
         collection: claim.collection,
