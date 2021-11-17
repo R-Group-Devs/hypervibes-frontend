@@ -4,7 +4,7 @@ import { useForm, FormProvider } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 import { useWallet } from 'use-wallet';
 import usePortal from 'react-useportal';
-import { BigNumber } from '@ethersproject/bignumber';
+import { utils } from 'ethers';
 import ClaimTokensContainer from '../components/ClaimTokensContainer';
 import FormHeading from '../components/FormHeading';
 import InputGroup from '../components/InputGroup';
@@ -20,7 +20,6 @@ import Modal, { ModalHeading, ModalContent } from '../components/Modal';
 import useClaimTokens from '../hooks/useClaimTokens';
 import useErc721IsApproved from '../hooks/useErc721IsApproved';
 import useErc20TokenDetails from '../hooks/useErc20TokenDetails';
-import useErc20Decimals from '../hooks/useErc20Decimals';
 import useRealmDetails from '../hooks/useRealmDetails';
 import useNftDetails from '../hooks/useNftDetails';
 import useMetadata from '../hooks/useMetadata';
@@ -54,13 +53,14 @@ const CardContainer = styled.div`
 `;
 
 const AmountInput = styled(NumberInput)`
+  width: 300px;
   padding-right: 3.5em;
 `;
 
 const MaxButton = styled(Button)`
   position: absolute;
   margin-top: 3em;
-  right: 2em;
+  right: -2em;
   padding: 0.25em 1.5em;
   height: 30px;
   background: #000;
@@ -118,17 +118,19 @@ export default () => {
     data: { lastClaimAtTimestamp, tokenUri },
   } = useNftDetails(realmId, collection, tokenId);
   const { metadata, isLoading: isLoadingMetadata } = useMetadata(tokenUri);
-  console.log(token);
   const { symbol } = useErc20TokenDetails(token?.address || '');
-  const decimals = useErc20Decimals(token?.address || '');
   const currentMinedTokens = useCurrentMinedTokens(
     realmId,
     collection,
     tokenId
   );
 
-  const minClaimAmountNumber = minClaimAmount?.div(decimals).toString();
-  const currentMinedTokensNumber = currentMinedTokens?.div(decimals).toString();
+  const remainder = currentMinedTokens.mod(1e13);
+  const minClaimAmountNumber = utils.formatEther(minClaimAmount.sub(remainder));
+
+  const currentMinedTokensNumber = utils.formatEther(
+    currentMinedTokens.sub(remainder)
+  );
 
   const [isPending, setIsPending] = useState(false);
   const [formErrors, setFormErrors] = useState<string[]>([]);
@@ -208,19 +210,18 @@ export default () => {
                 >
                   <AmountInput
                     name="amount"
-                    label={`Amount (Max: ${currentMinedTokensNumber})`}
+                    label={`(Max: ${currentMinedTokensNumber})`}
                     required
                     min={0.00001}
                     validate={value => {
-                      const higherThanMin = BigNumber.from(value).gte(
-                        BigNumber.from(minClaimAmountNumber)
-                      );
-                      const lessThanMined = BigNumber.from(value).lte(
-                        BigNumber.from(currentMinedTokensNumber)
-                      );
-                      const minIsGreaterThanMined = BigNumber.from(
-                        minClaimAmountNumber
-                      ).gte(BigNumber.from(currentMinedTokens));
+                      const higherThanMin = utils
+                        .parseUnits(value, 18)
+                        .gte(minClaimAmount);
+                      const lessThanMined = utils
+                        .parseUnits(value, 18)
+                        .lte(currentMinedTokens);
+                      const minIsGreaterThanMined =
+                        minClaimAmount.gte(currentMinedTokens);
 
                       const getErrorMessage = () => {
                         if (minIsGreaterThanMined) {
