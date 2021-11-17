@@ -27,6 +27,7 @@ const NftCardContainer = styled.div`
 
 const Details = styled.div`
   margin-left: 80px;
+  word-break: break-word;
 `;
 
 const Name = styled.div`
