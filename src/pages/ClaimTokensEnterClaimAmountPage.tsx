@@ -215,7 +215,8 @@ export default () => {
                     name="amount"
                     label={`(Max: ${currentMinedTokensNumber})`}
                     required
-                    min={0.00001}
+                    // shouldn't allow for 0 claim
+                    min={0}
                     validate={value => {
                       const higherThanMin = utils
                         .parseUnits(value, 18)
@@ -227,11 +228,19 @@ export default () => {
                         minClaimAmount.gte(currentMinedTokens);
 
                       const getErrorMessage = () => {
-                        if (minIsGreaterThanMined) {
+                        if (!lessThanMined && minIsGreaterThanMined) {
+                          return `Cannot claim more than the total available to claim (${currentMinedTokensNumber}).`;
+                        }
+
+                        if (!higherThanMin) {
                           return `Cannot claim less than realm minimum (${minClaimAmountNumber}).`;
-                        } else {
+                        }
+
+                        if (higherThanMin && !minIsGreaterThanMined) {
                           return `Enter a number between ${minClaimAmountNumber} (realm minimum) and ${currentMinedTokensNumber} (total available to claim).`;
                         }
+
+                        return '';
                       };
 
                       return (
