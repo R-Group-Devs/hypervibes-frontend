@@ -5,7 +5,8 @@
   "license": "UNLICENSED",
   "scripts": {
     "build": "tsc && vite build",
-    "prepare": "husky install",
+    "prepare": "git config --unset core.hooksPath; pro-commit",
+    "pro-commit:task": "lint-staged",
     "serve": "vite preview",
     "start": "vite"
   },
@@ -54,9 +55,9 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.26.1",
     "eslint-plugin-react-hooks": "^4.2.0",
-    "husky": "^7.0.4",
     "lint-staged": "^11.2.6",
     "prettier": "^2.4.1",
+    "pro-commit": "^1.2.2",
     "typescript": "^4.4.4",
     "vite": "^2.6.13"
   },
