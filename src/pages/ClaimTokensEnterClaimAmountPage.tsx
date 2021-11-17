@@ -112,14 +112,15 @@ export default () => {
   const amount = methods.watch('amount');
   const isApproved = useErc721IsApproved(collection, tokenId, account);
   const {
-    data: { minClaimAmount, allowPublicClaiming, claimers },
+    data: { minClaimAmount, allowPublicClaiming, claimers, token },
   } = useRealmDetails(realmId);
   const {
     data: { lastClaimAtTimestamp, tokenUri },
   } = useNftDetails(realmId, collection, tokenId);
   const { metadata, isLoading: isLoadingMetadata } = useMetadata(tokenUri);
-  const { symbol } = useErc20TokenDetails(collection);
-  const decimals = useErc20Decimals(collection);
+  console.log(token);
+  const { symbol } = useErc20TokenDetails(token?.address || '');
+  const decimals = useErc20Decimals(token?.address || '');
   const currentMinedTokens = useCurrentMinedTokens(
     realmId,
     collection,
