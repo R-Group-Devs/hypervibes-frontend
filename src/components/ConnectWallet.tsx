@@ -6,7 +6,6 @@ import Button from './Button';
 import WalletModal from './WalletModal';
 import useAutoConnect from '../hooks/useAutoConnect';
 import { shortenAddress } from '../utils/address';
-import { getNetworkName } from '../utils/network';
 
 const Container = styled.div`
   position: absolute;
@@ -48,7 +47,6 @@ export default ({ ...rest }) => {
   const { openPortal, closePortal, isOpen, Portal } = usePortal();
   const wallet = useWallet();
   const triedAutoConnect = useAutoConnect();
-  //const networkName = wallet.chainId ? getNetworkName(wallet.chainId) : null;
 
   useEffect(() => {
     if (wallet.status === 'connected') {

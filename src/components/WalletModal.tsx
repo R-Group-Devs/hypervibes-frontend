@@ -70,6 +70,14 @@ const WalletLink = styled.a`
   }
 `;
 
+const WalletConnectionError = styled.div`
+  display: flex;
+  flex-direction: column;
+  min-height: 150px;
+  align-items: center;
+  text-align: center;
+`;
+
 export default ({ isOpen, close }: Props) => {
   const wallet = useWallet();
   const connectedWallet = wallet.connector
@@ -77,6 +85,7 @@ export default ({ isOpen, close }: Props) => {
     : null;
   const [isChangingWallets, setIsChangingWallets] = useState(false);
   const [isAddressCopied, setIsAddressCopied] = useState(false);
+  const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
     if (isAddressCopied) {
@@ -88,34 +97,46 @@ export default ({ isOpen, close }: Props) => {
     if (isOpen) {
       setIsChangingWallets(false);
     }
+
+    if (!isOpen) {
+      setHasError(false);
+    }
   }, [isOpen]);
+
+  useEffect(() => {
+    if (wallet.status === 'error') {
+      setHasError(true);
+    }
+  }, [wallet]);
 
   return (
     <Modal isOpen={isOpen} close={close}>
-      {(wallet.status === 'disconnected' || isChangingWallets) && (
-        <>
-          <ModalHeading>Select a wallet</ModalHeading>
+      {((wallet.status !== 'connected' && wallet.status !== 'connecting') ||
+        isChangingWallets) &&
+        !hasError && (
+          <>
+            <ModalHeading>Select a wallet</ModalHeading>
 
-          <ModalContent>
-            {Object.values(SUPPORTED_WALLETS).map(
-              ({ name, connector, iconURL }) => (
-                <WalletProviderOption
-                  key={name}
-                  onClick={() => {
-                    wallet.connect(connector);
-                    setIsChangingWallets(false);
-                  }}
-                >
-                  <h4>{name}</h4>
-                  <WalletProviderIcon src={iconURL} alt={name} />
-                </WalletProviderOption>
-              )
-            )}
-          </ModalContent>
-        </>
-      )}
+            <ModalContent>
+              {Object.values(SUPPORTED_WALLETS).map(
+                ({ name, connector, iconURL }) => (
+                  <WalletProviderOption
+                    key={name}
+                    onClick={() => {
+                      wallet.connect(connector);
+                      setIsChangingWallets(false);
+                    }}
+                  >
+                    <h4>{name}</h4>
+                    <WalletProviderIcon src={iconURL} alt={name} />
+                  </WalletProviderOption>
+                )
+              )}
+            </ModalContent>
+          </>
+        )}
 
-      {wallet.status === 'connecting' && connectedWallet && (
+      {wallet.status === 'connecting' && connectedWallet && !hasError && (
         <>
           <ModalHeading>Select a wallet</ModalHeading>
 
@@ -141,7 +162,8 @@ export default ({ isOpen, close }: Props) => {
       {wallet.status === 'connected' &&
         wallet.account &&
         connectedWallet &&
-        !isChangingWallets && (
+        !isChangingWallets &&
+        !hasError && (
           <>
             <ModalHeading>Account</ModalHeading>
 
@@ -190,6 +212,23 @@ export default ({ isOpen, close }: Props) => {
             </ModalContent>
           </>
         )}
+
+      {hasError && (
+        <>
+          <ModalHeading>Select a wallet</ModalHeading>
+
+          <ModalContent>
+            <WalletConnectionError>
+              <p>There was an error connecting your wallet.</p>
+
+              <p>
+                Please make sure you have the proper wallet software installed
+                and activated.
+              </p>
+            </WalletConnectionError>
+          </ModalContent>
+        </>
+      )}
     </Modal>
   );
 };
