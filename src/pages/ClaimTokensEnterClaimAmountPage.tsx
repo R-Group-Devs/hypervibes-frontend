@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import styled from 'styled-components';
 import { useForm, FormProvider } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
@@ -19,6 +19,7 @@ import FormErrors from '../components/FormErrors';
 import Modal, { ModalHeading, ModalContent } from '../components/Modal';
 import useClaimTokens from '../hooks/useClaimTokens';
 import useErc721IsApproved from '../hooks/useErc721IsApproved';
+import { useLazyErc20Contract } from '../hooks/useErc20Contract';
 import useErc20TokenDetails from '../hooks/useErc20TokenDetails';
 import useRealmDetails from '../hooks/useRealmDetails';
 import useNftDetails from '../hooks/useNftDetails';
@@ -109,6 +110,8 @@ export default () => {
   const { openPortal, closePortal, isOpen, Portal } = usePortal();
   const { realmId, collection, tokenId } = useParams<Params>();
   const { claimTokens } = useClaimTokens();
+  const getErc20Contract = useLazyErc20Contract();
+  const [decimalExponent, setDecimalExponent] = useState<number>();
   const amount = methods.watch('amount');
   const isApproved = useErc721IsApproved(collection, tokenId, account);
   const {
@@ -125,18 +128,43 @@ export default () => {
     tokenId
   );
 
-  const minClaimAmountRemainder = minClaimAmount.mod(1e13);
-  const minClaimAmountNumber = utils.formatEther(
-    minClaimAmount.sub(minClaimAmountRemainder)
+  const decimalPlaces = 5;
+  const decimalMod = useMemo(() => {
+    if (!decimalExponent) {
+      return 1e13;
+    }
+
+    return decimalPlaces >= decimalExponent
+      ? 1
+      : Number(`1e${decimalExponent - decimalPlaces}`);
+  }, [decimalExponent]);
+
+  const minClaimAmountRemainder = minClaimAmount.mod(decimalMod);
+  const minClaimAmountNumber = utils.formatUnits(
+    minClaimAmount.sub(minClaimAmountRemainder),
+    decimalExponent
   );
 
-  const currentMinedTokensRemainder = currentMinedTokens.mod(1e13);
-  const currentMinedTokensNumber = utils.formatEther(
-    currentMinedTokens.sub(currentMinedTokensRemainder)
+  const currentMinedTokensRemainder = currentMinedTokens.mod(decimalMod);
+  const currentMinedTokensNumber = utils.formatUnits(
+    currentMinedTokens.sub(currentMinedTokensRemainder),
+    decimalExponent
   );
 
   const [isPending, setIsPending] = useState(false);
   const [formErrors, setFormErrors] = useState<string[]>([]);
+
+  useEffect(() => {
+    (async () => {
+      if (!decimalExponent && token && getErc20Contract) {
+        const decimalExponent = await getErc20Contract(
+          token?.address
+        )?.decimals();
+
+        setDecimalExponent(decimalExponent);
+      }
+    })();
+  }, [decimalExponent, token, getErc20Contract]);
 
   const onSubmit = methods.handleSubmit(async data => {
     let hasErrors = false;
@@ -172,7 +200,7 @@ export default () => {
         realmId,
         collection,
         tokenId,
-        amount: data.amount,
+        amount: utils.parseUnits(data.amount, decimalExponent),
       });
 
       setIsPending(true);
@@ -219,10 +247,10 @@ export default () => {
                     min={0}
                     validate={value => {
                       const higherThanMin = utils
-                        .parseUnits(value, 18)
+                        .parseUnits(value, decimalExponent)
                         .gte(minClaimAmount);
                       const lessThanMined = utils
-                        .parseUnits(value, 18)
+                        .parseUnits(value, decimalExponent)
                         .lte(currentMinedTokens);
                       const minIsGreaterThanMined =
                         minClaimAmount.gte(currentMinedTokens);
