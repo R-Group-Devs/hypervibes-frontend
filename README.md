@@ -29,11 +29,19 @@ Install dependencies:
 $ yarn
 ```
 
-Generate **Ethereum** and **Rinkeby** RPC endpoints using [Infura](https://infura.io/) or [Alchemy](https://www.alchemy.com/) and add the following environment variables to a `.env.local` file:
+You'll need RPC endpoints for all networks you plan to use during local development.  You can generate private RPC endpoints with [Infura](https://infura.io/) or [Alchemy](https://www.alchemy.com/), or search for public RPC endpoints to use.
+
+Add the following environment variables to a `.env.local` file:
 
 ```
 REACT_APP_ETHEREUM_RPC_URL=???
+REACT_APP_POLYGON_RPC_URL=???
+REACT_APP_FANTOM_RPC_URL=???
+REACT_APP_ARBITRUM_RPC_URL=???
+REACT_APP_ROPSTEN_RPC_URL=???
 REACT_APP_RINKEBY_RPC_URL=???
+REACT_APP_GOERLI_RPC_URL=???
+REACT_APP_MUMBAI_RPC_URL=???
 ```
 
 Run the app in development mode:
