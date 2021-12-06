@@ -16,6 +16,7 @@
     "@ethersproject/providers": "^5.4.5",
     "@hookform/devtools": "^4.0.1",
     "ethers": "^5.5.1",
+    "ethers-multicall": "0.2.1",
     "get-ens": "^2.0.1",
     "graphql": "^15.7.0",
     "graphql-request": "^3.6.1",
