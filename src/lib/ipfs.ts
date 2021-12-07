@@ -21,9 +21,21 @@ export const fetchIpfsJson = memoize(
 );
 
 // if a uri is an ipfs-ish uri, convert it to a https featchable able
-export const ensureHttpsUri = (uri: string): string => {
-  const hash = extractIpfsHash(uri);
-  return hash ? ipfsHashAsHttp(hash) : uri;
+export const rewriteIpfsUri = (uri: string | undefined): string | undefined => {
+  if (uri == null) return undefined;
+
+  const isIpfsIo = /^https:\/\/ipfs.io\/ipfs/.test(uri);
+  const isHttps = /^https:\/\//.test(uri);
+
+  // if its not already https, or if its ipfs's public (slow/throttled) gateway,
+  // then rewrite
+  if (!isHttps || isIpfsIo) {
+    const hash = extractIpfsHash(uri);
+    return hash ? ipfsHashAsHttp(hash) : uri;
+  }
+
+  // else no-op
+  return uri;
 };
 
 // fetchable https uri from an ipfs hash

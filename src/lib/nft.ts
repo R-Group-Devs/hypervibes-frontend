@@ -1,4 +1,4 @@
-import { ensureHttpsUri, extractIpfsHash, fetchIpfsJson } from './ipfs';
+import { rewriteIpfsUri, extractIpfsHash, fetchIpfsJson } from './ipfs';
 
 export interface Metadata {
   name: string;
@@ -31,14 +31,28 @@ export const resolveMetadata = async (uri: string) => {
   const projected: Metadata = {
     name: fetched.name ?? '',
     description: fetched.description ?? '',
-    image: fetched.image ? ensureHttpsUri(fetched.image) : undefined,
+    image: resolveMetadataImage(fetched),
     animationUrl: fetched.animation_url
-      ? ensureHttpsUri(fetched.animation_url)
+      ? rewriteIpfsUri(fetched.animation_url)
       : undefined,
     externalUrl: fetched.external_url ?? undefined,
   };
 
   return projected;
+};
+
+// given metadata blob, figure out the image we want to use
+const resolveMetadataImage = (payload: any): string | undefined => {
+  if (payload.image != null) {
+    return rewriteIpfsUri(payload.image);
+  }
+
+  // MakersPlace uses this for video NFTs
+  if (payload.imageUrl != null) {
+    return rewriteIpfsUri(payload.imageUrl);
+  }
+
+  return undefined;
 };
 
 // parse base64 encoded URI schemes
