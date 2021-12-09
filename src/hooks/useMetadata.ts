@@ -1,5 +1,5 @@
 import { useQuery } from 'react-query';
-import { Metadata, resolveMetadata } from '../lib/nft';
+import { Metadata, resolveMetadata } from '../hypervibes/nft';
 
 export default (tokenUri: string | undefined | null) => {
   const query = useQuery<Metadata | undefined, Error>(
