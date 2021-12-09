@@ -1,3 +1,4 @@
+import memoize from 'lodash/memoize';
 import { rewriteIpfsUri, extractIpfsHash, fetchIpfsJson } from './ipfs';
 
 export interface Metadata {
@@ -9,7 +10,7 @@ export interface Metadata {
 }
 
 // resolve metadata give a token URI
-export const resolveMetadata = async (uri: string) => {
+export const resolveMetadata = memoize(async (uri: string) => {
   // base64 encoded
   if (uri.match(/^data:application\/json;/)) {
     return parseBase64MetadataUri(uri);
@@ -39,17 +40,15 @@ export const resolveMetadata = async (uri: string) => {
   };
 
   return projected;
-};
+});
 
 // given metadata blob, figure out the image we want to use
 const resolveMetadataImage = (payload: any): string | undefined => {
-  if (payload.image != null) {
-    return rewriteIpfsUri(payload.image);
-  }
+  // various metadata formats, trying to be accomodating
+  const image = payload.image ?? payload.imageUrl ?? payload.image_url;
 
-  // MakersPlace uses this for video NFTs
-  if (payload.imageUrl != null) {
-    return rewriteIpfsUri(payload.imageUrl);
+  if (image != null) {
+    return rewriteIpfsUri(image);
   }
 
   return undefined;
