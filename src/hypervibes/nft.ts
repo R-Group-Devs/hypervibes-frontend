@@ -19,6 +19,7 @@ export const resolveMetadata = memoize(async (uri: string) => {
   // ipfs-style metadata
   const hash = extractIpfsHash(uri);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let fetched: any;
 
   // use throttled ipfs fetch if ipfs, else str8 fetch it
@@ -43,6 +44,7 @@ export const resolveMetadata = memoize(async (uri: string) => {
 });
 
 // given metadata blob, figure out the image we want to use
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const resolveMetadataImage = (payload: any): string | undefined => {
   // various metadata formats, trying to be accomodating
   const image = payload.image ?? payload.imageUrl ?? payload.image_url;
