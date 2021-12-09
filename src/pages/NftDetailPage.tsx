@@ -6,10 +6,6 @@ import useBrowseNftDetails from '../hooks/useBrowseNftDetails';
 import useCollectionInfusions from '../hooks/useCollectionInfusions';
 import useMetadata from '../hooks/useMetadata';
 import { NETWORKS } from '../constants/contracts';
-import { useQuery } from 'react-query';
-import { getLoaders } from '../hypervibes/dataloaders';
-import { BigNumber } from 'ethers';
-import InfusionTicker from '../components/InfusionTicker';
 
 interface Params {
   network: string;
@@ -93,12 +89,12 @@ export default () => {
 
   const { metadata, isLoading: isMetadataLoading } = useMetadata(nft?.tokenUri);
 
-  const infusionDataQuery = useQuery([network, collection, tokenId], () =>
-    getLoaders(chainId).indexedInfusion.load({
-      collection: collection,
-      tokenId: BigNumber.from(tokenId),
-    })
-  );
+  // const infusionDataQuery = useQuery([network, collection, tokenId], () =>
+  //   getLoaders(chainId).indexedInfusion.load({
+  //     collection: collection,
+  //     tokenId: BigNumber.from(tokenId),
+  //   })
+  // );
 
   if (isError) {
     return <p>error fetching realms</p>;
@@ -176,7 +172,7 @@ export default () => {
         </Details>
       </NftDetails>
 
-      {infusionDataQuery.data && (
+      {/* {infusionDataQuery.data && (
         <table>
           <tbody>
             {infusionDataQuery.data.infusions.map(infusion => (
@@ -194,7 +190,7 @@ export default () => {
             ))}
           </tbody>
         </table>
-      )}
+      )} */}
 
       {otherCollectionInfusions && otherCollectionInfusions.length > 0 && (
         <>

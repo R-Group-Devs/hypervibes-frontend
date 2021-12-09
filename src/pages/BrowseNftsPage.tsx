@@ -4,8 +4,6 @@ import { NETWORKS } from '../constants/contracts';
 import useListRealmNfts from '../hooks/useListRealmNfts';
 import BannerPageHeading from '../components/BannerPageHeading';
 import NftGalleryCard from '../components/NftGalleryCard';
-import { BigNumber } from 'ethers';
-import InfusionTicker from '../components/InfusionTicker';
 
 interface Params {
   network: string;
@@ -56,7 +54,7 @@ export default () => {
           />
         ))}
       </NftList>
-      <div>
+      {/* <div>
         {data.realm.infusions.map(infusion => (
           <div key={infusion.id}>
             <InfusionTicker
@@ -67,7 +65,7 @@ export default () => {
             />
           </div>
         ))}
-      </div>
+      </div> */}
     </Container>
   );
 };
