@@ -15,6 +15,7 @@
     "@ethersproject/contracts": "^5.4.1",
     "@ethersproject/providers": "^5.4.5",
     "@hookform/devtools": "^4.0.1",
+    "dataloader": "^2.0.0",
     "ethers": "^5.5.1",
     "ethers-multicall": "0.2.1",
     "get-ens": "^2.0.1",
