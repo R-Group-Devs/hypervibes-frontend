@@ -18,7 +18,7 @@ interface Props {
  * daily rate
  */
 export default ({ value, decimals, interpolation }: Props) => {
-  const [alpha, setAlpha] = useState(BigNumber.from(0));
+  const [alpha, setAlpha] = useState<BigNumber | undefined>();
 
   useEffect(() => {
     const h = setInterval(update, 100);
@@ -26,7 +26,10 @@ export default ({ value, decimals, interpolation }: Props) => {
   }, [interpolation]);
 
   const update = () => {
-    if (interpolation == null) return;
+    if (interpolation == null) {
+      setAlpha(BigNumber.from(0));
+      return;
+    }
 
     // compute time since sample and amount to add (alpha)
     const delta = Math.max(0, Date.now() - interpolation.sampledAt * 1000);
@@ -38,7 +41,12 @@ export default ({ value, decimals, interpolation }: Props) => {
   };
 
   if (value == null) {
-    return '-';
+    return <>-</>;
+  }
+
+  // un-inited state
+  if (alpha == null) {
+    return null;
   }
 
   // add alpha to value and clamp to max
@@ -47,5 +55,7 @@ export default ({ value, decimals, interpolation }: Props) => {
     num = num.gt(interpolation.max) ? interpolation.max : num;
   }
 
-  return commify(formatUnits(num, decimals));
+  const truncated = Number(formatUnits(num, decimals)).toFixed(3);
+
+  return <>{truncated}</>;
 };
