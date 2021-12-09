@@ -4,6 +4,8 @@ import { NETWORKS } from '../constants/contracts';
 import useListRealmNfts from '../hooks/useListRealmNfts';
 import BannerPageHeading from '../components/BannerPageHeading';
 import NftGalleryCard from '../components/NftGalleryCard';
+import { BigNumber } from 'ethers';
+import InfusionTicker from '../components/InfusionTicker';
 
 interface Params {
   network: string;
@@ -18,12 +20,9 @@ const NftList = styled.div`
 
 export default () => {
   const { network, realmId } = useParams<Params>();
-  const { data, isLoading, isError } = useListRealmNfts(
-    realmId,
-    NETWORKS[network]
-  );
-
   const chainId = NETWORKS[network];
+  const { data, isLoading, isError } = useListRealmNfts(realmId, chainId);
+
   if (chainId == null) {
     return <p>invalid network</p>;
   }
@@ -57,6 +56,18 @@ export default () => {
           />
         ))}
       </NftList>
+      <div>
+        {data.realm.infusions.map(infusion => (
+          <div key={infusion.id}>
+            <InfusionTicker
+              chainId={chainId}
+              realmId={BigNumber.from(realmId)}
+              collection={infusion.nft.collection.address}
+              tokenId={BigNumber.from(infusion.nft.tokenId)}
+            />
+          </div>
+        ))}
+      </div>
     </Container>
   );
 };
