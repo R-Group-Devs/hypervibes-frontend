@@ -9,13 +9,13 @@ import { getChainInfo } from './constants';
 
 export interface GetTokenViewInput {
   realmId: BigNumber;
-  nft: string;
+  collection: string;
   tokenId: BigNumber;
 }
 
 export interface GetTokenViewOutput {
   realmId: BigNumber;
-  nft: string;
+  collection: string;
   tokenId: BigNumber;
   // if null, there is nothing infused
   view: null | {
@@ -45,8 +45,12 @@ export const batchGetTokenData = async (
   );
 
   const calls = batch.flatMap(d => {
-    const getTokenView = hv.tokenData(d.realmId, d.nft, d.tokenId);
-    const getCurrent = hv.currentMinedTokens(d.realmId, d.nft, d.tokenId);
+    const getTokenView = hv.tokenData(d.realmId, d.collection, d.tokenId);
+    const getCurrent = hv.currentMinedTokens(
+      d.realmId,
+      d.collection,
+      d.tokenId
+    );
     return [getTokenView, getCurrent];
   });
 

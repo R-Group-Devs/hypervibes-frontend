@@ -3,16 +3,18 @@ import request, { gql } from 'graphql-request';
 import { getChainInfo } from './constants';
 
 export interface GetIndexedInfusionsInput {
-  nft: string;
+  collection: string;
   tokenId: BigNumber;
 }
 
 export interface GetIndexedInfusionsOutput {
-  nft: string;
+  id: string;
+  collection: string;
   tokenId: BigNumber;
   tokenUri: string;
   currentOwner: string;
   infusions: Array<{
+    id: string;
     realm: {
       id: BigNumber;
       name: string;
@@ -86,8 +88,8 @@ const infusionsQuery = gql`
 `;
 
 // WARN: the assumption about the ID format isn't great here
-const computeNftId = (datum: { nft: string; tokenId: BigNumber }) =>
-  `${datum.nft}-${datum.tokenId.toNumber()}`;
+const computeNftId = (datum: { collection: string; tokenId: BigNumber }) =>
+  `${datum.collection}-${datum.tokenId.toString()}`;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const toProjectedInfusionInfo = (item: any): GetIndexedInfusionsOutput => {
@@ -97,6 +99,7 @@ const toProjectedInfusionInfo = (item: any): GetIndexedInfusionsOutput => {
     const [event] = infusion.events;
     if (event == null) throw new Error('missing initial infusion event');
     const entry: GetIndexedInfusionsOutput['infusions'][0] = {
+      id: infusion.id,
       realm: {
         id: BigNumber.from(infusion.realm.id),
         name: infusion.realm.name,
@@ -118,7 +121,8 @@ const toProjectedInfusionInfo = (item: any): GetIndexedInfusionsOutput => {
   });
 
   const mapped: GetIndexedInfusionsOutput = {
-    nft: item.collection.address,
+    id: item.id,
+    collection: item.collection.address,
     tokenId: BigNumber.from(item.tokenId),
     tokenUri: item.tokenUri,
     currentOwner: item.owner.address,
