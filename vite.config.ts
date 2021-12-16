@@ -9,4 +9,7 @@ export default defineConfig({
     sourcemap: true,
     manifest: true,
   },
+  define: {
+    'process.env': process.env,
+  },
 });

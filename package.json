@@ -37,7 +37,7 @@
     "react-useportal": "^1.0.14",
     "styled-components": "^5.3.1",
     "use-nft": "^0.10.1",
-    "use-wallet": "^0.12.3"
+    "use-wallet": "^0.13.1"
   },
   "devDependencies": {
     "@types/react": "^17.0.0",
