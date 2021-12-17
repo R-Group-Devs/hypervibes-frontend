@@ -8,6 +8,9 @@ export default defineConfig({
     outDir: './build',
     sourcemap: true,
     manifest: true,
+    commonjsOptions: {
+      transformMixedEsModules: true,
+    },
   },
   define: {
     'process.env': process.env,
