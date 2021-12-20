@@ -19,7 +19,6 @@ export const SUPPORTED_WALLETS: Record<string, WalletInfo> = {
     name: 'WalletConnect',
     connector: 'walletconnect',
     iconURL: walletConnectIconUrl,
-    description:
-      'Connect to mobile wallets with QR code scanning or deep linking.',
+    description: 'Connect to wallets with QR code scanning or deep linking.',
   },
 };
