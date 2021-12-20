@@ -97,9 +97,7 @@ export default ({ isOpen, close }: Props) => {
       setIsChangingWallets(false);
     }
 
-    if (!isOpen) {
-      setHasError(false);
-    }
+    setHasError(false);
   }, [isOpen]);
 
   useEffect(() => {
