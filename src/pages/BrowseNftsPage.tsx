@@ -1,5 +1,6 @@
 import { useParams } from 'react-router';
 import styled from 'styled-components';
+import { BigNumber } from 'ethers';
 import { NETWORKS } from '../constants/contracts';
 import useListRealmNfts from '../hooks/useListRealmNfts';
 import BannerPageHeading from '../components/BannerPageHeading';
@@ -14,6 +15,9 @@ const Container = styled.div``;
 
 const NftList = styled.div`
   margin-top: 210px;
+  justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
 `;
 
 export default () => {
@@ -49,23 +53,15 @@ export default () => {
           <NftGalleryCard
             key={infusion.id}
             url={`/${network}/tokens/${infusion.nft.collection.address}/${infusion.nft.tokenId}`}
+            chainId={chainId}
+            realmId={BigNumber.from(realmId)}
+            collection={infusion.nft.collection.address}
+            tokenId={BigNumber.from(infusion.nft.tokenId)}
             tokenUri={infusion.nft.tokenUri}
             size="lg"
           />
         ))}
       </NftList>
-      {/* <div>
-        {data.realm.infusions.map(infusion => (
-          <div key={infusion.id}>
-            <InfusionTicker
-              chainId={chainId}
-              realmId={BigNumber.from(realmId)}
-              collection={infusion.nft.collection.address}
-              tokenId={BigNumber.from(infusion.nft.tokenId)}
-            />
-          </div>
-        ))}
-      </div> */}
     </Container>
   );
 };

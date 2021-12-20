@@ -1,12 +1,19 @@
 import styled from 'styled-components';
+import { BigNumber } from 'ethers';
 import { Link } from 'react-router-dom';
 import useMetadata from '../hooks/useMetadata';
+import InfusionTicker from '../components/InfusionTicker';
 import fallbackImage from '../assets/images/fallback.png';
 
 interface Props {
+  chainId?: number;
+  realmId?: BigNumber;
+  collection?: string;
+  tokenId?: BigNumber;
   url: string;
   tokenUri: string;
   size?: 'sm' | 'lg';
+  showClaimableAmount?: boolean;
 }
 
 const Container = styled.div`
@@ -22,31 +29,40 @@ const Container = styled.div`
 `;
 
 const Image = styled.img<{ size: 'sm' | 'lg' }>`
-  width: ${({ size }) => (size === 'sm' ? '136px' : '180px')};
-  height: ${({ size }) => (size === 'sm' ? '136px' : '180px')};
+  width: ${({ size }) => (size === 'sm' ? '136px' : '270px')};
+  height: ${({ size }) => (size === 'sm' ? '136px' : '270px')};
   border-radius: 12px;
   outline: 4px solid transparent;
   box-shadow: none;
   transition: all 0.2s;
 `;
 
+const Name = styled.div`
+  margin: 12px 0 8px;
+  width: 100%;
+  font-size: 14px;
+  font-weight: 600;
+`;
+
 const StyledLink = styled(Link)`
   color: #fff;
 
-  &:hover {
+  &:hover ${Name} {
     color: #bcff67;
     text-decoration: none;
   }
 `;
 
-const Name = styled.div`
-  margin-top: 12px;
-  width: 100%;
-  font-size: 12px;
-  font-weight: 600;
-`;
-
-export default ({ url, tokenUri, size = 'sm' }: Props) => {
+export default ({
+  chainId,
+  realmId,
+  collection,
+  tokenId,
+  url,
+  tokenUri,
+  size = 'sm',
+  showClaimableAmount = true,
+}: Props) => {
   const { metadata, isLoading } = useMetadata(tokenUri);
 
   return (
@@ -56,6 +72,19 @@ export default ({ url, tokenUri, size = 'sm' }: Props) => {
           <>
             <Image src={metadata?.image || fallbackImage} size={size} alt="" />
             <Name>{metadata?.name}</Name>
+
+            {showClaimableAmount &&
+              chainId &&
+              realmId &&
+              collection &&
+              tokenId && (
+                <InfusionTicker
+                  chainId={chainId}
+                  realmId={realmId}
+                  collection={collection}
+                  tokenId={tokenId}
+                />
+              )}
           </>
         )}
       </Container>

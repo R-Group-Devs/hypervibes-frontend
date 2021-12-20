@@ -56,6 +56,7 @@ export default () => {
                 key={nft.tokenId}
                 tokenUri={nft.tokenUri}
                 url={`collection/${nft.collection.address}/token/${nft.tokenId}`}
+                showClaimableAmount={false}
               />
             ))}
         </form>

@@ -1,3 +1,4 @@
+import styled from 'styled-components';
 import { BigNumber } from 'ethers';
 import { useQuery } from 'react-query';
 import { getLoaders } from '../hypervibes/dataloaders';
@@ -9,6 +10,18 @@ interface Props {
   tokenId: BigNumber;
   realmId: BigNumber;
 }
+
+const Container = styled.div`
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  font-size: 12px;
+  font-weight: 300;
+`;
+
+const ClaimableAmount = styled(DecimalNumber)`
+  color: #17ffe3;
+`;
 
 export default ({ chainId, realmId, collection, tokenId }: Props) => {
   const loaders = getLoaders(chainId);
@@ -46,22 +59,26 @@ export default ({ chainId, realmId, collection, tokenId }: Props) => {
   const { realm } = infusion;
 
   return (
-    <>
-      <DecimalNumber
-        value={BigNumber.from(0)}
-        decimals={realm.token.decimals}
-        interpolation={{
-          dailyRate: realm.dailyRate,
-          sampledAt: tokenData.view.lastClaimAt,
-          max: tokenData.view.balance,
-        }}
-      />{' '}
-      /{' '}
-      <DecimalNumber
-        value={tokenData.view.balance}
-        decimals={realm.token.decimals}
-      />{' '}
+    <Container>
+      <div>
+        <ClaimableAmount
+          value={BigNumber.from(0)}
+          decimals={realm.token.decimals}
+          interpolation={{
+            dailyRate: realm.dailyRate,
+            sampledAt: tokenData.view.lastClaimAt,
+            max: tokenData.view.balance,
+          }}
+          minimumFractionDigits={3}
+        />{' '}
+        /{' '}
+        <DecimalNumber
+          value={tokenData.view.balance}
+          decimals={realm.token.decimals}
+          maximumFractionDigits={3}
+        />{' '}
+      </div>
       {realm.token.symbol}
-    </>
+    </Container>
   );
 };

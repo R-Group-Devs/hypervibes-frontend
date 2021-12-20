@@ -1,4 +1,5 @@
-import { commify, formatUnits } from '@ethersproject/units';
+import styled from 'styled-components';
+import { formatUnits } from '@ethersproject/units';
 import { BigNumber } from 'ethers';
 import { useEffect, useState } from 'react';
 
@@ -11,13 +12,24 @@ interface Props {
     dailyRate: BigNumber;
     max: BigNumber;
   };
+  maximumFractionDigits?: number;
+  minimumFractionDigits?: number;
 }
+
+const Container = styled.span``;
 
 /**
  * Render a BigNumber, optionally lerped in real time based on a sample time and
  * daily rate
  */
-export default ({ value, decimals, interpolation }: Props) => {
+export default ({
+  value,
+  decimals,
+  interpolation,
+  minimumFractionDigits,
+  maximumFractionDigits,
+  ...props
+}: Props) => {
   const [alpha, setAlpha] = useState<BigNumber | undefined>();
 
   useEffect(() => {
@@ -55,7 +67,10 @@ export default ({ value, decimals, interpolation }: Props) => {
     num = num.gt(interpolation.max) ? interpolation.max : num;
   }
 
-  const truncated = Number(formatUnits(num, decimals)).toFixed(3);
+  const truncated = Number(formatUnits(num, decimals)).toLocaleString('en-US', {
+    minimumFractionDigits,
+    maximumFractionDigits,
+  });
 
-  return <>{truncated}</>;
+  return <Container {...props}>{truncated}</Container>;
 };

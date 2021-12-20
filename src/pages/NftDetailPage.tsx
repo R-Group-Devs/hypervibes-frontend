@@ -1,7 +1,11 @@
 import { useParams } from 'react-router';
+import { useQuery } from 'react-query';
 import styled from 'styled-components';
+import { BigNumber } from 'ethers';
 import NftCard from '../components/NftCard';
 import NftGalleryCard from '../components/NftGalleryCard';
+import InfusionTicker from '../components/InfusionTicker';
+import { getLoaders } from '../hypervibes/dataloaders';
 import useBrowseNftDetails from '../hooks/useBrowseNftDetails';
 import useCollectionInfusions from '../hooks/useCollectionInfusions';
 import useMetadata from '../hooks/useMetadata';
@@ -26,6 +30,7 @@ const NftCardContainer = styled.div`
 `;
 
 const Details = styled.div`
+  min-width: 450px;
   margin-left: 80px;
   word-break: break-word;
 `;
@@ -63,7 +68,7 @@ const LargeValue = styled.div`
 `;
 
 const Metrics = styled.div`
-  margin-top: 3em;
+  margin: 2.5em 0 3em;
   padding-top: 3em;
   padding-bottom: 1em;
   border-top: 1px solid rgba(255, 255, 255, 0.5);
@@ -75,6 +80,26 @@ const OtherNftsHeading = styled.div`
   font-size: 20px;
   font-weight: 600;
   text-align: center;
+`;
+
+const InfusionsTable = styled.table`
+  margin-top: 1.5em;
+`;
+
+const RealmNameRow = styled.td`
+  padding: 0.5em 2em 0.5em 0;
+  width: 40%;
+`;
+
+const RealmName = styled.div`
+  width: 99%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+`;
+
+const ClaimableAmountRow = styled.td`
+  width: 80%;
 `;
 
 export default () => {
@@ -89,12 +114,12 @@ export default () => {
 
   const { metadata, isLoading: isMetadataLoading } = useMetadata(nft?.tokenUri);
 
-  // const infusionDataQuery = useQuery([network, collection, tokenId], () =>
-  //   getLoaders(chainId).indexedInfusion.load({
-  //     collection: collection,
-  //     tokenId: BigNumber.from(tokenId),
-  //   })
-  // );
+  const infusionDataQuery = useQuery([network, collection, tokenId], () =>
+    getLoaders(chainId).indexedInfusion.load({
+      collection: collection,
+      tokenId: BigNumber.from(tokenId),
+    })
+  );
 
   if (isError) {
     return <p>error fetching realms</p>;
@@ -139,18 +164,31 @@ export default () => {
           )}
 
           <Field>
-            <Label>Network</Label>
-            <Value>{network}</Value>
-          </Field>
+            <Label>Infusions</Label>
+            <Value>
+              {infusionDataQuery.data && (
+                <InfusionsTable>
+                  <tbody>
+                    {infusionDataQuery.data.infusions.map(infusion => (
+                      <tr key={infusion.id}>
+                        <RealmNameRow>
+                          <RealmName>{infusion.realm.name}</RealmName>
+                        </RealmNameRow>
 
-          <Field>
-            <Label>Collection</Label>
-            <Value>{nft.collection.address}</Value>
-          </Field>
-
-          <Field>
-            <Label>Owner</Label>
-            <Value>{nft.owner.address}</Value>
+                        <ClaimableAmountRow>
+                          <InfusionTicker
+                            chainId={chainId}
+                            collection={collection}
+                            realmId={infusion.realm.id}
+                            tokenId={BigNumber.from(tokenId)}
+                          />
+                        </ClaimableAmountRow>
+                      </tr>
+                    ))}
+                  </tbody>
+                </InfusionsTable>
+              )}
+            </Value>
           </Field>
 
           <Metrics>
@@ -169,28 +207,23 @@ export default () => {
               <LargeValue>{totalClaims}</LargeValue>
             </Field>
           </Metrics>
+
+          <Field>
+            <Label>Network</Label>
+            <Value>{network}</Value>
+          </Field>
+
+          <Field>
+            <Label>Collection</Label>
+            <Value>{nft.collection.address}</Value>
+          </Field>
+
+          <Field>
+            <Label>Owner</Label>
+            <Value>{nft.owner.address}</Value>
+          </Field>
         </Details>
       </NftDetails>
-
-      {/* {infusionDataQuery.data && (
-        <table>
-          <tbody>
-            {infusionDataQuery.data.infusions.map(infusion => (
-              <tr key={infusion.id}>
-                <td>{infusion.realm.name}:</td>
-                <td>
-                  <InfusionTicker
-                    chainId={chainId}
-                    collection={collection}
-                    realmId={infusion.realm.id}
-                    tokenId={BigNumber.from(tokenId)}
-                  />
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )} */}
 
       {otherCollectionInfusions && otherCollectionInfusions.length > 0 && (
         <>
@@ -204,6 +237,7 @@ export default () => {
               url={`/${network}/tokens/${nft.collection.address}/${nft.tokenId}`}
               tokenUri={nft.tokenUri}
               size="lg"
+              showClaimableAmount={false}
             />
           ))}
         </>
