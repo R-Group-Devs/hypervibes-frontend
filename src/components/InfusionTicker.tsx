@@ -23,6 +23,10 @@ const ClaimableAmount = styled(DecimalNumber)`
   color: #17ffe3;
 `;
 
+const TokenSymbol = styled.div`
+  margin-left: 0.5em;
+`;
+
 export default ({ chainId, realmId, collection, tokenId }: Props) => {
   const loaders = getLoaders(chainId);
 
@@ -76,9 +80,9 @@ export default ({ chainId, realmId, collection, tokenId }: Props) => {
           value={tokenData.view.balance}
           decimals={realm.token.decimals}
           maximumFractionDigits={3}
-        />{' '}
+        />
       </div>
-      {realm.token.symbol}
+      <TokenSymbol>{realm.token.symbol}</TokenSymbol>
     </Container>
   );
 };
