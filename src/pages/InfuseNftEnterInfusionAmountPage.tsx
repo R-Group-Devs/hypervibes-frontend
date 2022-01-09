@@ -127,18 +127,31 @@ export default () => {
     ? BigNumber.from(minInfusionAmount || 0)
     : BigNumber.from(0);
 
-  const minInfusionAmountRemainder = minInfusionAmountBn.mod(1e13);
-  const minInfusionAmountNumber = utils.formatEther(
-    minInfusionAmountBn.sub(minInfusionAmountRemainder)
+  const decimalPlaces = 5;
+  const decimalMod = useMemo(() => {
+    if (!decimalExponent) {
+      return 1e13;
+    }
+
+    return decimalPlaces >= decimalExponent
+      ? 1
+      : Number(`1e${decimalExponent - decimalPlaces}`);
+  }, [decimalExponent]);
+
+  const minInfusionAmountRemainder = minInfusionAmountBn.mod(decimalMod);
+  const minInfusionAmountNumber = utils.formatUnits(
+    minInfusionAmountBn.sub(minInfusionAmountRemainder),
+    decimalExponent
   );
 
   const maxTokenBalanceBn = decimals
     ? BigNumber.from(maxTokenBalance || 0)
     : BigNumber.from(0);
 
-  const maxTokenBalanceRemainder = maxTokenBalanceBn.mod(1e13);
-  const maxTokenBalanceNumber = utils.formatEther(
-    maxTokenBalanceBn.sub(maxTokenBalanceRemainder)
+  const maxTokenBalanceRemainder = maxTokenBalanceBn.mod(decimalMod);
+  const maxTokenBalanceNumber = utils.formatUnits(
+    maxTokenBalanceBn.sub(maxTokenBalanceRemainder),
+    decimalExponent
   );
 
   const hasApprovedEnoughAllowance = useMemo(
@@ -183,7 +196,7 @@ export default () => {
           collection,
           tokenId,
           infuser: account,
-          amount: data.amount,
+          amount: utils.parseUnits(data.amount, decimalExponent),
         });
 
         setIsPendingInfusion(true);

@@ -1,5 +1,4 @@
 import { useCallback } from 'react';
-import { utils } from 'ethers';
 import { BigNumber } from '@ethersproject/bignumber';
 import useHyperVibesContract from './useHyperVibesContract';
 
@@ -7,7 +6,7 @@ export interface Claim {
   realmId: string;
   collection: string;
   tokenId: string;
-  amount: string;
+  amount: BigNumber;
 }
 
 export default () => {
@@ -19,8 +18,7 @@ export default () => {
         realmId: claim.realmId,
         collection: claim.collection,
         tokenId: BigNumber.from(claim.tokenId),
-        // TODO: get decimals from collection ERC-20
-        amount: utils.parseUnits(claim.amount, 18),
+        amount: claim.amount,
       });
     },
     [hyperVibesContract]
