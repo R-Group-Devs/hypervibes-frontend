@@ -42,7 +42,6 @@ const ConnectedWalletInfoHeading = styled.h4`
 
 const WalletProviderIcon = styled.img`
   width: 24px;
-  height: 24px;
 `;
 
 const DisconnectWalletButton = styled(Button)`
@@ -98,9 +97,7 @@ export default ({ isOpen, close }: Props) => {
       setIsChangingWallets(false);
     }
 
-    if (!isOpen) {
-      setHasError(false);
-    }
+    setHasError(false);
   }, [isOpen]);
 
   useEffect(() => {
